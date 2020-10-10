@@ -9,16 +9,13 @@
   <a href="https://ru.m.wikipedia.org/wiki/python">
     <img src="https://img.shields.io/badge/language-python-blue.svg">
  </a>
-  <a href="https://github.com/3xploit-db/Pentest-Tools-Framework">
+  <a href="https://github.com/GDGSNF/PXXTF">
     <img src="https://img.shields.io/badge/version-V.2.2[Beta]-green.svg">
  </a>
-   <a href="https://t.me/WongNdesoCok">
-   <img src="https://img.shields.io/badge/telegram--blue.svg">
-   </a>
-  <a href="https://github.com/3xploit-db/Pentest-Tools-Framework/releases">
+  <a href="https://github.com/GDGSNF/PXXTF/releases">
    <img src="https://img.shields.io/badge/release-V.2.1[Beta]-red.svg">
    </a>
-   <a href="https://github.com/3xploit-db/Pentest-Tools-Framework/blob/master/LICENSE">
+   <a href="https://github.com/GDGSNF/PXXTF/blob/master/LICENSE">
    <img src="https://img.shields.io/badge/LICENSE-red.svg">
    </a>
  </a>
