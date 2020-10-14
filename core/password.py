@@ -254,7 +254,7 @@ def ssh_bruteforce():
          ssh_bruteforce()
     elif list =='exit':
          print
-         print""+G+"Thanks for using PTF"
+         print""+G+"Thanks for using PXXTF"
          print
          exit()
     else:

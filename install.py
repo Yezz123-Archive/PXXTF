@@ -5,13 +5,13 @@ import sys
 
 if not os.geteuid() == 0:
     sys.exit("""\033[1;91m\n[!] Pentest Tools Framework installer must be run as root. ¯\_(ツ)_/¯\n\033[1;m""")
-os.system("rm -rf /opt/Pentest && rm -rf /usr/bin/PTF && rm -rf /usr/bin/ptf")
+os.system("rm -rf /opt/Pentest && rm -rf /usr/bin/PXXTF && rm -rf /usr/bin/pxxtf")
 print(""" \033[1;36m
-┌══════════════════════════════════════════════════════════════┐
-█                                                              █
-█                     Pentest Tools installer                  █
-█                                                              █
-└══════════════════════════════════════════════════════════════┘     \033[1;m""")
+┌═════════════════════════════════════════════════════════════════┐
+█                                                                 █
+█                     Pentest Tools installer!!!                  █
+█                                                                 █
+└═════════════════════════════════════════════════════════════════┘     \033[1;m""")
 
 def main():
 

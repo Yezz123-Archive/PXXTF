@@ -80,7 +80,7 @@ def dirse():
             dirse()
         elif dir =='exit':
              print
-             print""+G+"Thanks for using PTF"
+             print""+G+"Thanks for using PXXTF"
              print
              exit()
         else:

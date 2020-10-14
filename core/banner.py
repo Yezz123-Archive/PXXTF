@@ -141,5 +141,5 @@ def exits():
     print""+G+""
     sleep(0.4)
     print""+B+""
-    exit('--[+] Thanks for using PTF [+]--')
+    exit('--[+] Thanks for using PXXTF [+]--')
     print""+R+""
