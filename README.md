@@ -15,7 +15,7 @@
 
 > python install.py
 
-> PTF
+> PXXTF
 ```
 
 
