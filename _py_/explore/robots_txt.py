@@ -13,7 +13,7 @@ class robots_txt:
 
     def atom(self, host):
         import request
-        from urfil import sansor
+        from .urfil import sansor
         host = sansor().pransor(host)
 
         if sansor().cransor(host):
@@ -48,7 +48,7 @@ class robots_txt:
         import sys
 
         while True:
-            host = raw_input(""+N+"Pentest>> ("+B+"modules/exploits)("+R+"exploit/robots_txt"+G+"(set target)"+N+"): ")
+            host = eval(input(""+N+"Pentest>> ("+B+"modules/exploits)("+R+"exploit/robots_txt"+G+"(set target)"+N+"): "))
             if host == 'exit':
                 sys.exit()
             elif host == 'back':
@@ -63,8 +63,8 @@ class robots_txt:
 
             wread = 'Activ url:' + str(wread).replace(',', '<br>')
             saved = fsave(host, 'robots_txt', wread).pansor()
-            print('Open faile save with Browser ' + saved)
-            print ""+G+""
+            print(('Open faile save with Browser ' + saved))
+            print((""+G+""))
             os.system('firefox log/ ')
-            print
+            print()
             break

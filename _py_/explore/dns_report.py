@@ -12,14 +12,14 @@ class dns_report:
         pass
 
     def atom(self, host):
-        import urllib
+        import urllib.request, urllib.parse, urllib.error
         from bs4 import BeautifulSoup
         from core.urli import sansor
 
         host = sansor().pransor(host)
         if sansor().cransor(host) and sansor().cransor('viewdns.info'):
 
-            wread = urllib.urlopen(
+            wread = urllib.request.urlopen(
                 'http://www.viewdns.info/dnsreport/?domain=' + host).read()
             content = BeautifulSoup(
                 wread, 'html.parser').find(
@@ -34,10 +34,10 @@ class dns_report:
         import sys
 
         while True:
-            host = raw_input(""+N+"Pentest>> ("+B+"modules/scanners)("+R+"scanner/dns_report"+G+" (set target)"+N+"): ")
-            print
-            print'target => ',host
-            print
+            host = eval(input(""+N+"Pentest>> ("+B+"modules/scanners)("+R+"scanner/dns_report"+G+" (set target)"+N+"): "))
+            print()
+            print(('target => ',host))
+            print()
             if host == 'exit':
                 sys.exit()
             elif host == 'back':
@@ -49,7 +49,7 @@ class dns_report:
                 continue
 
             saved = fsave(host, 'dns_report', content).pansor()
-            print('Open faile save with Browser ' + saved)
-            print ""+G+""
+            print(('Open faile save with Browser ' + saved))
+            print((""+G+""))
             os.system('firefox log/ ')
             break

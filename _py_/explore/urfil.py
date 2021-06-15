@@ -6,7 +6,7 @@ class sansor():
         pass
 
     def pransor(self, url):
-        from urllib import unquote
+        from urllib.parse import unquote
         import socket
         import re
         http_match = re.search(r"^.*://", url)
@@ -34,7 +34,7 @@ class sansor():
         return unquote(url)
 
     def cransor(self, url):
-        from urllib import urlopen
+        from urllib.request import urlopen
         try:
             ch = urlopen(url)
             status = True

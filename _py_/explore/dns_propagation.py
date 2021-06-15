@@ -12,14 +12,14 @@ class dns_propagation:
         pass
 
     def atom(self, host):
-        import urllib
+        import urllib.request, urllib.parse, urllib.error
         from bs4 import BeautifulSoup
         from core.urli import sansor
 
         host = sansor().pransor(host)
         if sansor().cransor(host) and sansor().cransor('viewdns.info'):
 
-            wread = urllib.urlopen(
+            wread = urllib.request.urlopen(
                 'http://www.viewdns.info/propagation/?domain=' + host).read()
             content = BeautifulSoup(
                 wread, 'html.parser').find(
@@ -34,9 +34,9 @@ class dns_propagation:
         import sys
 
         while True:
-            host = raw_input(""+N+"Pentest>> ("+B+"modules/scanners)("+R+"scanner/dns_propagation "+G+"(set target) "+N+"): ")
-            print'\ttarget => ',host
-            print
+            host = eval(input(""+N+"Pentest>> ("+B+"modules/scanners)("+R+"scanner/dns_propagation "+G+"(set target) "+N+"): "))
+            print(('\ttarget => ',host))
+            print()
             if host == 'exit':
                 sys.exit()
             elif host == 'back':
@@ -48,7 +48,7 @@ class dns_propagation:
                 continue
 
             saved = fsave(host, "dns_propagation", content).pansor()
-            print('Open file save with Browser' + saved)
-            print ""+G+""
+            print(('Open file save with Browser' + saved))
+            print((""+G+""))
             os.system('firefox log/ ')
             break

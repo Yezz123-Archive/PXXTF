@@ -12,7 +12,8 @@ class web_robot:
         pass
 
     def atom(self, host, tag):
-        from urllib import urlopen, unquote
+        from urllib.request import urlopen
+        from urllib.parse import unquote
         from bs4 import BeautifulSoup
         from core.urli import sansor
 
@@ -84,7 +85,7 @@ class web_robot:
         import sys
 
         while True:
-            host = raw_input(""+N+"Pentest>> ("+B+"modules/scanners)("+R+"scanner/web_robot "+G+"(set target)"+N+"): ")
+            host = eval(input(""+N+"Pentest>> ("+B+"modules/scanners)("+R+"scanner/web_robot "+G+"(set target)"+N+"): "))
 
             if host == 'exit':
                 sys.exit()
@@ -95,7 +96,7 @@ class web_robot:
 
             while True:
                 print(option)
-                lnx = raw_input(""+N+"Pentest>> ("+B+"modules/scanners)("+R+"scanner/web_robot "+G+"(set target)"+N+"): ")
+                lnx = eval(input(""+N+"Pentest>> ("+B+"modules/scanners)("+R+"scanner/web_robot "+G+"(set target)"+N+"): "))
                 if host == 'exit':
                     sys.exit()
                 elif host == 'back':
@@ -138,7 +139,7 @@ class web_robot:
             wread = str(recv).replace('<', '')
             wread = wread.replace(',', '<br>')
             wread = fsave(host, 'web_robot', length + wread).pansor()
-            print('Open faile save with Browser ' + wread)
-            print ""+G+""
+            print(('Open faile save with Browser ' + wread))
+            print((""+G+""))
             os.system('firefox log/ ')
             break

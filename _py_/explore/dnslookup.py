@@ -11,13 +11,13 @@ class dnslookup:
         pass
 
     def atom(self, host):
-        import urllib
+        import urllib.request, urllib.parse, urllib.error
         from core.urli import sansor
 
         host = sansor().pransor(host)
         if sansor().cransor(host) and sansor().cransor('api.hackertarget.com/dnslookup'):
 
-            wread = urllib.urlopen(
+            wread = urllib.request.urlopen(
                 'https://api.hackertarget.com/dnslookup/?q=' + host).read()
             return wread
         else:
@@ -28,9 +28,9 @@ class dnslookup:
         import sys
 
         while True:
-            host = raw_input(""+N+"Pentest>> ("+B+"modules/scanners)("+R+"scanner/dnslookup"+G+"(set target)"+N+"): ")
-            print
-            print 'target =>', host
+            host = eval(input(""+N+"Pentest>> ("+B+"modules/scanners)("+R+"scanner/dnslookup"+G+"(set target)"+N+"): "))
+            print()
+            print(('target =>', host))
             if host == 'exit':
                 sys.exit()
             elif host == 'back':
@@ -42,7 +42,7 @@ class dnslookup:
                 continue
 
             PTF = fsave(host, 'dnslookup', wread).pansor()
-            print('Open faile save with Browser ' + PTF)
-            print ""+G+""
+            print(('Open faile save with Browser ' + PTF))
+            print((""+G+""))
             os.system('firefox log/')
             break

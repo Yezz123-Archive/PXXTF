@@ -12,14 +12,14 @@ class find_records:
         pass
 
     def atom(self, host):
-        import urllib
+        import urllib.request, urllib.parse, urllib.error
         from core.urli import sansor
 
         host = sansor().pransor(host)
         if sansor().cransor(host) and sansor().cransor(
                 'api.hackertarget.com/hostsearch'):
 
-            wread = urllib.urlopen(
+            wread = urllib.request.urlopen(
                 'https://api.hackertarget.com/hostsearch/?q=' + host).read()
             return wread
         else:
@@ -30,7 +30,7 @@ class find_records:
         import sys
 
         while True:
-            host = raw_input(""+N+"Pentest>> ("+B+"modules/scanners)("+R+"scanner/find_records"+N+"): ")
+            host = eval(input(""+N+"Pentest>> ("+B+"modules/scanners)("+R+"scanner/find_records"+N+"): "))
             if host == 'exit':
                 sys.exit()
             elif host == 'back':
@@ -42,7 +42,7 @@ class find_records:
                 continue
 
             saved = fsave(host, 'find_records', wread).pansor()
-            print('Open faile save with Browser ' + saved)
-            print ""+G+""
+            print(('Open faile save with Browser ' + saved))
+            print((""+G+""))
             os.system('firefox log/ ')
             break

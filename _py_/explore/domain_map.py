@@ -11,13 +11,13 @@ class domain_map:
         pass
 
     def atom(self, host, fname):
-        import urllib
+        import urllib.request, urllib.parse, urllib.error
         from core.urli import sansor
 
         host = sansor().pransor(host)
         if sansor().cransor(host) and sansor().cransor('dnsdumpster.com'):
             try:
-                content = urllib.urlretrieve(
+                content = urllib.request.urlretrieve(
                     'https://dnsdumpster.com/static/map/' + host + '.png',
                     fname)
                 return True
@@ -32,7 +32,7 @@ class domain_map:
         import sys
 
         while True:
-            host = raw_input(""+N+"Pentest>> ("+B+"modules/scanners)("+R+"scanner/domain_map"+G+"(set target)"+N+"): ")
+            host = eval(input(""+N+"Pentest>> ("+B+"modules/scanners)("+R+"scanner/domain_map"+G+"(set target)"+N+"): "))
             if host == 'exit':
                 sys.exit()
             elif host == 'back':
@@ -43,13 +43,13 @@ class domain_map:
             wread = self.atom(host, fname)
 
             if wread:
-                print('\tresult saved in ' + fname)
-                print ""+G+""
+                print(('\tresult saved in ' + fname))
+                print((""+G+""))
                 os.system('firefox log/ ')
             elif wread is None:
                 print("\t[-] Error Input")
                 continue
             else:
-                print wread
+                print(wread)
                 break
             break

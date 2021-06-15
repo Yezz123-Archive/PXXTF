@@ -12,14 +12,14 @@ class extract_links:
         pass
 
     def atom(self, host):
-        import urllib
+        import urllib.request, urllib.parse, urllib.error
         from core.urli import sansor
         import re
 
         host = sansor().pransor(host)
         if sansor().cransor(host):
 
-            wread = urllib.urlopen('http://' + host).read()
+            wread = urllib.request.urlopen('http://' + host).read()
             search = re.compile(host + r'/[\w\/\-.\?=%]+')
             content = search.findall(wread)
             if content == []:
@@ -34,7 +34,7 @@ class extract_links:
         import sys
 
         while True:
-            host = raw_input(""+N+"Pentest>> ("+B+"modules/scanners)("+R+"scanner/extract_links"+N+"): ")
+            host = eval(input(""+N+"Pentest>> ("+B+"modules/scanners)("+R+"scanner/extract_links"+N+"): "))
             if host == 'exit':
                 sys.exit()
             elif host == 'back':
@@ -47,7 +47,7 @@ class extract_links:
 
             wread = str(wread).replace(',', '<br>')
             saved = fsave(host, 'extract_links', wread).pansor()
-            print('Open faile save with Browser ' + saved)
-            print ""+G+""
+            print(('Open faile save with Browser ' + saved))
+            print((""+G+""))
             os.system('firefox log/ ')
             break

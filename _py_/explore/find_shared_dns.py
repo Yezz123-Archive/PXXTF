@@ -11,14 +11,14 @@ class find_shared_dns:
         pass
 
     def atom(self, host):
-        import urllib
+        import urllib.request, urllib.parse, urllib.error
         from core.urli import sansor
 
         host = sansor().pransor(host)
         if sansor().cransor(host) and sansor().cransor(
                 'api.hackertarget.com/findshareddns'):
 
-            wread = urllib.urlopen(
+            wread = urllib.request.urlopen(
                 'https://api.hackertarget.com/findshareddns/?q=' + host).read()
             return wread
         else:
@@ -29,7 +29,7 @@ class find_shared_dns:
         import sys
 
         while True:
-            host = raw_input(""+N+"Pentest>> ("+B+"modules/scanners)("+R+"scanner/find_shared_dns"+G+"(set target)"+N+"): ")
+            host = eval(input(""+N+"Pentest>> ("+B+"modules/scanners)("+R+"scanner/find_shared_dns"+G+"(set target)"+N+"): "))
             if host == 'exit':
                 sys.exit()
             elif host == 'back':
@@ -41,7 +41,7 @@ class find_shared_dns:
                 continue
 
             saved = fsave(host, 'find_shared_dns', wread).pansor()
-            print('Open faile save with Browser ' + saved)
-            print ""+G+""
+            print(('Open faile save with Browser ' + saved))
+            print((""+G+""))
             os.system('firefox log/ ')
             break

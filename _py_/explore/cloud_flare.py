@@ -12,13 +12,13 @@ class cloud_flare:
         pass
 
     def atom(self, host):
-        import urllib
+        import urllib.request, urllib.parse, urllib.error
         from core.urli import sansor
         from socket import gethostbyname
 
         def check(host):
             try:
-                return urllib.urlopen('http://' + str(host)).code
+                return urllib.request.urlopen('http://' + str(host)).code
             except BaseException:
                 return None
 
@@ -62,10 +62,10 @@ class cloud_flare:
         R = '\x1b[36m'
         C = '\x1b[32m'
         while True:
-            host = raw_input(""+N+"Pentest>> ("+B+"modules/scanners)("+R+"scanner/cloud_flare"+G+" (set target)"+N+"): ")
-            print
-            print'target => ',host
-            print
+            host = eval(input(""+N+"Pentest>> ("+B+"modules/scanners)("+R+"scanner/cloud_flare"+G+" (set target)"+N+"): "))
+            print()
+            print(('target => ',host))
+            print()
             if host == 'exit':
                 sys.exit()
             elif host == 'back':
@@ -79,8 +79,8 @@ class cloud_flare:
             if wread[0] == 'none':
                 print('\n\tnot found.')
                 break
-            print
+            print()
             for key in wread:
-                print(C + '\t' + key)
+                print((C + '\t' + key))
 
             break
