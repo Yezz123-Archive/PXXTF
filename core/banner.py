@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import random
-import os,sys
+import os
+import sys
 import time
 from time import sleep
 # Set color
@@ -90,12 +91,11 @@ def info():
     print(("""\033[1;31m
     +---------------------------------------------------------------------+
     |                      Pentest Tools Framework                        |
-    |                        \033[32m    V2.2[Beta]  \033[1;31m                             |
+    |                        \033[32m    V3.0[Beta]  \033[1;31m                             |
     |                                                                     |
     | \033[0;33mEmails:xzhack206@gmail.com\033[1;31m                                          |
-    | \033[0;33mTelegram:@WongNdesoCok  \033[1;31m                                            |
     | Report Bugs and ask questions[**] xzhack206@gmail.com               |
-    |          \033[1;37m Pentest Tools Framework  Copyright (C) 2019\033[1;31m               |
+    |          \033[1;37m Pentest Tools Framework  Copyright (C) 2021\033[1;31m               |
     +---------------------------------------------------------------------+\n"""+N+""))
 def ptf():
     print()

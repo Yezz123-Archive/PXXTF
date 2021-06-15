@@ -2,9 +2,8 @@ import os
 import sys
 import core
 from time import sleep, time
-from pxxtf import *
 from core.exploit import clean
-from core.banner import banner, PXXTF
+from core.banner import banner, ptf
 # Set color
 R = '\033[31m'  # Red
 N = '\033[1;37m'  # White
@@ -16,66 +15,66 @@ if not os.geteuid() == 0:  #Detected user root
     sys.exit(
         """\033[1;91m\n[!] Pentest Tools Framework run as root!!. \n\033[1;m"""
     )
-if __name__ == "__main__" or clean() or banner() or PXXTF():
+if __name__ == "__main__" or clean() or banner() or ptf():
     main()
 
 
 def main():
     while True:
         try:
-            PXXTF = eval(input("Pentest>> "))
-            if PXXTF == 'use modules/exploits':
+            ptf = eval(input("Pentest>> "))
+            if ptf == 'use modules/exploits':
                 core.menu.exploits()
                 main()
-            elif PXXTF == 'use modules/scanners':
+            elif ptf == 'use modules/scanners':
                 core.menu.scan()
                 main()
-            elif PXXTF == 'use modules/password':
+            elif ptf == 'use modules/password':
                 core.menu.pas1()
                 main()
-            elif PXXTF == 'use modules/post':
+            elif ptf == 'use modules/post':
                 core.menu.post()
                 main()
-            elif PXXTF == 'use modules/listener':
+            elif ptf == 'use modules/listener':
                 core.menu.listener()
                 main()
-            elif PXXTF == 'use modules/exploitdb':
+            elif ptf == 'use modules/exploitdb':
                 core.menu.exploit_db()
                 main()
-            elif PXXTF == 'use modules/tools':
+            elif ptf == 'use modules/tools':
                 core.menu.tools()
                 main()
-            elif PXXTF == 'shell':
+            elif ptf == 'shell':
                 core.exploit.commands()
                 main()
-            elif PXXTF == 'show modules':
+            elif ptf == 'show modules':
                 core.help.modules()
                 main()
-            elif PXXTF == 'ipconfig':
+            elif ptf == 'ipconfig':
                 core.exploit.ip1()
                 main()
-            elif PXXTF == 'show options':
+            elif ptf == 'show options':
                 core.help.help()
                 main()
-            elif PXXTF == 'update':
+            elif ptf == 'update':
                 core.exploit.update()
                 main()
-            elif PXXTF == 'about':
+            elif ptf == 'about':
                 core.banner.info()
                 main()
-            elif PXXTF == 'credits':
+            elif ptf == 'credits':
                 core.banner.credits()
                 main()
-            elif PXXTF == 'banner':
-                clean(), banner(), PXXTF(), main()
-            elif PXXTF == 'clear':
+            elif ptf == 'banner':
+                clean(), banner(), ptf(), main()
+            elif ptf == 'clear':
                 core.menu.exploit.clean()
                 main()
-            elif PXXTF == 'exit':
+            elif ptf == 'exit':
                 core.banner.exits()
                 exit()
             else:
-                print(("Wrong Command => ", PXXTF))
+                print(("Wrong Command => ", ptf))
                 print(("" + N + "" + B + "[" + R + "!" + B + "] " + N +
                     "Please enter 'show options'"))
                 main()
