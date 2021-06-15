@@ -8,6 +8,7 @@
     kernel vulnerabilities, network vulnerabilities.
 
 ## How to install PTF(Pentest Tools Framework)
+
 ```
 > cd PXXTF
 
@@ -18,9 +19,8 @@
 > PXXTF
 ```
 
-
     INFO: After running install.py you should
-    select your backbox/kali linux /parrot Os , all computer OS,
+    select your Ubuntu/kali linux /parrot Os , all computer OS,
 
 ## About Pentest Tools Framework modules
 
@@ -33,14 +33,13 @@
     seizure of control over the system, and the violation
     of its functioning!
 
->Scanners
+> Scanners
 
     INFO: The program that scans the specified Internet resource,
     archive or website. Also network scanners can scan open ports or
     your local network and IPs!
 
-
-## Why  Pentest Tools Framework?
+## Why Pentest Tools Framework?
 
 > Pentest Tools Framework is a free software
 
@@ -59,9 +58,7 @@
     exploits - scanners - password
     This is enough for beginners.
 
-
 ## Credits & Thanks
-
 
 <table><tr>
 <td> [Nmap Security Scanners] <a href="https://nmap.org">

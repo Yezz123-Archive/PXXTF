@@ -15,8 +15,8 @@ print(""" \033[1;36m
 |                                                               |
 +---------------------------------------------------------------=
   \033[1;m""")
-print'\n\033[1;91m Remove modules PTF'
+print('\n\033[1;91m Remove modules PXXTF')
 time.sleep(3)
 os.system("rm -rf /opt/Pentest && rm -rf /usr/bin/ptf")
 time.sleep(2)
-print'\033[1;36m\nsucessfuly remove PTF\n'
+print('\033[1;36m\nsucessfuly remove PTF\n')

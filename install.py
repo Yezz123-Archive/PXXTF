@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+
 import os
 import sys
 
@@ -24,13 +25,13 @@ def main():
 2) Parrot OS
 3) ubuntu
 """)
-    ptf = raw_input(">>> ")
+    ptf = input(">>> ")
     if ptf == "1":
         print("\033[1;34m\n[++] Installing Pentest Tools Framework ... \033[1;m")
         install = os.system("apt-get update && apt-get install -y golismero exploitdb nmap commix hping3 build-essential python-pip ruby-dev git libpcap-dev libgmp3-dev && pip install tabulate terminaltables && pip install droopescan && pip3 install dirhunt")
         install0 = os.system('apt-get install python3-parse python3-ldap')
         install1 = os.system("apt-get install -y dmitry")
-        install2 = os.system("""cd modules/bettercap/ && gem build bettercap.* && sudo gem install xettercap-* && rm xettercap-* && cd ../../ && mkdir -p /opt/Pentest && cp -R core/ /opt/Pentest/ && cp -R modules/ /opt/Pentest/ &&  cp -R _py_ /opt/Pentest && cp -R log /opt/Pentest/ && cp ptf.py /opt/Pentest/ && cp bin/ptf /usr/bin/ && chmod +x /usr/bin/ptf &&  pip2 install -r requirements.txt && tput setaf 34; echo "Pentest Tools Framework has been sucessfuly instaled. Execute 'ptf'in your terminal." """)
+        install2 = os.system("""cd modules/bettercap/ && gem build bettercap.* && sudo gem install xettercap-* && rm xettercap-* && cd ../../ && mkdir -p /opt/Pentest && cp -R core/ /opt/Pentest/ && cp -R modules/ /opt/Pentest/ &&  cp -R _py_ /opt/Pentest && cp -R log /opt/Pentest/ && cp pxxtf.py /opt/Pentest/ && cp bin/ptf /usr/bin/ && chmod +x /usr/bin/ptf &&  pip2 install -r requirements.txt && tput setaf 34; echo "Pentest Tools Framework has been sucessfuly instaled. Execute 'ptf'in your terminal." """)
     elif ptf == "2":
         print("\033[1;34m\n[++] Installing Pentest Tools Framework ... \033[1;m")
         bet_un = os.system("apt-get remove bettercap")
@@ -39,7 +40,7 @@ def main():
         install = os.system(
             "apt-get update && apt-get install -y golismero exploitdb nmap commix hping3 ruby-dev git libpcap-dev libgmp3-dev python-tabulate python-terminaltables && pip install droopescan && pip3 install dirhunt")
         install1 = os.system("apt-get install -y dmitry")
-        install2 = os.system("""cd modules/bettercap/ && gem build bettercap.* && sudo gem install xettercap-* && rm xettercap-* && cd ../../ && mkdir -p /opt/Pentest && cp -R core/ /opt/Pentest/ && cp -R modules/ /opt/Pentest/ &&  cp -R _py_ /opt/Pentest && cp -R log /opt/Pentest/ && cp -R ptf.py /opt/Pentest/ && cp bin/ptf /usr/bin/ && chmod +x /usr/bin/ptf &&  pip2 install -r requirements.txt && tput setaf 34; echo "Pentest Tools Framework has been sucessfuly instaled. Execute 'ptf'in your terminal." """)
+        install2 = os.system("""cd modules/bettercap/ && gem build bettercap.* && sudo gem install xettercap-* && rm xettercap-* && cd ../../ && mkdir -p /opt/Pentest && cp -R core/ /opt/Pentest/ && cp -R modules/ /opt/Pentest/ &&  cp -R _py_ /opt/Pentest && cp -R log /opt/Pentest/ && cp -R pxxtf.py /opt/Pentest/ && cp bin/ptf /usr/bin/ && chmod +x /usr/bin/ptf &&  pip2 install -r requirements.txt && tput setaf 34; echo "Pentest Tools Framework has been sucessfuly instaled. Execute 'ptf'in your terminal." """)
     elif ptf == '3':
         print("\033[1;34m\n[++] Installing Pentest Tools Framework ... \033[1;m")
         cmd1 = os.system("apt-get remove bettercap")
@@ -52,7 +53,7 @@ def main():
         cmd5 = os.system("apt-get update && apt-get install -y golismero exploitdb nmap commix hping3 ruby-dev git libpcap-dev libgmp3-dev python-tabulate python-terminaltables && pip install droopescan && pip3 install dirhunt")
         cmd6 = os.system(
             "apt-get install -y dmitry metasploit-framework sslscan ")
-        cmd7 = os.system("""cd modules/bettercap/ && gem build bettercap.* && sudo gem install xettercap-* && rm xettercap-* && cd ../../ && mkdir -p /opt/Pentest && cp -R core/ /opt/Pentest/ && cp -R modules/ /opt/Pentest/ &&  cp -R _py_ /opt/Pentest && cp -R log /opt/Pentest/ && cp -R ptf.py /opt/Pentest/ && cp bin/ptf /usr/bin/ && chmod +x /usr/bin/ptf &&  pip2 install -r requirements.txt && tput setaf 34; echo "Pentest Tools Framework has been sucessfuly instaled. Execute 'PXXTF'in your terminal." """)
+        cmd7 = os.system("""cd modules/bettercap/ && gem build bettercap.* && sudo gem install xettercap-* && rm xettercap-* && cd ../../ && mkdir -p /opt/Pentest && cp -R core/ /opt/Pentest/ && cp -R modules/ /opt/Pentest/ &&  cp -R _py_ /opt/Pentest && cp -R log /opt/Pentest/ && cp -R pxxtf.py /opt/Pentest/ && cp bin/ptf /usr/bin/ && chmod +x /usr/bin/ptf &&  pip2 install -r requirements.txt && tput setaf 34; echo "Pentest Tools Framework has been sucessfuly instaled. Execute 'PXXTF'in your terminal." """)
     else:
         print("Please select the option 1 or 2")
         main()

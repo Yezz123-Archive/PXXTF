@@ -1,6 +1,6 @@
 requests
 urllib3
-BeautifulSoup
+beautifulsoup4
 bs4
 mechanize
 google
@@ -15,9 +15,9 @@ six
 webencodings
 droopescan
 hexdump
-pydns
 python-geoip-geolite2
 argparse
 dnspython
 tld
 fuzzywuzzy
+py3dns
