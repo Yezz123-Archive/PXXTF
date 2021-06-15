@@ -14,10 +14,10 @@ class Windows():
 	def Run(os):
 		_ = False
 		try:
-			for item in os.items():
+			for item in list(os.items()):
 				_ = re.search(r'windows|win32',str(item),re.I) is not None
 				if _:
 					return "Windows"
 					break
-		except Exception,ERROR:
-			print ERROR
+		except Exception as ERROR:
+			print(ERROR)

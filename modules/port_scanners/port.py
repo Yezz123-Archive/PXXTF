@@ -12,21 +12,21 @@ B = '\033[1;34m' #Blue
 def main():
 	os.system("clear && python new.py")
 
-host = raw_input(''+N+'Pentest>> ('+R+'scanner/port_scanners (set host)'+N+'): ')
-print ""+N+"target => "+R+"",host
+host = input(''+N+'Pentest>> ('+R+'scanner/port_scanners (set host)'+N+'): ')
+print(""+N+"target => "+R+"",host)
 if host == "back":
 	main()
-from_port = raw_input(''+N+'Pentest>> ('+R+'scanner/port_scanners (start number)'+N+'): ')
+from_port = input(''+N+'Pentest>> ('+R+'scanner/port_scanners (start number)'+N+'): ')
 if from_port == "back":
 	main()
-to_port = raw_input(''+N+'Pentest>> ('+R+'scanner/port_scanners (end number)'+N+'): ')
+to_port = input(''+N+'Pentest>> ('+R+'scanner/port_scanners (end number)'+N+'): ')
 if te_port == "back":
 	main()
-re = raw_input("Pentest>> ("+R+"scanner/port_scanners"+N+"): ")
+re = input("Pentest>> ("+R+"scanner/port_scanners"+N+"): ")
 if re == "back":
 	main()
 elif re == "run":
-	print ""+B+"[*]"+N+" Starting attacks..."
+	print(""+B+"[*]"+N+" Starting attacks...")
 counting_open = []
 counting_close = []
 threads = []
@@ -34,7 +34,7 @@ threads = []
 def scan(port):
 	s = socket.socket()
 	result = s.connect_ex((host,port))
-	print(' [OK] > '+(str(port)))
+	print((' [OK] > '+(str(port))))
 	if result == 0:
 		counting_open.append(port)
 		#print((str(port))+' -> open')

@@ -51,7 +51,7 @@ class Response(object):
 
     @property
     def redirect(self):
-        headers = dict((key.lower(), value) for key, value in self.headers.items())
+        headers = dict((key.lower(), value) for key, value in list(self.headers.items()))
         return headers.get("location")
 
     @property

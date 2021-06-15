@@ -14,10 +14,10 @@ class Solaris():
 	def Run(os):
 		_ = False
 		try:
-			for item in os.items():
+			for item in list(os.items()):
 				_ = re.search(r'solaris|sunos|opensolaris|sparc64|sparc',str(item),re.I) is not None
 				if _:
 					return "Solaris"
 					break
-		except Exception,ERROR:
-			print ERROR
+		except Exception as ERROR:
+			print(ERROR)

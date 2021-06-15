@@ -8,7 +8,7 @@
 # @license: See the file 'doc/LICENSE'
 
 def utf8(string):
-	if isinstance(string,unicode):
+	if isinstance(string,str):
 		return string.encode('UTF-8')
 	else:
 		return str(string)

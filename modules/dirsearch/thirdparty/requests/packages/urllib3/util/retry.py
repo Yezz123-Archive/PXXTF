@@ -200,7 +200,7 @@ class Retry(object):
     def is_exhausted(self):
         """ Are we out of retries? """
         retry_counts = (self.total, self.connect, self.read, self.redirect)
-        retry_counts = list(filter(None, retry_counts))
+        retry_counts = list([_f for _f in retry_counts if _f])
         if not retry_counts:
             return False
 

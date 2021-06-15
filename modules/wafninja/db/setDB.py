@@ -28,7 +28,7 @@ def testConnection(path):
         conn.execute("Select payload from payload")
         return True
     except:
-        print "Could not open database!"
+        print("Could not open database!")
         return False
 
 def setDatabase(path):

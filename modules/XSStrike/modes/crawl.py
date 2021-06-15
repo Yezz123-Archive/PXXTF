@@ -15,7 +15,7 @@ logger = setup_logger(__name__)
 
 def crawl(scheme, host, main_url, form, blindXSS, blindPayload, headers, delay, timeout, encoding):
     if form:
-        for each in form.values():
+        for each in list(form.values()):
             url = each['action']
             if url:
                 if url.startswith(main_url):
@@ -34,7 +34,7 @@ def crawl(scheme, host, main_url, form, blindXSS, blindPayload, headers, delay, 
                 paramData = {}
                 for one in inputs:
                     paramData[one['name']] = one['value']
-                    for paramName in paramData.keys():
+                    for paramName in list(paramData.keys()):
                         if paramName not in core.config.globalVariables['checkedForms'][url]:
                             core.config.globalVariables['checkedForms'][url].append(paramName)
                             paramsCopy = copy.deepcopy(paramData)
@@ -42,12 +42,12 @@ def crawl(scheme, host, main_url, form, blindXSS, blindPayload, headers, delay, 
                             response = requester(
                                 url, paramsCopy, headers, GET, delay, timeout)
                             occurences = htmlParser(response, encoding)
-                            positions = occurences.keys()
+                            positions = list(occurences.keys())
                             efficiencies = filterChecker(
                                 url, paramsCopy, headers, GET, delay, occurences, timeout, encoding)
                             vectors = generator(occurences, response.text)
                             if vectors:
-                                for confidence, vects in vectors.items():
+                                for confidence, vects in list(vectors.items()):
                                     try:
                                         payload = list(vects)[0]
                                         logger.vuln('Vulnerable webpage: %s%s%s' %

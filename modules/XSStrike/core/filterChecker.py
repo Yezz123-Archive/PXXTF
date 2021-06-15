@@ -2,7 +2,7 @@ from core.checker import checker
 
 
 def filterChecker(url, params, headers, GET, delay, occurences, timeout, encoding):
-    positions = occurences.keys()
+    positions = list(occurences.keys())
     sortedEfficiencies = {}
     # adding < > to environments anyway because they can be used in all contexts
     environments = set(['<', '>'])

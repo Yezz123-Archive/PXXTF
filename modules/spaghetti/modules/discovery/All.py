@@ -7,24 +7,24 @@
 # @author: Momo Outaadi (M4ll0k)
 # @license: See the file 'doc/LICENSE'
 
-import AdminInterfaces
-import AllowMethod
-import ApacheUsers
-import ApacheXss
-import Backdoor
-import Backup 
-import Captcha
-import ClientAccessPolicy
-import CommonDirectory
-import CommonFile
-import Cookie
-import HtmlObject 
-import LDAPInjection
-import ModStatus
-import Email 
-import MultiIndex
-import PrivateIP 
-import Robots
+from . import AdminInterfaces
+from . import AllowMethod
+from . import ApacheUsers
+from . import ApacheXss
+from . import Backdoor
+from . import Backup 
+from . import Captcha
+from . import ClientAccessPolicy
+from . import CommonDirectory
+from . import CommonFile
+from . import Cookie
+from . import HtmlObject 
+from . import LDAPInjection
+from . import ModStatus
+from . import Email 
+from . import MultiIndex
+from . import PrivateIP 
+from . import Robots
 
 def All(url,agent,proxy,redirect):
 	Cookie.Cookie(url,agent,proxy,redirect).Run()

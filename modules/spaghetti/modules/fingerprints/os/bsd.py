@@ -14,10 +14,10 @@ class Bsd():
 	def Run(os):
 		_ = False
 		try:
-			for item in os.items():
+			for item in list(os.items()):
 				_  = re.search(r'\S*BSD',str(item),re.I) is not None
 				if _:
 					return "BSD"
 					break
-		except Exception,ERROR:
-			print ERROR
+		except Exception as ERROR:
+			print(ERROR)

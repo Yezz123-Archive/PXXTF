@@ -80,7 +80,7 @@ def htmlParser(response, encoding):
         non_executable_contexts.append([each.start(), each.end(), each.group(1)])
 
     if non_executable_contexts:
-        for key in database.keys():
+        for key in list(database.keys()):
             position = database[key]['position']
             badTag = isBadContext(position, non_executable_contexts)
             if badTag:

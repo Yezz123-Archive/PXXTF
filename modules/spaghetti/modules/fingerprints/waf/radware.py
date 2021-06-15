@@ -14,10 +14,10 @@ class Radware():
     def Run(headers):
         _ = False
         try:
-            for item in headers.items():
+            for item in list(headers.items()):
                 _ = re.search(r'X-SL-CompState',item[0],re.I) is not None
                 if _:
                     return "AppWall Web Application Firewall (Radware)"
                     break
-        except Exception,ERROR:
-            print ERROR
+        except Exception as ERROR:
+            print(ERROR)

@@ -29,5 +29,5 @@ class wpwaf:
 				waf += "6Scan Security"
 			if waf != "":
 				wpprint.wpprint().plus('Detect firewall: {}'.format(waf))
-		except Exception,e:
+		except Exception as e:
 			pass

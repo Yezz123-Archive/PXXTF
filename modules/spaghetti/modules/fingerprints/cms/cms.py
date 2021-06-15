@@ -7,9 +7,9 @@
 # @author: Momo Outaadi (M4ll0k)
 # @license: See the file 'doc/LICENSE'
 
-import drupal
-import joomla
-import wordpress
+from . import drupal
+from . import joomla
+from . import wordpress
 
 def Cms(content):
 	return (

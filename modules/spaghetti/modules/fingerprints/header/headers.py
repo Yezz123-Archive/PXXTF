@@ -18,14 +18,14 @@ class Headers():
 		'Status', 'Strict-Transport-Security', 'Trailer', 'Upgrade', 'Warning', 'WWW-Authenticate', 'X-Frame-Options','Public-Key-Pins', 'X-XSS-Protection', 
 		'Content-Security-Policy','X-Content-Security-Policy', 'X-WebKit-CSP', 'X-Content-Type-Options']
 		try:
-			if not re.search(r'X-Frame-Options',str(headers.keys()),re.I):
+			if not re.search(r'X-Frame-Options',str(list(headers.keys())),re.I):
 				info.append('The Anti-Clickjacking X-Frame-Options header is not present.')
-			if not re.search(r'Strict-Transport-Security',str(headers.keys()),re.I):
+			if not re.search(r'Strict-Transport-Security',str(list(headers.keys())),re.I):
 				info.append('Strict-Transport-Security header is not present.')
-			if not re.search(r'x-xss-protection',str(headers.keys()),re.I):
+			if not re.search(r'x-xss-protection',str(list(headers.keys())),re.I):
 				info.append('X-XSS-Protection header is not present.')
 			for x in fields:
-				if x in headers.keys():
+				if x in list(headers.keys()):
 					printer.Printer().plus('Uncommon header \'%s\' found, with contents: %s'%(x,headers[x]))
-		except Exception,ERROR:
-			print ERROR
+		except Exception as ERROR:
+			print(ERROR)

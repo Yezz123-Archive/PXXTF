@@ -14,10 +14,10 @@ class Rails():
 	def Run(headers):
 		_ = False
 		try:
-			for item in headers.items():
+			for item in list(headers.items()):
 				_ =  re.search(r'rails*|_rails_admin_session=*|x-rails',str(item),re.I) is not None
 				if _:
 					return "Rails"
 					break
-		except Exception,ERROR:
+		except Exception as ERROR:
 			pass

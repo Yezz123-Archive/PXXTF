@@ -14,10 +14,10 @@ class Django():
 	def Run(headers):
 		_ = False
 		try:
-			for item in headers.items():
+			for item in list(headers.items()):
 				_  = re.search(r'x-django|x-django-project|django',str(item),re.I) is not None
 				if _:
 					return "Django"
 					break
-		except Exception,ERROR:
-			print ERROR
+		except Exception as ERROR:
+			print(ERROR)

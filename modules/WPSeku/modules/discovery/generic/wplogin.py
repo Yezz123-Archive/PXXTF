@@ -31,5 +31,5 @@ class wplogin:
 			elif resp.status_code == 404:
 				if resp.url == url:
 					wplogin.out.plus('wp-login detect protection under: {}'.format(resp.url))
-		except Exception,e:
+		except Exception as e:
 			pass

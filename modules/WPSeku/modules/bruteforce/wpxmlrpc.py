@@ -30,7 +30,7 @@ class wpxmlrpc:
 			wpxmlrpc.out.plus('Bruteforcing login via xmlrpc..')
 			try:
 				db = open(self.wlist,'rb')
-			except Exception,e:
+			except Exception as e:
 				wpxmlrpc.out.warning(e)
 			dbfiles = [file.split('\n') for file in db]
 			for passwd in dbfiles:
@@ -45,5 +45,5 @@ class wpxmlrpc:
 				elif re.search('<name>isAdmin</name><value><boolean>1</boolean>',resp.content):
 					wpxmlrpc.out.plus('Valid admin credentials: \"{}\" - \"{}\"'.format(self.user,passwd[0]))
 			wpxmlrpc.out.passs()
-		except Exception,e:
+		except Exception as e:
 			pass

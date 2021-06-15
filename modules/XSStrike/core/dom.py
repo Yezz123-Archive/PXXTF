@@ -37,7 +37,7 @@ def dom(response):
                 for controlledVariable in controlledVariables:
                     allControlledVariables.add(controlledVariable)
                 for controlledVariable in allControlledVariables:
-                    matches = list(filter(None, re.findall(r'\b%s\b' % controlledVariable, line)))
+                    matches = list([_f for _f in re.findall(r'\b%s\b' % controlledVariable, line) if _f])
                     if matches:
                         line = re.sub(r'\b%s\b' % controlledVariable, yellow + controlledVariable + end, line)
                 pattern = re.finditer(sinks, newLine)

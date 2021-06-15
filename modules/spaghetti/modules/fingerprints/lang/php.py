@@ -14,11 +14,11 @@ class Php():
 	def Run(content,headers):
 		_ = False
 		try:
-			for item in headers.items():
+			for item in list(headers.items()):
 				_  = re.search(r'X-PHP-PID|PHP\S*|PHPSESSID',str(item)) is not None
 				_ |= re.search(r'(.php")',content) is not None
 				if _:
 					return "PHP"
 					break
-		except Exception,ERROR:
-			print ERROR
+		except Exception as ERROR:
+			print(ERROR)

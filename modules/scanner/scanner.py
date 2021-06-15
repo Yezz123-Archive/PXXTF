@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import sys, time, os , httplib , socket
+import sys, time, os , http.client , socket
 import urllib2 as u2
 
 
@@ -21,21 +21,21 @@ class logging:
 def proxycheck(_httpproxy,_proxy):
 	try:
 	  if _proxy:
-	    print "[+] Testing Proxy..."
-	    h2 = httplib.HTTPConnection(_httpproxy)
+	    print("[+] Testing Proxy...")
+	    h2 = http.client.HTTPConnection(_httpproxy)
 	    h2.connect()
-	    print "[+] Proxy:",_httpproxy
+	    print("[+] Proxy:",_httpproxy)
 	    return 1
 	except(socket.timeout):
-	  print "[-] Proxy Timed Out"
+	  print("[-] Proxy Timed Out")
 	  sys.exit()
 	  pass
 	except(NameError):
-	  print "[-] Proxy Not Given"
+	  print("[-] Proxy Not Given")
 	  sys.exit()
 	  pass
 	except:
-	  print "[-] Proxy Failed"
+	  print("[-] Proxy Failed")
 	  sys.exit()
 	  pass
 
@@ -49,17 +49,17 @@ def getWordlistLength(_wordlist):
 
 def urlcheck(_url):
 	try:
-	       	print ("[!] Checking website " + _url + "...")
+	       	print(("[!] Checking website " + _url + "..."))
 	       	req = u2.Request(_url)
 	       	u2.urlopen(req)
-	       	print "[!] " +_url+" appears to be Online.\n"
+	       	print("[!] " +_url+" appears to be Online.\n")
    	except:
 	        print("[-] Server offline or invalid URL")
 	        sys.exit()
 
 def printbanner():
-	 print """
-"""
+	 print("""
+""")
 
 if __name__=='__main__':
 
@@ -77,14 +77,14 @@ if __name__=='__main__':
 	printbanner()
 
 	if len(sys.argv) < 4 or len(sys.argv) > 7:
-		print "Usage:"   + sys.argv[0] + " <http:url> -m <mode> -p <proxy> "
-		print "Example:" + sys.argv[0] + " http://host.com  -m shell -p 127.0.0.1:8118"
+		print("Usage:"   + sys.argv[0] + " <http:url> -m <mode> -p <proxy> ")
+		print("Example:" + sys.argv[0] + " http://host.com  -m shell -p 127.0.0.1:8118")
 		exit()
 
 	for arg in sys.argv:
 		if arg == '-h':
-			print "Usage:"   + sys.argv[0] + " <http:url> -m <mode> -p <proxy> "
-			print "Example:" + sys.argv[0] + " http://host.com  -m shell -p 127.0.0.1:8118"
+			print("Usage:"   + sys.argv[0] + " <http:url> -m <mode> -p <proxy> ")
+			print("Example:" + sys.argv[0] + " http://host.com  -m shell -p 127.0.0.1:8118")
 			sys.exit(1)
 		elif arg == '-p':
 			proxy = sys.argv[count+1]
@@ -117,14 +117,14 @@ if __name__=='__main__':
 		exit()
 
 	if not os.access(wordlist, os.F_OK):
-		print(  "[x] File " + wordlist + " does not exist or "
-			+ "you are not permitted to access to the file")
+		print((  "[x] File " + wordlist + " does not exist or "
+			+ "you are not permitted to access to the file"))
 		exit()
 
 	proxycheck(proxy,proxy_supp)
-	print timer(),"[+] ["+mode+" Searching]"
-	print "[+] Host:", site
-	print "[+] Wordlist " + wordlist + " has " + str(getWordlistLength(wordlist)) + " words\n\n"
+	print(timer(),"[+] ["+mode+" Searching]")
+	print("[+] Host:", site)
+	print("[+] Wordlist " + wordlist + " has " + str(getWordlistLength(wordlist)) + " words\n\n")
 
 	if proxy_supp != 0:
 	    proxy_handler = u2.ProxyHandler({'http': 'http://'+proxy+'/'})
@@ -148,18 +148,18 @@ if __name__=='__main__':
 				u2.urlopen(req)
 			except u2.HTTPError as hr:
 				if hr.code == 404:
-					print mode+": " + line.ljust(50,' ') + "[ 404 ]"
+					print(mode+": " + line.ljust(50,' ') + "[ 404 ]")
 			except u2.URLError as ur:
-				print "URL error:", ur.args
+				print("URL error:", ur.args)
 				exit()
 			except ValueError as vr:
-				print "Value error:", vr.args
+				print("Value error:", vr.args)
 				exit()
 			except:
-				print "Unknown exception: exit..."
+				print("Unknown exception: exit...")
 				exit()
 			else:
-				print mode+": " + line.ljust(50,' ') + "[ 200 OK ]"
+				print(mode+": " + line.ljust(50,' ') + "[ 200 OK ]")
 				if logging_support !=0:
 				   logging_session.writelog(mode+": " + line.ljust(50,' ') + "[OK]\n")
 				else:
@@ -167,6 +167,6 @@ if __name__=='__main__':
 			try:
 				pass
 			except KeyboardInterrupt as kierr:
-				print "\nInterrupted by user: (CTRL+C or Delete)"
+				print("\nInterrupted by user: (CTRL+C or Delete)")
 				exit()
 	logging_session.close()

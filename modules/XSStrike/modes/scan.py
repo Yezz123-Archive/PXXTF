@@ -59,7 +59,7 @@ def scan(target, paramData, encoding, headers, delay, timeout, skipDOM, find, sk
     else:
         logger.good('WAF Status: %sOffline%s' % (green, end))
 
-    for paramName in params.keys():
+    for paramName in list(params.keys()):
         paramsCopy = copy.deepcopy(params)
         logger.info('Testing parameter: %s' % paramName)
         if encoding:
@@ -68,7 +68,7 @@ def scan(target, paramData, encoding, headers, delay, timeout, skipDOM, find, sk
             paramsCopy[paramName] = xsschecker
         response = requester(url, paramsCopy, headers, GET, delay, timeout)
         occurences = htmlParser(response, encoding)
-        positions = occurences.keys()
+        positions = list(occurences.keys())
         logger.debug('Scan occurences: {}'.format(occurences))
         if not occurences:
             logger.error('No reflection found')
@@ -83,14 +83,14 @@ def scan(target, paramData, encoding, headers, delay, timeout, skipDOM, find, sk
         logger.run('Generating payloads')
         vectors = generator(occurences, response.text)
         total = 0
-        for v in vectors.values():
+        for v in list(vectors.values()):
             total += len(v)
         if total == 0:
             logger.error('No vectors were crafted.')
             continue
         logger.info('Payloads generated: %i' % total)
         progress = 0
-        for confidence, vects in vectors.items():
+        for confidence, vects in list(vectors.items()):
             for vect in vects:
                 if core.config.globalVariables['path']:
                     vect = vect.replace('/', '%2F')

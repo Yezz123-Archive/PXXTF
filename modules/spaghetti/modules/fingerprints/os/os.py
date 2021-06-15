@@ -8,12 +8,12 @@
 # @license: See the file 'doc/LICENSE'
 
 
-import bsd
-import linux
-import mac
-import solaris
-import unix 
-import windows
+from . import bsd
+from . import linux
+from . import mac
+from . import solaris
+from . import unix 
+from . import windows
 
 def Os(headers):
 	return (

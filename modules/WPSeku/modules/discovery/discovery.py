@@ -6,10 +6,10 @@
 # @url: https://github.com/m4ll0k/WPSeku
 # @author: Momo Outaadi (M4ll0k)
 
-from generic import wpgeneric
-from plugin import wpplugin
-from theme import wptheme 
-from users import wpusers
+from .generic import wpgeneric
+from .plugin import wpplugin
+from .theme import wptheme 
+from .users import wpusers
 
 from lib import wpprint
 

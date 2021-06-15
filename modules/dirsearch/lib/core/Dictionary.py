@@ -117,7 +117,7 @@ class Dictionary(object):
 
         # oset library provides inserted ordered and unique collection.
         if self.lowercase:
-            self.entries = list(oset(map(lambda l: l.lower(), result)))
+            self.entries = list(oset([l.lower() for l in result]))
 
         else:
             self.entries = list(oset(result))

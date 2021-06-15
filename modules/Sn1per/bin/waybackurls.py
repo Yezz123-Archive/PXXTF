@@ -30,6 +30,6 @@ if __name__ == '__main__':
         filename = '%s-waybackurls.json' % host
         with open(filename, 'w') as f:
             f.write(json_urls)
-        print('[*] Saved results to %s' % filename)
+        print(('[*] Saved results to %s' % filename))
     else:
         print('[-] Found nothing')

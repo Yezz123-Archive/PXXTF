@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from __future__ import print_function
+
 
 from core.colors import end, red, white, bad, info
 
@@ -74,9 +74,9 @@ parser.add_argument('--blind', help='inject blind XSS payload while crawling',
                     dest='blindXSS', action='store_true')
 parser.add_argument('--console-log-level', help='Console logging level',
                     dest='console_log_level', default=core.log.console_log_level,
-                    choices=core.log.log_config.keys())
+                    choices=list(core.log.log_config.keys()))
 parser.add_argument('--file-log-level', help='File logging level', dest='file_log_level',
-                    choices=core.log.log_config.keys(), default=None)
+                    choices=list(core.log.log_config.keys()), default=None)
 parser.add_argument('--log-file', help='Name of the file to log', dest='log_file',
                     default=core.log.log_file)
 args = parser.parse_args()
@@ -146,11 +146,11 @@ if args_file:
     if args_file == 'default':
         payloadList = core.config.payloads
     else:
-        payloadList = list(filter(None, reader(args_file)))
+        payloadList = list([_f for _f in reader(args_file) if _f])
 
 seedList = []
 if args_seeds:
-    seedList = list(filter(None, reader(args_seeds)))
+    seedList = list([_f for _f in reader(args_seeds) if _f])
 
 encoding = base64 if encode and encode == 'base64' else False
 

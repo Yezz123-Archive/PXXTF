@@ -306,7 +306,7 @@ def makeHello(strSSLVer):
     r = "\x16" # Message Type 22
     r += dSSL[strSSLVer]
     strCiphers = "" 
-    for c in ssl3_cipher.keys():
+    for c in list(ssl3_cipher.keys()):
         strCiphers += c
     dLen = 43 + len(strCiphers)
     r += struct.pack("!H",dLen)

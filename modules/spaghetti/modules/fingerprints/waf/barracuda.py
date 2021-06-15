@@ -14,12 +14,12 @@ class Barracuda():
 	def Run(headers):
 		_ = False
 		try:
-			for item in headers.items():
+			for item in list(headers.items()):
 				_  = re.search(r'barracuda*',item[1],re.I) is not None
 				_ |= re.search(r'barra_counter_session=',item[1],re.I) is not None
 				_ |= re.search(r'barracuda_',item[1],re.I) is not None
 				if _: 
 					return "Barracuda Web Application Firewall (Barracuda Networks)"
 					break
-		except Exception,ERROR:
-			print ERROR
+		except Exception as ERROR:
+			print(ERROR)

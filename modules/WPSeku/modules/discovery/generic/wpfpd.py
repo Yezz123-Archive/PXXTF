@@ -30,5 +30,5 @@ class wpfpd:
 			if resp.status_code == 200 and resp._content != None:
 				if re.search(r'Fatal error',resp._content):
 						wpfpd.out.plus('Full Path Disclosure: {}'.format(resp.url))
-		except Exception,e:
+		except Exception as e:
 			pass

@@ -58,7 +58,7 @@ class wpplugin:
 
 			elif themes == None:
 				wpplugin.out.warning('Not found themes..')
-		except Exception,e:
+		except Exception as e:
 			pass
 
 	def changelog(self,plugin):
@@ -72,7 +72,7 @@ class wpplugin:
 					if resp.url == url:
 						wpplugin.out.more('Changelog: {}'.format(resp.url))
 						exit()
-		except Exception,e:
+		except Exception as e:
 			pass
 
 	def fullpathdisc(self,plugin):
@@ -90,7 +90,7 @@ class wpplugin:
 						if re.search('Fatal error',resp.content):
 							wpplugin.out.more('Full Path Disclosure: {}'.format(resp.url))
 							exit()
-		except Exception,e:
+		except Exception as e:
 			pass
 
 	def license(self,plugin):
@@ -104,7 +104,7 @@ class wpplugin:
 					if resp.url == url:
 						wpplugin.out.more('License: {}'.format(resp.url))
 						exit()
-		except Exception,e:
+		except Exception as e:
 			pass
 
 	def listing(self,plugin):
@@ -120,7 +120,7 @@ class wpplugin:
 					if resp.url == url:
 						if re.search('Index of',resp.content):
 							wpplugin.out.more('Listing: {}'.format(resp.url))
-		except Exception,e:
+		except Exception as e:
 			pass
 
 	def readme(self,plugin):
@@ -134,7 +134,7 @@ class wpplugin:
 					if resp.url == url:
 						wpplugin.out.more('Readme: {}'.format(resp.url))
 						exit()
-		except Exception,e:
+		except Exception as e:
 			pass
 
 	def dbwpscan(self,plugin):
@@ -145,7 +145,7 @@ class wpplugin:
 			js = json.loads(resp._content,'UTF-8')
 			if js[plugin]:
 				if js[plugin]['vulnerabilities']:
-					for x in xrange(len(js[plugin]['vulnerabilities'])):
+					for x in range(len(js[plugin]['vulnerabilities'])):
 						wpplugin.out.more('Title: {}'.format(js[plugin]['vulnerabilities'][x]['title']))
 						if js[plugin]['vulnerabilities'][x]['references']['url']:
 							for y in range(len(js[plugin]['vulnerabilities'][x]['references']['url'])):
@@ -155,5 +155,5 @@ class wpplugin:
 					wpplugin.out.more('Not found vulnerabilities')
 			elif not js[plugin]:
 				wpplugin.out.more('Not found vulnerabilities')
-		except Exception,e:
+		except Exception as e:
 			pass

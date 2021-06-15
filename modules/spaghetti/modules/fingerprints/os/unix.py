@@ -14,10 +14,10 @@ class Unix():
 	def Run(os):
 		_ = False
 		try:
-			for item in os.items():
+			for item in list(os.items()):
 				_ = re.search(r'unix',str(item),re.I) is not None 
 				if _:
 					return "Unix"
 					break
-		except Exception,ERROR:
-			print ERROR
+		except Exception as ERROR:
+			print(ERROR)

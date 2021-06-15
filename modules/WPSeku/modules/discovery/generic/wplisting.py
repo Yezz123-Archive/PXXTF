@@ -34,5 +34,5 @@ class wplisting:
 				if resp.status_code == 200 and resp._content != None:
 					if resp.url == url:
 						wplisting.out.plus('Dir {} listing enabled under: {}'.format(path,resp.url))
-		except Exception,e:
+		except Exception as e:
 			pass

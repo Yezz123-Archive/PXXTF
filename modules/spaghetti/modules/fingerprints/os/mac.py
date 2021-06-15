@@ -14,10 +14,10 @@ class Mac():
 	def Run(os):
 		_ = False
 		try:
-			for item in os.items():
+			for item in list(os.items()):
 				_  = re.search(r'Mac|MacOS|MacOS\S*',str(item)) is not None
 				if _:
 					return "MacOS"
 					break
-		except Exception,ERROR:
-			print ERROR
+		except Exception as ERROR:
+			print(ERROR)

@@ -2,7 +2,7 @@
 #              Display option                  #
 def showDisplay(mode,string):
 	if(mode == 0):
-		print string
+		print(string)
 	else:
 		pass
 #===========================

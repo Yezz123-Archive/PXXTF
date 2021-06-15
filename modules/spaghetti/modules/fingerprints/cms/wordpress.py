@@ -19,5 +19,5 @@ class Wordpress():
 				if _:
 					return "Wordpress"
 					break
-		except Exception,ERROR:
-			print ERROR
+		except Exception as ERROR:
+			print(ERROR)

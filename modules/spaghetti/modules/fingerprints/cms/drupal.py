@@ -19,5 +19,5 @@ class Drupal():
 			_ |= re.search(r'<meta name="Generator" content="Drupal',content) is not None
 			if _:
 				return "Drupal"
-		except Exception,ERROR:
-			print ERROR
+		except Exception as ERROR:
+			print(ERROR)

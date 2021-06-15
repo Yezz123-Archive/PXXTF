@@ -1,20 +1,20 @@
 #!/use/bin/python
 
-import sys, urllib2, re, time, httplib, random
+import sys, urllib.request, urllib.error, urllib.parse, re, time, http.client, random
 
 BAD_RESP = [400,401,404]
 
 def main(path):
-    print "[+] Testing:",host.split("/",1)[1]+path
+    print("[+] Testing:",host.split("/",1)[1]+path)
     try:
-        dzx = httplib.HTTP(host.split("/",1)[0])
+        dzx = http.client.HTTP(host.split("/",1)[0])
         dzx.putrequest("HEAD", "/"+host.split("/",1)[1]+path)
         dzx.putheader("Host", host.split("/",1)[0])
         dzx.endheaders()
         resp, reason, headers = dzx.getreply()
         return resp, reason, headers.get("Server")
-    except(), msg: 
-        print "Error :",msg
+    except() as msg: 
+        print("Error :",msg)
         pass
 
 def timer():
@@ -22,8 +22,8 @@ def timer():
     return time.asctime(now)
 
 
-print '''
-'''
+print('''
+''')
 
 dz4ever = {"/index.php?option=com_hdflvplayer&id=1'" : ["Joomla HD FLV SQL ","http://www.exploit-db.com/exploits/35220/"],
 "/components/com_hdflvplayer/hdflvplayer/download.php" : ["Joomla HD FLV File Download Vulnerability","http://www.exploit-db.com/exploits/35246/"],
@@ -68,25 +68,25 @@ dz4ever = {"/index.php?option=com_hdflvplayer&id=1'" : ["Joomla HD FLV SQL ","ht
 "/index.php?option=com_estateagent&Itemid=47&act=object&task=showEO&id=1" : ["(com_estateagent) SQLI","http://www.exploit-db.com/exploits/18728/"]}
 
 if len(sys.argv) != 2:
-    print "python joomdz.py www.site.com"
+    print("python joomdz.py www.site.com")
     sys.exit(1)
 
 host = sys.argv[1].replace("http://","").rsplit("/",1)[0]
 if host[-1] != "/":
     host = host+"/"
-print " Site/Target:",host
-print " Searching:",len(dz4ever) 
+print(" Site/Target:",host)
+print(" Searching:",len(dz4ever)) 
 
-print " Scanning"
-for dz,(poc,edz) in dz4ever.items():
+print(" Scanning")
+for dz,(poc,edz) in list(dz4ever.items()):
     resp,reason,server = main(dz)
     if resp not in BAD_RESP:
-        print ""
-        print " Result:",resp, reason
-        print " exploit:",poc
-        print " exploit-db:",edz
+        print("")
+        print(" Result:",resp, reason)
+        print(" exploit:",poc)
+        print(" exploit-db:",edz)
     else:
-        print ""
-        print " Result:",resp, reason
+        print("")
+        print(" Result:",resp, reason)
 		
-print "\n[-] finish scan bro\n"
+print("\n[-] finish scan bro\n")

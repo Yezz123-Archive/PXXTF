@@ -6,10 +6,10 @@ N = '\033[1;37m' # White
 B = '\033[1;34m' #Blue
 import bs4
 import time
-from urllib2 import quote
+from urllib.parse import quote
 from socket import timeout
-from urllib2 import urlopen
-from urllib2 import Request
+from urllib.request import urlopen
+from urllib.request import Request
 def tracker(keywords, start):
         searchQuery = quote(keywords, safe='')  # This line makes the script Support all encodings
         try:
@@ -32,7 +32,7 @@ def tracker(keywords, start):
         if (len(allResults) == 0):
             return(""+R+"[!] "+N+"No result found for this keyword => " + keywords)
         else:
-            print(""+B+"[*]"+N+" Ok! Starting... \n")
+            print((""+B+"[*]"+N+" Ok! Starting... \n"))
 
             for element in allResults:  # Prints all the results
                 if (element.startswith("http://")):
@@ -43,7 +43,7 @@ def tracker(keywords, start):
                     element = element[4:]
                 element=element[:element.find("/")]
                 element="http://"+element
-                print("checking "+element+" :")
+                print(("checking "+element+" :"))
                 if (checkwp(element)):
                     suc = str(checkVul(element))
                     if( suc=="True"):
@@ -52,13 +52,13 @@ def tracker(keywords, start):
                             filee.write(element+"\n")
                             filee.close()
                         except:
-                            print(""+R+"error"+N+"")
+                            print((""+R+"error"+N+""))
                         print (suc)
                     else:
-                        print (""+R+"False"+N+"")
+                        print((""+R+"False"+N+""))
 
                 else:
-                   print (element + ""+R+" =>"+N+" " + str(checkwp(element)))
+                   print((element + ""+R+" =>"+N+" " + str(checkwp(element))))
 
 
 def checkwp(url):
@@ -68,7 +68,7 @@ def checkwp(url):
     except:
         return False
     if (pURL.find(".userpro")>-1):
-        print (""+B+"[!] "+N+" Plugin is installed checking vulnerable...\n")
+        print((""+B+"[!] "+N+" Plugin is installed checking vulnerable...\n"))
         return True
     else:
         return False
@@ -84,25 +84,25 @@ def checkVul(url):
     except:
         return False
 while(True):
-    x = raw_input(""+N+"(dorks)> ("+R+"usr_pro_wordpress_auto_find"+N+"): ")
+    x = input(""+N+"(dorks)> ("+R+"usr_pro_wordpress_auto_find"+N+"): ")
     time.sleep(1)
-    print "DORKS => "+R+"",x
-    n= raw_input(""+N+"(start-number)> ("+R+"usr_pro_wordpress_auto_find"+N+"): ")
-    print "START NUMBER => "+R+"",n
-    g= raw_input(""+N+"(end-number)> ("+R+"usr_pro_wordpress_auto_find"+N+"): ")
-    print "END NUMBER => "+R+"",g
-    run = raw_input(""+N+"(console)> ("+R+"usr_pro_wordpress_auto_find"+N+"): ")
+    print("DORKS => "+R+"",x)
+    n= input(""+N+"(start-number)> ("+R+"usr_pro_wordpress_auto_find"+N+"): ")
+    print("START NUMBER => "+R+"",n)
+    g= input(""+N+"(end-number)> ("+R+"usr_pro_wordpress_auto_find"+N+"): ")
+    print("END NUMBER => "+R+"",g)
+    run = input(""+N+"(console)> ("+R+"usr_pro_wordpress_auto_find"+N+"): ")
     if run == "run":
-    	print ""+B+"[*] "+N+"Starting attacks..."
+    	print(""+B+"[*] "+N+"Starting attacks...")
     while(True):
         tracker(x, n)
-        y=raw_input(""+B+"[*]"+N+" Next (y/n)?")
+        y=input(""+B+"[*]"+N+" Next (y/n)?")
         if(y=="y"):
             n+=g;
             tracker(x, n)
         else:
             break
-    y1=raw_input(""+B+"[*]"+N+" Anouther dork (y/n) ?")
+    y1=input(""+B+"[*]"+N+" Anouther dork (y/n) ?")
     if (y1 == "y"):
         continue
     else:

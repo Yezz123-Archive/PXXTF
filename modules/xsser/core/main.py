@@ -21,7 +21,7 @@ You should have received a copy of the GNU General Public License along
 with xsser; if not, write to the Free Software Foundation, Inc., 51
 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 """
-import os, re, sys, datetime, hashlib, time, urllib, cgi, traceback, webbrowser, random
+import os, re, sys, datetime, hashlib, time, urllib.request, urllib.parse, urllib.error, cgi, traceback, webbrowser, random
 from random import randint
 import core.fuzzing
 import core.fuzzing.vectors
@@ -31,7 +31,7 @@ import core.fuzzing.HTTPsr
 import core.fuzzing.heuristic
 from collections import defaultdict
 from itertools import islice, chain
-from urlparse import parse_qs, urlparse
+from urllib.parse import parse_qs, urlparse
 from core.curlcontrol import Curl
 from core.encdec import EncoderDecoder
 from core.options import XSSerOptions
@@ -231,7 +231,7 @@ class xsser(EncoderDecoder, XSSerReporter):
             prefix = ""
             if level != 'info':
                 prefix = "["+level+"] "
-            print msg
+            print(msg)
         elif self.verbose:
             if level == 'error':
                 sys.stdout.write("*")
@@ -536,7 +536,7 @@ class xsser(EncoderDecoder, XSSerReporter):
             try:
                 urls = hc.do_head_check([url])
             except:
-                print "Target url: (" + url + ") is malformed" + " [DISCARDED]" + "\n"
+                print("Target url: (" + url + ") is malformed" + " [DISCARDED]" + "\n")
                 return
             if str(hc.info()["http-code"]) in ["200", "302", "301", "401"]:
                 if str(hc.info()["http-code"]) in ["301"]:
@@ -548,18 +548,18 @@ class xsser(EncoderDecoder, XSSerReporter):
                     payload = ""
                     query_string = ""
                 self.success_connection = self.success_connection + 1
-                print "\n[Info] HEAD alive check for the target: (" + url + ") is OK " + "(" + hc.info()["http-code"] + ") [AIMED]\n"
+                print("\n[Info] HEAD alive check for the target: (" + url + ") is OK " + "(" + hc.info()["http-code"] + ") [AIMED]\n")
                 for payload in payloads:
                     self.attack_url_payload(url, payload, query_string)
             else:
                 if str(hc.info()["http-code"]) in ["405"]:
-                    print "\n[Info] HEAD alive check for the target: (" + url + ") is NOT ALLOWED (" + hc.info()["http-code"] + ") [PASSING]" + "\n"                
+                    print("\n[Info] HEAD alive check for the target: (" + url + ") is NOT ALLOWED (" + hc.info()["http-code"] + ") [PASSING]" + "\n")                
                     self.success_connection = self.success_connection + 1
                     for payload in payloads:
                         self.attack_url_payload(url, payload, query_string)
                 else:
                     self.not_connection = self.not_connection + 1
-                    print "\n[Info] HEAD alive check for the target: (" + url + ") is FAILED (" + hc.info()["http-code"] + ") [DISCARDED]" + "\n"
+                    print("\n[Info] HEAD alive check for the target: (" + url + ") is FAILED (" + hc.info()["http-code"] + ") [DISCARDED]" + "\n")
 
     def get_url_payload(self, url, payload, query_string, attack_payload=None):
         """
@@ -614,18 +614,18 @@ class xsser(EncoderDecoder, XSSerReporter):
             url_orig_hash = self.generate_numeric_hash()
             hashed_payload = payload_string.replace('1', url_orig_hash) # adding numeric XSS (ex: alert('1'))
         else:
-            print "\n[Error] You aren't using a valid keyword: 'XSS', '1', 'PAYLOAD', 'VECTOR'... for your --payload. Aborting...\n"
-            print("="*75 + "\n") 
+            print("\n[Error] You aren't using a valid keyword: 'XSS', '1', 'PAYLOAD', 'VECTOR'... for your --payload. Aborting...\n")
+            print(("="*75 + "\n")) 
             sys.exit(2)
 
         if options.imperva:
-            hashed_payload = urllib.urlencode({'':hashed_payload})
-            hashed_payload = urllib.urlencode({'':hashed_payload}) #DoubleURL encoding
+            hashed_payload = urllib.parse.urlencode({'':hashed_payload})
+            hashed_payload = urllib.parse.urlencode({'':hashed_payload}) #DoubleURL encoding
             hashed_payload = cgi.escape(hashed_payload) # + HTML encoding
-            hashed_payload = unicode(hashed_payload) # + Unicode
+            hashed_payload = str(hashed_payload) # + Unicode
 
         if options.quickdefense:
-            hashed_payload = unicode(hashed_payload) # + Unicode
+            hashed_payload = str(hashed_payload) # + Unicode
 
         if attack_payload:
             # url for real attack
@@ -653,7 +653,7 @@ class xsser(EncoderDecoder, XSSerReporter):
             payload_url = query_string.strip() + hashed_vector_url
             dest_url = p_uri.scheme + "://" + uri + path + payload_url
         else:
-            for key, value in target_params.iteritems(): # parse params searching for keywords
+            for key, value in target_params.items(): # parse params searching for keywords
                 for v in value:
                     if v == 'XSS': # input keywords to inject payload
                         target_params[key] = hashed_vector_url
@@ -663,11 +663,11 @@ class xsser(EncoderDecoder, XSSerReporter):
                     else:
                         target_params[key] = v
             payload_url = query_string.strip() + hashed_vector_url
-            target_url_params = urllib.urlencode(target_params)
+            target_url_params = urllib.parse.urlencode(target_params)
             dest_url = p_uri.scheme + "://" + uri + path + "?" + target_url_params
         if options.postdata: # using POST provided by parameter (-p)
             target_params = parse_qs(query_string, keep_blank_values=True)
-            for key, value in target_params.iteritems(): # parse params searching for keywords
+            for key, value in target_params.items(): # parse params searching for keywords
                 for v in value:
                     if v == 'XSS': # input keywords to inject payload
                         target_params[key] = hashed_vector_url
@@ -676,7 +676,7 @@ class xsser(EncoderDecoder, XSSerReporter):
                         hashed_vector_url = self.encoding_permutations(hashed_payload)
                     else:
                         target_params[key] = v
-            target_url_params = urllib.urlencode(target_params)
+            target_url_params = urllib.parse.urlencode(target_params)
             dest_url = target_url_params
         return dest_url, url_orig_hash
 
@@ -755,22 +755,22 @@ class xsser(EncoderDecoder, XSSerReporter):
                 try:
                     urls = hc.do_head_check([url])
                 except:
-                    print "Target url: (" + url + ") is unaccesible" + " [DISCARDED]" + "\n"
+                    print("Target url: (" + url + ") is unaccesible" + " [DISCARDED]" + "\n")
                     self.errors_isalive = 0
                     return
                 if str(hc.info()["http-code"]) in ["200", "302", "301", "401"]:
-                    print "HEAD alive check: OK" + "(" + hc.info()["http-code"] + ")\n"
-                    print "- Your target still Alive: " + "(" + url + ")"
-                    print "- If you are receiving continuous 404 errors requests on your injections but your target is alive is because:\n"
-                    print "          - your injections are failing: normal :-)"
-                    print "          - maybe exists some IPS/NIDS/... systems blocking your requests!\n"
+                    print("HEAD alive check: OK" + "(" + hc.info()["http-code"] + ")\n")
+                    print("- Your target still Alive: " + "(" + url + ")")
+                    print("- If you are receiving continuous 404 errors requests on your injections but your target is alive is because:\n")
+                    print("          - your injections are failing: normal :-)")
+                    print("          - maybe exists some IPS/NIDS/... systems blocking your requests!\n")
                 else:
                     if str(hc.info()["http-code"]) == "0":
-                        print "\nTarget url: (" + url + ") is unaccesible" + " [DISCARDED]" + "\n"
+                        print("\nTarget url: (" + url + ") is unaccesible" + " [DISCARDED]" + "\n")
                     else:
-                        print "HEAD alive check: FAILED" + "(" + hc.info()["http-code"] + ")\n"
-                        print "- Your target " + "(" + url + ")" + " looks that is NOT alive"
-                        print "- If you are receiving continuous 404 errors requests on payloads\n  and this HEAD pre-check request is giving you another 404\n  maybe is because; target is down, url malformed, something is blocking you...\n- If you haven't more than one target try to; STOP THIS TEST!!\n"
+                        print("HEAD alive check: FAILED" + "(" + hc.info()["http-code"] + ")\n")
+                        print("- Your target " + "(" + url + ")" + " looks that is NOT alive")
+                        print("- If you are receiving continuous 404 errors requests on payloads\n  and this HEAD pre-check request is giving you another 404\n  maybe is because; target is down, url malformed, something is blocking you...\n- If you haven't more than one target try to; STOP THIS TEST!!\n")
                 self.errors_isalive = 0
             else:
                 if str(self.errors_isalive) >= str(self.options.isalive):
@@ -868,7 +868,7 @@ class xsser(EncoderDecoder, XSSerReporter):
             for _enc in enc_perm:
                 enpayload_url   = self.encmap[_enc](enpayload_url)
         else: 
-            for enctype in self.encmap.keys():
+            for enctype in list(self.encmap.keys()):
                 if getattr(options, enctype):
                     enpayload_url   = self.encmap[enctype](enpayload_url)
         return enpayload_url
@@ -892,7 +892,7 @@ class xsser(EncoderDecoder, XSSerReporter):
             if options.postdata:
                 self.report("[+] Trying: " + dest_url.strip(), "(POST:", query_string + ")")
             else:
-                self.report("[+] Trying: " + urllib.unquote(dest_url.strip()))
+                self.report("[+] Trying: " + urllib.parse.unquote(dest_url.strip()))
         if payload['browser'] == "[Heuristic test]" or payload['browser'] == "[hashed_precheck_system]" or payload['browser'] == "[manual_injection]":
             pass
         else:
@@ -1081,7 +1081,7 @@ class xsser(EncoderDecoder, XSSerReporter):
         dest_url = dest_url.split("#")[0]
 
         def requote(what):
-            return urllib.quote_plus(what)
+            return urllib.parse.quote_plus(what)
         vector_and_payload = payload['payload']
         _e = self.encoding_permutations
         if 'VECTOR' in dest_url:
@@ -1134,7 +1134,7 @@ class xsser(EncoderDecoder, XSSerReporter):
         if tok_url:
             self._webbrowser.open(tok_url)
         else:
-            print("Cant apply any heuristic for final check on url: " + dest_url)
+            print(("Cant apply any heuristic for final check on url: " + dest_url))
 
     def _report_attack_failure(self, curl_handle, dest_url, payload,\
                                attack_vector, orig_url, url_orig_hash):
@@ -1160,7 +1160,7 @@ class xsser(EncoderDecoder, XSSerReporter):
                 except:
                     self.report("[+] Trying: " + dest_url.strip(), "(POST)")
             else:
-                self.report("[+] Trying: " + urllib.unquote(dest_url.strip()))
+                self.report("[+] Trying: " + urllib.parse.unquote(dest_url.strip()))
         self.report("[+] Browser Support: " + payload['browser'])
  
 	# statistics injections counters
@@ -1324,7 +1324,7 @@ class xsser(EncoderDecoder, XSSerReporter):
             self.report("  1- Output with detailed statistics\n")
             self.report("  2- Export results to files: [XSSreport.raw] - [XSSer_<target>_<datetime>.xml]\n")
             self.report("-"*22)
-            print '[Info] Good fly... and happy "Cross" hacking !!! :-)'
+            print('[Info] Good fly... and happy "Cross" hacking !!! :-)')
             self.options.crawling = "99999" # set max num of urls to crawl
             self.options.crawler_width = "5" # set max num of deeping levels
             self.options.statistics = True # detailed output
@@ -1390,14 +1390,14 @@ class xsser(EncoderDecoder, XSSerReporter):
                             uri = p_uri.netloc
                             path = p_uri.path
                             target_params = parse_qs(urlparse(u).query, keep_blank_values=True)
-                            for key, value in target_params.iteritems(): # parse params to apply keywords
+                            for key, value in target_params.items(): # parse params to apply keywords
                                 for v in value:
                                     target_params[key] = 'XSS'
-                            target_url_params = urllib.urlencode(target_params)
+                            target_url_params = urllib.parse.urlencode(target_params)
                             u = p_uri.scheme + "://" + uri + path + "?" + target_url_params
                             urls[i] = u
                             i = i + 1
-                    except Exception, e:
+                    except Exception as e:
                         for reporter in self._reporters:
                             reporter.mosquito_crashed(dorker.search_url, str(e.message))
                     else:
@@ -1417,14 +1417,14 @@ class xsser(EncoderDecoder, XSSerReporter):
                         uri = p_uri.netloc
                         path = p_uri.path
                         target_params = parse_qs(urlparse(u).query, keep_blank_values=True)
-                        for key, value in target_params.iteritems(): # parse params to apply keywords
+                        for key, value in target_params.items(): # parse params to apply keywords
                             for v in value:
                                 target_params[key] = 'XSS'
-                        target_url_params = urllib.urlencode(target_params)
+                        target_url_params = urllib.parse.urlencode(target_params)
                         u = p_uri.scheme + "://" + uri + path + "?" + target_url_params
                         urls[i] = u
                         i = i + 1
-                except Exception, e:
+                except Exception as e:
                     for reporter in self._reporters:
                         reporter.mosquito_crashed(dorker.search_url, str(e.message))
                 else:
@@ -1445,14 +1445,14 @@ class xsser(EncoderDecoder, XSSerReporter):
                 dorks = [ dork.replace('\n','') for dork in dorks ]
                 f.close()
                 if not dorks:
-                    print "\n[Error] - Imposible to retrieve 'dorks' from file.\n"
+                    print("\n[Error] - Imposible to retrieve 'dorks' from file.\n")
                     return
             except:
                 if os.path.exists('core/fuzzing/dorks.txt') == True:
-                    print '[Error] - Cannot open:', 'dorks.txt', "\n"
+                    print('[Error] - Cannot open:', 'dorks.txt', "\n")
                     return 
                 else:
-                    print '[Error] - Cannot found:', 'dorks.txt', "\n"
+                    print('[Error] - Cannot found:', 'dorks.txt', "\n")
                     return
             if not options.dork_engine:
                 options.dork_engine = 'yahoo' # default search engine [09-04/2018]
@@ -1468,14 +1468,14 @@ class xsser(EncoderDecoder, XSSerReporter):
                             uri = p_uri.netloc
                             path = p_uri.path
                             target_params = parse_qs(urlparse(u).query, keep_blank_values=True)
-                            for key, value in target_params.iteritems(): # parse params to apply keywords
+                            for key, value in target_params.items(): # parse params to apply keywords
                                 for v in value:
                                     target_params[key] = 'XSS'
-                            target_url_params = urllib.urlencode(target_params)
+                            target_url_params = urllib.parse.urlencode(target_params)
                             u = p_uri.scheme + "://" + uri + path + "?" + target_url_params
                             urls[i] = u
                             i = i + 1
-                    except Exception, e:
+                    except Exception as e:
                         for reporter in self._reporters:
                             reporter.mosquito_crashed(dorker.search_url, str(e.message))
                     else:
@@ -1494,14 +1494,14 @@ class xsser(EncoderDecoder, XSSerReporter):
                         uri = p_uri.netloc
                         path = p_uri.path
                         target_params = parse_qs(urlparse(u).query, keep_blank_values=True)
-                        for key, value in target_params.iteritems(): # parse params to apply keywords
+                        for key, value in target_params.items(): # parse params to apply keywords
                             for v in value:
                                 target_params[key] = 'XSS'
-                        target_url_params = urllib.urlencode(target_params)
+                        target_url_params = urllib.parse.urlencode(target_params)
                         u = p_uri.scheme + "://" + uri + path + "?" + target_url_params
                         urls[i] = u
                         i = i + 1
-                except Exception, e:
+                except Exception as e:
                     for reporter in self._reporters:
                         reporter.mosquito_crashed(dorker.search_url, str(e.message))
                 else:
@@ -1574,7 +1574,7 @@ class xsser(EncoderDecoder, XSSerReporter):
         """
         try:
             return func(*args)
-        except Exception, e:
+        except Exception as e:
             self.report(error, "error")
             if DEBUG:
                 traceback.print_exc()
@@ -1593,19 +1593,19 @@ class xsser(EncoderDecoder, XSSerReporter):
         if self.options.target:
             xst = subprocess.Popen(shlex.split('curl -q -s -i -m 30 -A ' + agent + ' -e ' + referer + ' -X TRACE ' + self.options.target), stdout=subprocess.PIPE)
         line1 = xst.stdout.readline()
-        print ""
+        print("")
         while True:
             line = xst.stdout.readline()
             if line != '':
-                print line.rstrip()
+                print(line.rstrip())
             else:
                 break
-        print ""
+        print("")
         self.report('='*75)
         if "200 OK" in line1.rstrip():
-            print "[Info] Target is vulnerable to XST! (Cross Site Tracing) ;-)"
+            print("[Info] Target is vulnerable to XST! (Cross Site Tracing) ;-)")
         else:
-            print "[Info] Target is NOT vulnerable to XST (Cross Site Tracing) ..."
+            print("[Info] Target is NOT vulnerable to XST (Cross Site Tracing) ...")
         if self.options.target:
             self.report('='*75)
  
@@ -1629,18 +1629,18 @@ class xsser(EncoderDecoder, XSSerReporter):
             *[3]- I don't know where are my target(s)... I just want to explore! :-)
              [e]- Exit/Quit/Abort.
             """)
-            ans1 = raw_input("Your choice: [1], [2], [3] or [e]xit\n")
+            ans1 = input("Your choice: [1], [2], [3] or [e]xit\n")
             if ans1 == "1": # from url
-                url = raw_input("Target url (ex: http(s)://target.com): ")
+                url = input("Target url (ex: http(s)://target.com): ")
                 if url.startswith("http"):
                     ans1 = None
                 else:
-                    print "\n[Error] Your url is not valid!. Try again!"
+                    print("\n[Error] Your url is not valid!. Try again!")
                     pass
             elif ans1 == "2": # from file
-                url = raw_input("Path to file (ex: 'targets_list.txt'): ")
+                url = input("Path to file (ex: 'targets_list.txt'): ")
                 if url == None:
-                    print "\n[Error] Your are not providing a valid file. Try again!"
+                    print("\n[Error] Your are not providing a valid file. Try again!")
                     pass
                 else:
                     ans1 = None
@@ -1648,7 +1648,7 @@ class xsser(EncoderDecoder, XSSerReporter):
                 url = "DORKING" 
                 ans1 = None
             elif (ans1 == "e" or ans1 == "E"):
-                print "Closing wizard..."
+                print("Closing wizard...")
                 ans1=None
                 ans2=None
                 ans3=None
@@ -1656,11 +1656,11 @@ class xsser(EncoderDecoder, XSSerReporter):
                 ans5=None
                 ans6=None
             else:
-                print "\nNot valid choice. Try again!"
+                print("\nNot valid choice. Try again!")
 
         #step 2: How
         while ans2:
-            print 22*"-"
+            print(22*"-")
             print("""\nB)- How do you want to connect?\n
              [1]- I want to connect using GET and select some possible vulnerable parameter(s) directly.
              [2]- I want to connect using POST and select some possible vulnerable parameter(s) directly.
@@ -1668,19 +1668,19 @@ class xsser(EncoderDecoder, XSSerReporter):
             *[4]- I don't know how to connect... Just do it! :-)
              [e]- Exit/Quit/Abort.
             """)
-            ans2 = raw_input("Your choice: [1], [2], [3], [4] or [e]xit\n")
+            ans2 = input("Your choice: [1], [2], [3], [4] or [e]xit\n")
             if ans2 == "1": # using GET
-                payload = raw_input("GET payload (ex: '/menu.php?q='): ")
+                payload = input("GET payload (ex: '/menu.php?q='): ")
                 if payload == None:
-                    print "\n[Error] Your are providing an empty payload. Try again!"
+                    print("\n[Error] Your are providing an empty payload. Try again!")
                     pass
                 else:
                     self.user_template_conntype = "GET"
                     ans2 = None
             elif ans2 == "2": # using POST
-                payload = raw_input("POST payload (ex: 'foo=1&bar='): ")
+                payload = input("POST payload (ex: 'foo=1&bar='): ")
                 if payload == None:
-                    print "\n[Error] Your are providing an empty payload. Try again!"
+                    print("\n[Error] Your are providing an empty payload. Try again!")
                     pass
                 else:
                     self.user_template_conntype = "POST"
@@ -1692,18 +1692,18 @@ class xsser(EncoderDecoder, XSSerReporter):
                 payload = "CRAWLER"
                 ans2 = None
             elif (ans2 == "e" or ans2 == "E"):
-                print "Closing wizard..."
+                print("Closing wizard...")
                 ans2=None
                 ans3=None
                 ans4=None
                 ans5=None
                 ans6=None
             else:
-                print "\nNot valid choice. Try again!"
+                print("\nNot valid choice. Try again!")
 
         #step 3: Proxy
         while ans3:
-            print 22*"-"
+            print(22*"-")
             print("""\nC)- Do you want to be 'anonymous'?\n
              [1]- Yes. I want to use my proxy and apply automatic spoofing methods.
              [2]- Anonymous?. Yes!!!. I have a TOR proxy ready at: http://127.0.0.1:8118. 
@@ -1711,9 +1711,9 @@ class xsser(EncoderDecoder, XSSerReporter):
              [4]- No. It's not a problem for me to connect directly to the target(s).
              [e]- Exit/Quit.
             """)
-            ans3 = raw_input("Your choice: [1], [2], [3], [4] or [e]xit\n")
+            ans3 = input("Your choice: [1], [2], [3], [4] or [e]xit\n")
             if ans3 == "1": # using PROXY + spoofing
-                proxy = raw_input("Enter proxy [http(s)://server:port]: ")
+                proxy = input("Enter proxy [http(s)://server:port]: ")
                 ans3 = None
             elif ans3 == "2": # using TOR + spoofing
                 proxy = 'Using TOR (default: http://127.0.0.1:8118)'
@@ -1726,17 +1726,17 @@ class xsser(EncoderDecoder, XSSerReporter):
                 proxy = 'Proxy: No - Spoofing: No'
                 ans3 = None
             elif (ans3 == "e" or ans3 == "E"):
-                print "Closing wizard..."
+                print("Closing wizard...")
                 ans3=None
                 ans4=None
                 ans5=None
                 ans6=None
             else:
-                print "\nNot valid choice. Try again!"
+                print("\nNot valid choice. Try again!")
 
         #step 4: Bypasser(s)
         while ans4:
-            print 22*"-"
+            print(22*"-")
             print("""\nD)- Which 'bypasser(s' do you want to use?\n
              [1]- I want to inject XSS scripts without any encoding.
              [2]- Try to inject code using 'Hexadecimal'.
@@ -1745,7 +1745,7 @@ class xsser(EncoderDecoder, XSSerReporter):
             *[5]- I don't know exactly what is a 'bypasser'... But I want to inject code! :-)
              [e]- Exit/Quit.
             """)
-            ans4 = raw_input("Your choice: [1], [2], [3], [4], [5] or [e]xit\n")
+            ans4 = input("Your choice: [1], [2], [3], [4], [5] or [e]xit\n")
             if ans4 == "1": # no encode
                 enc = "Not using encoders"
                 ans4 = None
@@ -1762,30 +1762,30 @@ class xsser(EncoderDecoder, XSSerReporter):
                 enc = 'Not using encoders' 
                 ans4 = None
             elif (ans4 == "e" or ans4 == "E"):
-                print "Closing wizard..."
+                print("Closing wizard...")
                 ans4=None
                 ans5=None
                 ans6=None
             else:
-                print "\nNot valid choice. Try again!"
+                print("\nNot valid choice. Try again!")
 
         #step 5: Exploiting
         while ans5:
-            print 22*"-"
+            print(22*"-")
             print("""\nE)- Which final code do you want to 'exploit' on vulnerabilities found?\n
              [1]- I want to inject a classic "Alert" message box.
              [2]- I want to inject my own scripts.
             *[3]- I don't want to inject a final code... I just want to discover vulnerabilities! :-)
              [e]- Exit/Quit.
             """)
-            ans5 = raw_input("Your choice: [1], [2], [3] or [e]xit\n")
+            ans5 = input("Your choice: [1], [2], [3] or [e]xit\n")
             if ans5 == "1": # alertbox
                 script = 'Alertbox'
                 ans5 = None
             elif ans5 == "2": # manual
-                script = raw_input("Enter code (ex: '><script>alert('XSS');</script>): ")
+                script = input("Enter code (ex: '><script>alert('XSS');</script>): ")
                 if script == None:
-                    print "\n[Error] Your are providing an empty script to inject. Try again!"
+                    print("\n[Error] Your are providing an empty script to inject. Try again!")
                     pass
                 else:
                     ans5 = None
@@ -1793,36 +1793,36 @@ class xsser(EncoderDecoder, XSSerReporter):
                 script = 'Not exploiting code' 
                 ans5 = None
             elif (ans5 == "e" or ans5 == "E"):
-                print "Closing wizard..."
+                print("Closing wizard...")
                 ans5=None
                 ans6=None
             else:
-                print "\nNot valid choice. Try again!"
+                print("\nNot valid choice. Try again!")
 
         #step 6: Final
         while ans6:
-            print 22*"-"
-            print "\nVery nice!. That's all. Your last step is to -accept or not- this template.\n"
-            print "A)- Target:", url
-            print "B)- Payload:", payload
-            print "C)- Privacy:", proxy
-            print "D)- Bypasser(s):", enc
-            print "E)- Final:", script
+            print(22*"-")
+            print("\nVery nice!. That's all. Your last step is to -accept or not- this template.\n")
+            print("A)- Target:", url)
+            print("B)- Payload:", payload)
+            print("C)- Privacy:", proxy)
+            print("D)- Bypasser(s):", enc)
+            print("E)- Final:", script)
             print("""
             [Y]- Yes. Accept it and start testing!.
             [N]- No. Abort it?.
             """)
-            ans6 = raw_input("Your choice: [Y] or [N]\n")
+            ans6 = input("Your choice: [Y] or [N]\n")
             if (ans6 == "y" or ans6 == "Y"): # YES
                 start = 'YES'
-                print 'Good fly... and happy "Cross" hacking !!! :-)\n'
+                print('Good fly... and happy "Cross" hacking !!! :-)\n')
                 ans6 = None
             elif (ans6 == "n" or ans6 == "N"): # NO
                 start = 'NO'
-                print "Aborted!. Closing wizard..."
+                print("Aborted!. Closing wizard...")
                 ans6 = None
             else:
-                print "\nNot valid choice. Try again!"
+                print("\nNot valid choice. Try again!")
             if url and payload and proxy and enc and script:
                 return url, payload, proxy, enc, script
             else:
@@ -1987,7 +1987,7 @@ class xsser(EncoderDecoder, XSSerReporter):
             time.sleep(0.2)
             for reporter in self._reporters:
                 reporter.report_state('final sweep..')
-        print("="*75 + "\n")
+        print(("="*75 + "\n"))
         if self.pool:
             self.pool.dismissWorkers(len(self.pool.workers))
             self.pool.joinAllDismissedWorkers()
@@ -1998,7 +1998,7 @@ class xsser(EncoderDecoder, XSSerReporter):
                 reporter.report_state('landing.. '+str(int(5.0 - (time.time() - start))))
         if self.final_attacks:
             self.report("Forcing a reverse connection XSSer will certify that your target is 100% vulnerable\n")
-            for final_attack in self.final_attacks.itervalues():
+            for final_attack in self.final_attacks.values():
                 if not final_attack['url'] == None:
                     self.report("Connecting from:", final_attack['url'] , "\n")
                 self.report(",".join(self.successfull_urls) , "is connecting remotely to XSSer... You have it! ;-)", "\n")
@@ -2007,7 +2007,7 @@ class xsser(EncoderDecoder, XSSerReporter):
             reporter.end_attack()
         if self.mothership:
             self.mothership.remove_reporter(self)
-            print("="*75 + "\n")
+            print(("="*75 + "\n"))
             self.report("Mosquito(es) landed!\n")
         else:
             self.report("Mosquito(es) landed!")
@@ -2024,7 +2024,7 @@ class xsser(EncoderDecoder, XSSerReporter):
                     self.report("\nThis target: (" + url + ") is not a correct url [DISCARDED]\n")
                     url = None
         else:
-            print "\n[Info] Not any valid source provided to start a test... Aborting!\n"
+            print("\n[Info] Not any valid source provided to start a test... Aborting!\n")
         return all_urls
 
     def land(self, join=False):
@@ -2231,7 +2231,7 @@ class xsser(EncoderDecoder, XSSerReporter):
         return real_attack_url
 
     def report(self, *args):
-        args = list(map(lambda s: str(s), args))
+        args = list([str(s) for s in args])
         formatted = " ".join(args)
         if not self.options.silent:
             print(formatted)

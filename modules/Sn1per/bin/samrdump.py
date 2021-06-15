@@ -38,7 +38,7 @@ class SAMRDump:
     def __init__(self, protocols = None,
                  username = '', password = '', domain = '', hashes = None, aesKey=None, doKerberos = False):
         if not protocols:
-            self.__protocols = SAMRDump.KNOWN_PROTOCOLS.keys()
+            self.__protocols = list(SAMRDump.KNOWN_PROTOCOLS.keys())
         else:
             self.__protocols = [protocols]
 
@@ -71,7 +71,7 @@ class SAMRDump:
 
             try:
                 entries = self.__fetchList(rpctransport)
-            except Exception, e:
+            except Exception as e:
                 logging.critical(str(e))
             else:
                 # Got a response. No need for further iterations.
@@ -82,11 +82,11 @@ class SAMRDump:
         for entry in entries:
             (username, uid, user) = entry
             base = "%s (%d)" % (username, uid)
-            print base + '/FullName:', user['FullName']
-            print base + '/UserComment:', user['UserComment']
-            print base + '/PrimaryGroupId:', user['PrimaryGroupId']
-            print base + '/BadPasswordCount:', user['BadPasswordCount']
-            print base + '/LogonCount:', user['LogonCount']
+            print(base + '/FullName:', user['FullName'])
+            print(base + '/UserComment:', user['UserComment'])
+            print(base + '/PrimaryGroupId:', user['PrimaryGroupId'])
+            print(base + '/BadPasswordCount:', user['BadPasswordCount'])
+            print(base + '/LogonCount:', user['LogonCount'])
 
         if entries:
             num = len(entries)
@@ -113,9 +113,9 @@ class SAMRDump:
             resp = samr.hSamrEnumerateDomainsInSamServer(dce, serverHandle)
             domains = resp['Buffer']['Buffer']
 
-            print 'Found domain(s):'
+            print('Found domain(s):')
             for domain in domains:
-                print " . %s" % domain['Name']
+                print(" . %s" % domain['Name'])
 
             logging.info("Looking up users in domain %s" % domains[0]['Name'])
 
@@ -129,14 +129,14 @@ class SAMRDump:
             while status == STATUS_MORE_ENTRIES:
                 try:
                     resp = samr.hSamrEnumerateUsersInDomain(dce, domainHandle, enumerationContext = enumerationContext)
-                except DCERPCException, e:
+                except DCERPCException as e:
                     if str(e).find('STATUS_MORE_ENTRIES') < 0:
                         raise 
                     resp = e.get_packet()
 
                 for user in resp['Buffer']['Buffer']:
                     r = samr.hSamrOpenUser(dce, domainHandle, samr.MAXIMUM_ALLOWED, user['RelativeId'])
-                    print "Found user: %s, uid = %d" % (user['Name'], user['RelativeId'] )
+                    print("Found user: %s, uid = %d" % (user['Name'], user['RelativeId'] ))
                     info = samr.hSamrQueryInformationUser2(dce, r['UserHandle'],samr.USER_INFORMATION_CLASS.UserAllInformation)
                     entry = (user['Name'], user['RelativeId'], info['Buffer']['All'])
                     entries.append(entry)
@@ -145,7 +145,7 @@ class SAMRDump:
                 enumerationContext = resp['EnumerationContext'] 
                 status = resp['ErrorCode']
 
-        except ListUsersException, e:
+        except ListUsersException as e:
             logging.critical("Error listing users: %s" % e)
 
         dce.disconnect()
@@ -157,12 +157,12 @@ class SAMRDump:
 if __name__ == '__main__':
     # Init the example's logger theme
     logger.init()
-    print version.BANNER
+    print(version.BANNER)
 
     parser = argparse.ArgumentParser(add_help = True, description = "This script downloads the list of users for the target system.")
 
     parser.add_argument('target', action='store', help='[[domain/]username[:password]@]<targetName or address>')
-    parser.add_argument('protocol', choices=SAMRDump.KNOWN_PROTOCOLS.keys(), nargs='?', default='445/SMB', help='transport protocol (default 445/SMB)')
+    parser.add_argument('protocol', choices=list(SAMRDump.KNOWN_PROTOCOLS.keys()), nargs='?', default='445/SMB', help='transport protocol (default 445/SMB)')
     parser.add_argument('-debug', action='store_true', help='Turn DEBUG output ON')
 
     group = parser.add_argument_group('authentication')

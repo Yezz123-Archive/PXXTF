@@ -14,10 +14,10 @@ class Aspxmvc():
 	def Run(headers):
 		_ = False
 		try:
-			for item in headers.items():
+			for item in list(headers.items()):
 				_ = re.search(r'x-aspnetmvc-version|__requestverificationtoken',str(item),re.I) is not None
 				if _:
 					return "ASPX_MVC"
 					break
-		except Exception,ERROR:
-			print ERROR
+		except Exception as ERROR:
+			print(ERROR)

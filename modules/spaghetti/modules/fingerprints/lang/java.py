@@ -14,10 +14,10 @@ class Java():
 	def Run(content,headers):
 		_ = False
 		try:
-			for item in headers.items():
+			for item in list(headers.items()):
 				_ = re.search(r'Java|Servlet|JSP|JBoss|Glassfish|Oracle|JRE|JDK|JSESSIONID',str(item)) is not None
 				if _:
 					return "Java"
 					break
-		except Exception,ERROR:
-			print ERROR
+		except Exception as ERROR:
+			print(ERROR)

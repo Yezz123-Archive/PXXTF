@@ -14,10 +14,10 @@ class Nette():
 	def Run(headers):
 		_ = False
 		try:
-			for item in headers.items():
+			for item in list(headers.items()):
 				_ = re.search(r'nette*|nette-browser=*',str(item),re.I) is not None 
 				if _:
 					return "Nette"
 					break
-		except Exception,ERROR:
-			print ERROR
+		except Exception as ERROR:
+			print(ERROR)

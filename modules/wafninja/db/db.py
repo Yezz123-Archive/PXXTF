@@ -67,7 +67,7 @@ def setPayload(input, type, waf):
     c.execute(sql, (list))
     conn.commit()
     conn.close()
-    print 'Payload inserted successfully!'
+    print('Payload inserted successfully!')
     
 def getFuzz(type):
     """
@@ -116,4 +116,4 @@ def setFuzz(input, expected, type):
     c.execute(sql, (list))
     conn.commit()
     conn.close()
-    print 'Fuzz inserted successfully!'
+    print('Fuzz inserted successfully!')

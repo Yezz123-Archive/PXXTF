@@ -90,8 +90,8 @@ class wpheaders:
 				  'X-UA-Compatible'
 				  )
 		try:
-			for key in headers.keys():
+			for key in list(headers.keys()):
 				if key not in fields:
 					wpprint.wpprint().plus('Uncommon header "%s" found, with contents: %s'%(key,headers[key]))
-		except Exception,e:
+		except Exception as e:
 			pass

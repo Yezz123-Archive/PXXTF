@@ -182,26 +182,26 @@ class XSSerOptions(optparse.OptionParser):
     def get_options(self, user_args=None):
         (options, args) = self.parse_args(user_args)
         if (not options.url and not options.readfile and not options.dork and not options.dork_file and not options.imx and not options.flash and not options.update and not options.xsser_gtk and not options.wizard and not options.xst and not options.target):
-            print "\n", '='*75
-            print self.version
-            print "-----------", "\n"
-            print self.description, "\n"
-            print '='*75
-            print ""
-            print "                                       \\ \\                           %"
-            print "Project site:","                          \\ \\     LulZzzz!           %  "
-            print "http://xsser.03c8.net                 %% \\_\\                      %   "
-            print "                                      \/ ( \x1B[31m@\x1B[0m.\x1B[31m@\x1B[0m)         Bbzzzzz!      %  "
-            print "                                       \== < ==                  %      "
-            print "Forum:                                    / \_      ==       %          "
-            print "irc.freenode.net -> #xsser              (')   \   *=====%             "
-            print "                                       /  /       ========              "
-            print ""
-            print '='*75
-            print "Total vectors:", self.total_vectors + " = XSS: " + str(self.vectors_fuzz) + " + DCP: " + str(self.vectors_dcp) + " + DOM: " + str(self.vectors_dom) + " + HTTPsr: " + str(self.vectors_httpsr)
-            print '='*75
-            print "\n-> For HELP use: -h or --help"
-            print "\n-> For GTK interface use: --gtk\n"
-            print '='*55, "\n"
+            print("\n", '='*75)
+            print(self.version)
+            print("-----------", "\n")
+            print(self.description, "\n")
+            print('='*75)
+            print("")
+            print("                                       \\ \\                           %")
+            print("Project site:","                          \\ \\     LulZzzz!           %  ")
+            print("http://xsser.03c8.net                 %% \\_\\                      %   ")
+            print("                                      \/ ( \x1B[31m@\x1B[0m.\x1B[31m@\x1B[0m)         Bbzzzzz!      %  ")
+            print("                                       \== < ==                  %      ")
+            print("Forum:                                    / \_      ==       %          ")
+            print("irc.freenode.net -> #xsser              (')   \   *=====%             ")
+            print("                                       /  /       ========              ")
+            print("")
+            print('='*75)
+            print("Total vectors:", self.total_vectors + " = XSS: " + str(self.vectors_fuzz) + " + DCP: " + str(self.vectors_dcp) + " + DOM: " + str(self.vectors_dom) + " + HTTPsr: " + str(self.vectors_httpsr))
+            print('='*75)
+            print("\n-> For HELP use: -h or --help")
+            print("\n-> For GTK interface use: --gtk\n")
+            print('='*55, "\n")
             return False
         return options

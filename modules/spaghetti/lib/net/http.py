@@ -8,7 +8,7 @@
 # @license: See the file 'doc/LICENSE'
 
 import requests
-import utils
+from . import utils
 import sys
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 

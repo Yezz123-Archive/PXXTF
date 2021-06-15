@@ -14,11 +14,11 @@ class Binarysec():
     def Run(headers):
         _ = False
         try:
-            for item in headers.items():
+            for item in list(headers.items()):
                 _  = re.search(r'BinarySec',item[1],re.I) is not None
                 _ |= re.search(r'x-binarysec-[via|nocahe]',item[0],re.I) is not None
                 if _: 
                     return "BinarySEC Web Application Firewall (BinarySEC)"
                     break
-        except Exception,ERROR:
-            print ERROR
+        except Exception as ERROR:
+            print(ERROR)

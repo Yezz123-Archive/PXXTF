@@ -13,8 +13,8 @@
 """
 
 import ssl
-import urllib
-import urllib2
+import urllib.request, urllib.parse, urllib.error
+import urllib.request, urllib.error, urllib.parse
 import copy
 import random
 import codecs
@@ -52,7 +52,7 @@ def fireFuzz(type, fuzz, url, params, header, delay, outputFile, proxy, prefix, 
         :todo: Add threads in order to send requests simultaneously.
 		
     """
-    print '''
+    print('''
     ___       ______________________   ______       ________        
     __ |     / /__    |__  ____/__  | / /__(_)____________(_)_____ _
     __ | /| / /__  /| |_  /_   __   |/ /__  /__  __ \____  /_  __ `/
@@ -61,17 +61,17 @@ def fireFuzz(type, fuzz, url, params, header, delay, outputFile, proxy, prefix, 
                                                     /___/           
                                                     
     WAFNinja - Penetration testers favorite for WAF Bypassing
-    '''
+    ''')
     pbar = ProgressBar(widgets=[SimpleProgress(), ' Fuzz sent!    ', Percentage(), Bar()])
     if proxy is not '':
-        httpProxy = urllib2.ProxyHandler({'http': proxy, 'https': proxy})
+        httpProxy = urllib.request.ProxyHandler({'http': proxy, 'https': proxy})
         ctx = ssl.create_default_context()
         ctx.check_hostname = False
         ctx.verify_mode = ssl.CERT_NONE
-        opener = urllib2.build_opener(urllib2.HTTPSHandler(context=ctx),httpProxy)
-        urllib2.install_opener(opener)
+        opener = urllib.request.build_opener(urllib.request.HTTPSHandler(context=ctx),httpProxy)
+        urllib.request.install_opener(opener)
     else:
-        opener = urllib2.build_opener()
+        opener = urllib.request.build_opener()
     opener.addheaders = [('User-Agent', 'Mozilla/5.0')]
     for h in header:
         opener.addheaders.append(h)
@@ -88,7 +88,7 @@ def fireFuzz(type, fuzz, url, params, header, delay, outputFile, proxy, prefix, 
                 response = opener.open(url_with_fuzz)
             else: # POST parameter
                 randomString, params_with_fuzz = setParams(params, fuzz_enc) 
-                response = opener.open(url, urllib.urlencode(params_with_fuzz))
+                response = opener.open(url, urllib.parse.urlencode(params_with_fuzz))
             content = response.read()
             occurence = content.find(randomString)+len(randomString) # get position of the randomString + length(randomString) to get to the fuzz
             result.append({
@@ -97,9 +97,9 @@ def fireFuzz(type, fuzz, url, params, header, delay, outputFile, proxy, prefix, 
                 'httpCode' : response.getcode(), 
                 'contentLength': len(content),  
                 'output' : content[occurence:occurence+len(expected)]}) # take string from occurence to occurence+len(expected)
-        except urllib2.HTTPError, error: # HTTP Status != 200
+        except urllib.error.HTTPError as error: # HTTP Status != 200
             if error.code == 404:
-                print 'ERROR: Target URL not reachable!'
+                print('ERROR: Target URL not reachable!')
                 sys.exit()
             else: # HTTP Status != 404
                 result.append({
@@ -254,9 +254,9 @@ def showOutput(type, url, result, outputFile, delay, proxy, prefix, postfix):
         file = codecs.open(outputFile, 'w', encoding='utf-8')
         file.write(table) 
         file.close() 
-        print 'Output saved to ' + outputFile + '!'
+        print('Output saved to ' + outputFile + '!')
     else:
-        print table
+        print(table)
         
 def insertFuzz(url, fuzz):
     """
@@ -273,7 +273,7 @@ def insertFuzz(url, fuzz):
 
     """
 
-    fuzz = urllib.quote_plus(fuzz) #url encoding
+    fuzz = urllib.parse.quote_plus(fuzz) #url encoding
     randomString = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(6))
     return randomString, url.replace('FUZZ', randomString + str(fuzz))
     

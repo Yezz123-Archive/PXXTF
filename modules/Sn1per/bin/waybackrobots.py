@@ -32,7 +32,7 @@ if __name__ == '__main__':
     host = sys.argv[1]
 
     snapshots = robots(host)
-    print('Found %s unique results' % len(snapshots))
+    print(('Found %s unique results' % len(snapshots)))
     if len(snapshots) == 0:
         sys.exit()
     print('This may take some time...')
@@ -44,4 +44,4 @@ if __name__ == '__main__':
     filename = '%s-robots.txt' % host
     with open(filename, 'w') as f:
         f.write('\n'.join(unique_paths))
-    print('[*] Saved results to %s' % filename)
+    print(('[*] Saved results to %s' % filename))

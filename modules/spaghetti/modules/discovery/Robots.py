@@ -36,7 +36,7 @@ class Robots():
 						dpath.append(x)
 				for x in dpath:
 					resp = self.http.Send(self.checker.Path(self.url,x))
-					print(' - [%s] %s'%(resp.status_code,resp.url))
+					print((' - [%s] %s'%(resp.status_code,resp.url)))
 				print("")
 		except Exception:
 			pass

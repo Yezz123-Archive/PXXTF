@@ -39,7 +39,7 @@ def singleFuzz(target, paramData, encoding, headers, delay, timeout):
     else:
         logger.good('WAF Status: %sOffline%s' % (green, end))
 
-    for paramName in params.keys():
+    for paramName in list(params.keys()):
         logger.info('Fuzzing parameter: %s' % paramName)
         paramsCopy = copy.deepcopy(params)
         paramsCopy[paramName] = xsschecker

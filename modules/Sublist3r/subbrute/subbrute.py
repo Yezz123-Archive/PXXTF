@@ -24,7 +24,7 @@ import json
 try:
     import queue as Queue
 except:
-    import Queue
+    import queue
 
 #The 'multiprocessing' library does not rely upon a Global Interpreter Lock (GIL)
 import multiprocessing
@@ -85,7 +85,7 @@ class verify_nameservers(multiprocessing.Process):
                 trace("Added nameserver:", nameserver)
                 keep_trying = False
             except Exception as e:
-                if type(e) == Queue.Full or str(type(e)) == "<class 'queue.Full'>":
+                if type(e) == queue.Full or str(type(e)) == "<class 'queue.Full'>":
                     keep_trying = True
 
     def verify(self, nameserver_list):
@@ -401,7 +401,7 @@ def extract_subdomains(file_name):
     #Free some memory before the sort...
     del f_all
     #Sort by freq in desc order
-    subs_sorted = sorted(subs.keys(), key = lambda x: subs[x], reverse = True)
+    subs_sorted = sorted(list(subs.keys()), key = lambda x: subs[x], reverse = True)
     return subs_sorted
 
 def print_target(target, record_type = None, subdomains = "names.txt", resolve_list = "resolvers.txt", process_count = 16, output = False, json_output = False, found_subdomains=[],verbose=False):
@@ -478,7 +478,7 @@ def run(target, record_type = None, subdomains = "names.txt", resolve_list = "re
                 yield result
         except Exception as e:
             #The cx_freeze version uses queue.Empty instead of Queue.Empty :(
-            if type(e) == Queue.Empty or str(type(e)) == "<class 'queue.Empty'>":
+            if type(e) == queue.Empty or str(type(e)) == "<class 'queue.Empty'>":
                 pass
             else:
                 raise(e)
@@ -629,7 +629,7 @@ if __name__ == "__main__":
             #options.resolvers => the resolvers file
             #options.output
             #options.json
-            print(target, record_type, options.subs, options.resolvers, options.process_count, output, json_output)
+            print((target, record_type, options.subs, options.resolvers, options.process_count, output, json_output))
             print_target(target, record_type, options.subs, options.resolvers, options.process_count, output, json_output)
 
 

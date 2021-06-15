@@ -7,24 +7,24 @@
 # @author: Momo Outaadi (M4ll0k)
 # @license: See the file 'doc/LICENSE'
 
-import aws
-import baidu
-import barracuda
-import bigip
-import binarysec
-import cloudflare
-import cloudfront
-import dotdefender
-import edgecast
-import incapsula
-import modsecurity
-import profense
-import radware
-import paloalto
-import sucuri
-import urlscan
-import varnish
-import webknight
+from . import aws
+from . import baidu
+from . import barracuda
+from . import bigip
+from . import binarysec
+from . import cloudflare
+from . import cloudfront
+from . import dotdefender
+from . import edgecast
+from . import incapsula
+from . import modsecurity
+from . import profense
+from . import radware
+from . import paloalto
+from . import sucuri
+from . import urlscan
+from . import varnish
+from . import webknight
 
 def Waf(headers):
 	return (

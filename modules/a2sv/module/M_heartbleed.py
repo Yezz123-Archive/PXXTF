@@ -51,7 +51,7 @@ def hexdump(s, dumpf, quiet):
 	#dump.write(s)
 	#dump.close()
 	if quiet: return
-	for b in xrange(0, len(s), 16):
+	for b in range(0, len(s), 16):
 		lin = [c for c in s[b : b + 16]]
 		hxdat = ' '.join('%02X' % ord(c) for c in lin)
 		pdat = ''.join((c if 32 <= ord(c) <= 126 else '.' )for c in lin)

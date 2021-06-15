@@ -14,11 +14,11 @@ class Profense():
     def Run(headers):
         _ = False
         try:
-            for item in headers.items():
+            for item in list(headers.items()):
                 _ = re.search(r'PLBSID=',item[1],re.I) is not None
                 _ = re.search(r'Profense',item[1],re.I) is not None
                 if _:
                     return "Profense Web Application Firewall (Armorlogic)"
                     break 
-        except Exception,ERROR:
-            print ERROR
+        except Exception as ERROR:
+            print(ERROR)

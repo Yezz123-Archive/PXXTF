@@ -20,7 +20,7 @@ def bruteforcer(target, paramData, payloadList, encoding, headers, delay, timeou
     if not params:
         logger.error('No parameters to test.')
         quit()
-    for paramName in params.keys():
+    for paramName in list(params.keys()):
         progress = 1
         paramsCopy = copy.deepcopy(params)
         for payload in payloadList:

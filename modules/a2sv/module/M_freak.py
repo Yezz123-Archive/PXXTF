@@ -1,8 +1,8 @@
-import Queue
+import queue
 import threading
 import getopt
 import sys
-import urllib2
+import urllib.request, urllib.error, urllib.parse
 import hashlib
 import socket
 import time

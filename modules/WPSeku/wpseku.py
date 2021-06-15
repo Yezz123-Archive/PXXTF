@@ -10,7 +10,7 @@ from lib import wphttp
 from lib import wpcolor
 from lib import wpprint
 
-from urlparse import urlsplit
+from urllib.parse import urlsplit
 from modules.fingerprint import fingerprint
 from modules.discovery import discovery 
 from modules.bruteforce import wpxmlrpc
@@ -23,27 +23,27 @@ RESET = wpcolor.wpcolor().reset()
 class WPSeku(object):
 	out = wpprint.wpprint()
 	def banner(self):
-		print
+		print()
 	def usage(self,ext=False):
 		path = os.path.basename(sys.argv[0])
 		self.banner()
-		print "Usage: {} [options]\n".format(path)
-		print "\t-t --target\tTarget URL (eg: http://site.com)"
-		print "\t-b --brute\tBruteforce login via xmlrpc"
-		print "\t-u --user\tSet username, (df=admin)"
-		print "\t-p --proxy\tSet proxy, (host:port)"
-		print "\t-c --cookie\tSet cookie, (--cookie=\"COOKIE\")"
-		print "\t-a --agent\tSet user-agent, (--agent=\"AGENT\")"
-		print "\t-r --ragent\tSet random user-agent"
-		print "\t-f --redirect\tRedirect target url, (df=true)"
-		print "\t-m --timeout\tSet timeout, (df=None)"
-		print "\t-w --wordlist\tSet wordlist, (df=db/wordlist.txt)"
-		print "\t-h --help\tShow this help and exit\n"
-		print "Examples:"
-		print "\t{} -t http://site.com".format(path)
-		print "\t{} -t http://site.com -b -w wlist.txt".format(path)
-		print "\t{} -t http://site.com/wordpress/ --redirect".format(path)
-		print "\t{} -t http://site.com -b -u test -w wlist.txt\n".format(path)
+		print("Usage: {} [options]\n".format(path))
+		print("\t-t --target\tTarget URL (eg: http://site.com)")
+		print("\t-b --brute\tBruteforce login via xmlrpc")
+		print("\t-u --user\tSet username, (df=admin)")
+		print("\t-p --proxy\tSet proxy, (host:port)")
+		print("\t-c --cookie\tSet cookie, (--cookie=\"COOKIE\")")
+		print("\t-a --agent\tSet user-agent, (--agent=\"AGENT\")")
+		print("\t-r --ragent\tSet random user-agent")
+		print("\t-f --redirect\tRedirect target url, (df=true)")
+		print("\t-m --timeout\tSet timeout, (df=None)")
+		print("\t-w --wordlist\tSet wordlist, (df=db/wordlist.txt)")
+		print("\t-h --help\tShow this help and exit\n")
+		print("Examples:")
+		print("\t{} -t http://site.com".format(path))
+		print("\t{} -t http://site.com -b -w wlist.txt".format(path))
+		print("\t{} -t http://site.com/wordpress/ --redirect".format(path))
+		print("\t{} -t http://site.com -b -u test -w wlist.txt\n".format(path))
 		if ext:
 			exit()
 
@@ -63,7 +63,7 @@ class WPSeku(object):
 			opts,args = getopt.getopt(kw,"t:u:p:c:a:m:w:frbh:",["target=","brute",
 				"user=","proxy=","cookie=","timeout=","agent=","ragent","redirect","wordlist=","help"]
 				)
-		except getopt.error,e:
+		except getopt.error as e:
 			self.usage(True)
 		for opt,arg in opts:
 			if opt in ('-t','--target'):

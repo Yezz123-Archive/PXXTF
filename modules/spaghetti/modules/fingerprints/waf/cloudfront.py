@@ -14,11 +14,11 @@ class Cloudfront():
     def Run(headers):
         _ = False
         try:
-            for item in headers.items():
+            for item in list(headers.items()):
                 _ = re.search(r'cloudfront',item[1],re.I) is not None
                 _ |= re.search('x-amz-cf-id',item[0],re.I) is not None
                 if _: 
                     return "CloudFront Web Application Firewall (Amazon)"
                     break
-        except Exception,ERROR:
+        except Exception as ERROR:
             pass

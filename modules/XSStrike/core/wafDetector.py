@@ -24,7 +24,7 @@ def wafDetector(url, params, headers, GET, delay, timeout):
 
     if int(code) >= 400:
         bestMatch = [0, None]
-        for wafName, wafSignature in wafSignatures.items():
+        for wafName, wafSignature in list(wafSignatures.items()):
             score = 0
             pageSign = wafSignature['page']
             codeSign = wafSignature['code']

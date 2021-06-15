@@ -254,7 +254,7 @@ def enumerate(server):
             request = method.split(' HTTP/1.', 1)[0]
 
             if verbose == True:
-                print(request + ': ' + responce)
+                print((request + ': ' + responce))
             if responce.startswith('200'):
                 found.append(request)
             elif responce.startswith('403'):
@@ -262,7 +262,7 @@ def enumerate(server):
             elif responce.startswith('401'):
                 unauth.append(request)
         except:
-            print('Error in filtering the responce',method, ':', data)
+            print(('Error in filtering the responce',method, ':', data))
 
     if len(found) > 0:
         result = True

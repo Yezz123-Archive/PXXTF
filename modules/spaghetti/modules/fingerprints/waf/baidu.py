@@ -14,12 +14,12 @@ class Baidu():
 	def Run(headers):
 		_ = False
 		try:
-			for item in headers.items():
+			for item in list(headers.items()):
 				_  = re.search(r'yunjiasu-nginx',item[1],re.I) is not None
 				_ |= re.search(r'YJS-ID',item[1],re.I) is not None
 				_ |= re.search(r'fhl',item[1],re.I) is not None
 				if _: 
 					return "Yunjiasu Web Application Firewall (Baidu)"
 					break
-		except Exception,ERROR:
-			print ERROR
+		except Exception as ERROR:
+			print(ERROR)

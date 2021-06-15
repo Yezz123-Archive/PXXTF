@@ -34,7 +34,7 @@ def photon(seedUrl, headers, level, threadCount, delay, timeout, skipDOM):
         params = getParams(target, '', True)
         if '=' in target:  # if there's a = in the url, there should be GET parameters
             inps = []
-            for name, value in params.items():
+            for name, value in list(params.items()):
                 inps.append({'name': name, 'value': value})
             forms.append({0: {'action': url, 'method': 'get', 'inputs': inps}})
         response = requester(url, params, headers, True, delay, timeout).text

@@ -81,4 +81,4 @@ elif arguments[0] == 'set-db':
     path = arguments[0]
     if (testConnection(path) == 1):
         setDatabase(path)
-        print "Database sucessfully changed!"
+        print("Database sucessfully changed!")

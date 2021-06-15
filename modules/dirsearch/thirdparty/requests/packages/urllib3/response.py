@@ -1,7 +1,7 @@
 try:
     import http.client as httplib
 except ImportError:
-    import httplib
+    import http.client
 import zlib
 import io
 from socket import timeout as SocketTimeout
@@ -10,7 +10,7 @@ from ._collections import HTTPHeaderDict
 from .exceptions import (
     ProtocolError, DecodeError, ReadTimeoutError, ResponseNotChunked
 )
-from .packages.six import string_types as basestring, binary_type, PY3
+from .packages.six import string_types as str, binary_type, PY3
 from .connection import HTTPException, BaseSSLError
 from .util.response import is_fp_closed
 
@@ -114,7 +114,7 @@ class HTTPResponse(io.IOBase):
         self._original_response = original_response
         self._fp_bytes_read = 0
 
-        if body and isinstance(body, (basestring, binary_type)):
+        if body and isinstance(body, (str, binary_type)):
             self._body = body
 
         self._pool = pool
@@ -321,7 +321,7 @@ class HTTPResponse(io.IOBase):
         headers = r.msg
         if not isinstance(headers, HTTPHeaderDict):
             if PY3: # Python 3
-                headers = HTTPHeaderDict(headers.items())
+                headers = HTTPHeaderDict(list(headers.items()))
             else: # Python 2
                 headers = HTTPHeaderDict.from_httplib(headers)
 
@@ -398,7 +398,7 @@ class HTTPResponse(io.IOBase):
         except ValueError:
             # Invalid chunked protocol response, abort.
             self.close()
-            raise httplib.IncompleteRead(line)
+            raise http.client.IncompleteRead(line)
 
     def _handle_chunk(self, amt):
         returned_chunk = None

@@ -31,8 +31,8 @@ from glib import markup_escape_text
 from collections import defaultdict
 from threading import Thread
 import traceback
-import urllib
-import urlparse
+import urllib.request, urllib.parse, urllib.error
+import urllib.parse
 import math
 import cairo
 import gzip
@@ -76,7 +76,7 @@ class MapPoint(object):
         self.gtkcolor = gtkcol(self.color)
 
     def add_reports(self, report_type, reports):
-        for report_type in set(reports.keys() + self.reports.keys()):
+        for report_type in set(list(reports.keys()) + list(self.reports.keys())):
             self.reports[report_type].extend(reports[report_type])
 
 class CrashSite(MapPoint):
@@ -98,15 +98,15 @@ class DownloadThread(Thread):
             os.makedirs(os.path.dirname(geo_db_path))
         self._parent.report_state('getting city database', 0.0)
         try:
-            urllib.urlretrieve('http://xsser.03c8.net/map/GeoLiteCity.dat.gz',
+            urllib.request.urlretrieve('http://xsser.03c8.net/map/GeoLiteCity.dat.gz',
                            geo_db_path+'.gz', reportfunc)
         except:
             try:
-                urllib.urlretrieve('http://xsser.sf.net/map/GeoLiteCity.dat.gz',
+                urllib.request.urlretrieve('http://xsser.sf.net/map/GeoLiteCity.dat.gz',
                            geo_db_path+'.gz', reportfunc)
             except:
                 try:
-                    urllib.urlretrieve('http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz',
+                    urllib.request.urlretrieve('http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz',
                            geo_db_path+'.gz', reportfunc)
                 except:
                     self._parent.report_state('error downloading map', 0.0)
@@ -225,21 +225,21 @@ class GlobalMap(gtk.DrawingArea, XSSerReporter):
                 crawls.extend(point.reports[PointType.crawled])
             if finalsuccess:
                 text += "<b>browser checked sucesses:</b>\n"
-                text += "\n".join(map(lambda s: markup_escape_text(s), finalsuccess))
+                text += "\n".join([markup_escape_text(s) for s in finalsuccess])
                 if failures or success:
                     text += "\n"
 
             if success:
                 text += "<b>sucesses:</b>\n"
-                text += "\n".join(map(lambda s: markup_escape_text(s), success))
+                text += "\n".join([markup_escape_text(s) for s in success])
                 if failures:
                     text += "\n"
             if failures:
                 text += "<b>failures:</b>\n"
-                text += "\n".join(map(lambda s: markup_escape_text(s), failures))
+                text += "\n".join([markup_escape_text(s) for s in failures])
             if crawls and not failures and not success:
                 text += "<b>crawls:</b>\n"
-                text += "\n".join(map(lambda s: markup_escape_text(s), crawls))
+                text += "\n".join([markup_escape_text(s) for s in crawls])
 
             tooltip.set_markup(str(text))
             return True
@@ -313,7 +313,7 @@ class GlobalMap(gtk.DrawingArea, XSSerReporter):
             newpoints[key].append(point)
 
         self._points = []
-        for points in newpoints.itervalues():
+        for points in newpoints.values():
             win_type = points[0]
             win_size = points[0]
             for point in points[1:]:
@@ -413,7 +413,7 @@ class GlobalMap(gtk.DrawingArea, XSSerReporter):
         v = (5.0-self._current_text[1])/5.0
         self.context.scale(0.1+max(v, 1.0), 0.1+max(v, 1.0))
         self.context.set_source_color(gtk.gdk.Color(*gtkcol((v,)*3)))
-        u = urlparse.urlparse(text)
+        u = urllib.parse.urlparse(text)
         self.context.show_text(u.netloc)
         self.context.restore()
 
@@ -468,7 +468,7 @@ class GlobalMap(gtk.DrawingArea, XSSerReporter):
 
 
     def get_latlon_fromurl(self, url):
-        parsed_url = urlparse.urlparse(url)
+        parsed_url = urllib.parse.urlparse(url)
         split_netloc = parsed_url.netloc.split(":")
         if len(split_netloc) == 2:
             server_name, port = split_netloc

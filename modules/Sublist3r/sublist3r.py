@@ -27,8 +27,8 @@ if sys.version > '3':
     import urllib.parse as urlparse
     import urllib.parse as urllib
 else:
-    import urlparse
-    import urllib
+    import urllib.parse
+    import urllib.request, urllib.parse, urllib.error
 
 # In case you cannot install some of the required development packages
 # there's also an option to disable the SSL warning:
@@ -72,7 +72,7 @@ def no_color():
 
 
 def banner():
-    print("""%s
+    print(("""%s
                  ____        _     _ _     _   _____
                 / ___| _   _| |__ | (_)___| |_|___ / _ __
                 \___ \| | | | '_ \| | / __| __| |_ \| '__|
@@ -80,13 +80,13 @@ def banner():
                 |____/ \__,_|_.__/|_|_|___/\__|____/|_|%s%s
 
                 # Coded By Ahmed Aboul-Ela - @aboul3la
-    """ % (R, W, Y))
+    """ % (R, W, Y)))
 
 
 def parser_error(errmsg):
     banner()
-    print("Usage: python " + sys.argv[0] + " [Options] use -h for help")
-    print(R + "Error: " + errmsg + W)
+    print(("Usage: python " + sys.argv[0] + " [Options] use -h for help"))
+    print((R + "Error: " + errmsg + W))
     sys.exit()
 
 
@@ -108,7 +108,7 @@ def parse_args():
 
 def write_file(filename, subdomains):
     # saving subdomains results to output file
-    print("%s[-] Saving results to file: %s%s%s%s" % (Y, W, R, filename, W))
+    print(("%s[-] Saving results to file: %s%s%s%s" % (Y, W, R, filename, W)))
     with open(str(filename), 'wt') as f:
         for subdomain in subdomains:
             f.write(subdomain + os.linesep)
@@ -143,7 +143,7 @@ def subdomain_sorting_key(hostname):
 class enumratorBase(object):
     def __init__(self, base_url, engine_name, domain, subdomains=None, silent=False, verbose=True):
         subdomains = subdomains or []
-        self.domain = urlparse.urlparse(domain).netloc
+        self.domain = urllib.parse.urlparse(domain).netloc
         self.session = requests.Session()
         self.subdomains = []
         self.timeout = 25
@@ -291,7 +291,7 @@ class GoogleEnum(enumratorBaseThreaded):
                 link = re.sub('<span.*>', '', link)
                 if not link.startswith('http'):
                     link = "http://" + link
-                subdomain = urlparse.urlparse(link).netloc
+                subdomain = urllib.parse.urlparse(link).netloc
                 if subdomain and subdomain not in self.subdomains and subdomain != self.domain:
                     if self.verbose:
                         self.print_("%s%s: %s%s" % (R, self.engine_name, W, subdomain))
@@ -301,7 +301,7 @@ class GoogleEnum(enumratorBaseThreaded):
         return links_list
 
     def check_response_errors(self, resp):
-        if (type(resp) is str or type(resp) is unicode) and 'Our systems have detected unusual traffic' in resp:
+        if (type(resp) is str or type(resp) is str) and 'Our systems have detected unusual traffic' in resp:
             self.print_(R + "[!] Error: Google probably now is blocking our requests" + W)
             self.print_(R + "[~] Finished now the Google Enumeration ..." + W)
             return False
@@ -344,7 +344,7 @@ class YahooEnum(enumratorBaseThreaded):
                 link = re.sub("<(\/)?b>", "", link)
                 if not link.startswith('http'):
                     link = "http://" + link
-                subdomain = urlparse.urlparse(link).netloc
+                subdomain = urllib.parse.urlparse(link).netloc
                 if not subdomain.endswith(self.domain):
                     continue
                 if subdomain and subdomain not in self.subdomains and subdomain != self.domain:
@@ -391,7 +391,7 @@ class AskEnum(enumratorBaseThreaded):
             for link in links_list:
                 if not link.startswith('http'):
                     link = "http://" + link
-                subdomain = urlparse.urlparse(link).netloc
+                subdomain = urllib.parse.urlparse(link).netloc
                 if subdomain not in self.subdomains and subdomain != self.domain:
                     if self.verbose:
                         self.print_("%s%s: %s%s" % (R, self.engine_name, W, subdomain))
@@ -440,7 +440,7 @@ class BingEnum(enumratorBaseThreaded):
                 link = re.sub('<(\/)?strong>|<span.*?>|<|>', '', link)
                 if not link.startswith('http'):
                     link = "http://" + link
-                subdomain = urlparse.urlparse(link).netloc
+                subdomain = urllib.parse.urlparse(link).netloc
                 if subdomain not in self.subdomains and subdomain != self.domain:
                     if self.verbose:
                         self.print_("%s%s: %s%s" % (R, self.engine_name, W, subdomain))
@@ -483,7 +483,7 @@ class BaiduEnum(enumratorBaseThreaded):
                 link = re.sub('<.*?>|>|<|&nbsp;', '', link)
                 if not link.startswith('http'):
                     link = "http://" + link
-                subdomain = urlparse.urlparse(link).netloc
+                subdomain = urllib.parse.urlparse(link).netloc
                 if subdomain.endswith(self.domain):
                     subdomain_list.append(subdomain)
                     if subdomain not in self.subdomains and subdomain != self.domain:
@@ -551,7 +551,7 @@ class NetcraftEnum(enumratorBaseThreaded):
         cookies_list = cookie[0:cookie.find(';')].split("=")
         cookies[cookies_list[0]] = cookies_list[1]
         # hashlib.sha1 requires utf-8 encoded str
-        cookies['netcraft_js_verification_response'] = hashlib.sha1(urllib.unquote(cookies_list[1]).encode('utf-8')).hexdigest()
+        cookies['netcraft_js_verification_response'] = hashlib.sha1(urllib.parse.unquote(cookies_list[1]).encode('utf-8')).hexdigest()
         return cookies
 
     def get_cookies(self, headers):
@@ -580,7 +580,7 @@ class NetcraftEnum(enumratorBaseThreaded):
         try:
             links_list = link_regx.findall(resp)
             for link in links_list:
-                subdomain = urlparse.urlparse(link).netloc
+                subdomain = urllib.parse.urlparse(link).netloc
                 if not subdomain.endswith(self.domain):
                     continue
                 if subdomain and subdomain not in self.subdomains and subdomain != self.domain:
@@ -868,7 +868,7 @@ class portscan():
                 pass
         self.lock.release()
         if len(openports) > 0:
-            print("%s%s%s - %sFound open ports:%s %s%s%s" % (G, host, W, R, W, Y, ', '.join(openports), W))
+            print(("%s%s%s - %sFound open ports:%s %s%s%s" % (G, host, W, R, W, Y, ', '.join(openports), W)))
 
     def run(self):
         for subdomain in self.subdomains:
@@ -893,19 +893,19 @@ def main(domain, threads, savefile, ports, silent, verbose, enable_bruteforce, e
     domain_check = re.compile("^(http|https)?[a-zA-Z0-9]+([\-\.]{1}[a-zA-Z0-9]+)*\.[a-zA-Z]{2,}$")
     if not domain_check.match(domain):
         if not silent:
-            print(R + "Error: Please enter a valid domain" + W)
+            print((R + "Error: Please enter a valid domain" + W))
         return []
 
     if not domain.startswith('http://') or not domain.startswith('https://'):
         domain = 'http://' + domain
 
-    parsed_domain = urlparse.urlparse(domain)
+    parsed_domain = urllib.parse.urlparse(domain)
 
     if not silent:
-        print(B + "[-] Enumerating subdomains now for %s" % parsed_domain.netloc + W)
+        print((B + "[-] Enumerating subdomains now for %s" % parsed_domain.netloc + W))
 
     if verbose and not silent:
-        print(Y + "[-] verbosity is enabled, will show the subdomains results in realtime" + W)
+        print((Y + "[-] verbosity is enabled, will show the subdomains results in realtime" + W))
 
     supported_engines = {'baidu': BaiduEnum,
                          'yahoo': YahooEnum,
@@ -947,7 +947,7 @@ def main(domain, threads, savefile, ports, silent, verbose, enable_bruteforce, e
 
     if enable_bruteforce:
         if not silent:
-            print(G + "[-] Starting bruteforce module now using subbrute.." + W)
+            print((G + "[-] Starting bruteforce module now using subbrute.." + W))
         record_type = False
         path_to_file = os.path.dirname(os.path.realpath(__file__))
         subs = os.path.join(path_to_file, 'subbrute', 'names.txt')
@@ -966,18 +966,18 @@ def main(domain, threads, savefile, ports, silent, verbose, enable_bruteforce, e
             write_file(savefile, subdomains)
 
         if not silent:
-            print(Y + "[-] Total Unique Subdomains Found: %s" % len(subdomains) + W)
+            print((Y + "[-] Total Unique Subdomains Found: %s" % len(subdomains) + W))
 
         if ports:
             if not silent:
-                print(G + "[-] Start port scan now for the following ports: %s%s" % (Y, ports) + W)
+                print((G + "[-] Start port scan now for the following ports: %s%s" % (Y, ports) + W))
             ports = ports.split(',')
             pscan = portscan(subdomains, ports)
             pscan.run()
 
         elif not silent:
             for subdomain in subdomains:
-                print(G + subdomain + W)
+                print((G + subdomain + W))
     return subdomains
 
 

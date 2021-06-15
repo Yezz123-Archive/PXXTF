@@ -14,10 +14,10 @@ class Webknight():
     def Run(headers):
         _ = False
         try:
-            for item in headers.items():
+            for item in list(headers.items()):
                 _ = re.search(r'Webknight',item[1],re.I) is not None
                 if _:
                     return "WebKnight Application Firewall (AQTRONIX)"
                     break
-        except Exception,ERROR:
-            print ERROR
+        except Exception as ERROR:
+            print(ERROR)

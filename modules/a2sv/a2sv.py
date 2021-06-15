@@ -10,7 +10,7 @@ import sys
 import argparse
 import socket
 import datetime
-from urlparse import urlparse
+from urllib.parse import urlparse
 sys.path.append(os.path.dirname( os.path.abspath( __file__ ))+"/module")
 from M_ccsinjection import *
 from M_heartbleed import *
@@ -87,7 +87,7 @@ class TablePrinter(object):
         self.width = {key:width for heading,key,width in fmt}
 
     def row(self, data):
-        return self.fmt.format(**{ k:str(data.get(k,''))[:w] for k,w in self.width.iteritems() })
+        return self.fmt.format(**{ k:str(data.get(k,''))[:w] for k,w in self.width.items() })
 
     def __call__(self, dataList):
         _r = self.row
@@ -110,7 +110,7 @@ def runScan(s_type):
     global crime_result
     global anonymous_result
 
-    print ""
+    print("")
     # SSL Check Logic ---------------------------
     showDisplay(displayMode,GREEN+"[INF] Check the SSL.."+END)
     result = subprocess.Popen(['timeout','4','openssl','s_client','-connect',targetIP+":"+str(port)], stderr=subprocess.STDOUT, stdout=subprocess.PIPE).communicate()[0]
@@ -171,16 +171,16 @@ def runScan(s_type):
             showDisplay(displayMode,GREEN+"[RES] Finish scan all vulnerability.."+END)
 
 def outVersion():
-    print "A2SV v"+a2sv_version
+    print("A2SV v"+a2sv_version)
 
 def updateVersion():
-    print GREEN+"[INF] Update A2SV"+END
-    print GREEN+"[INF] This A2SV version is .. v"+a2sv_version+END
+    print(GREEN+"[INF] Update A2SV"+END)
+    print(GREEN+"[INF] This A2SV version is .. v"+a2sv_version+END)
     os.chdir(os.path.dirname( os.path.abspath( __file__ )))
     os.system("git reset --hard HEAD")
     os.system("git pull -v")
     vfp = open(myPath+"/version","r")  #Version File Pointer
-    print RED+"[FIN] Updated A2SV"+END
+    print(RED+"[FIN] Updated A2SV"+END)
 
 def outReport(o_ck,o_path,tmode):
     global ccs_result
@@ -282,7 +282,7 @@ def outReport(o_ck,o_path,tmode):
     ('State', 'v_state', 15)
 ]
     if o_ck == 1:
-        print "The result is in \""+str(o_path)+"\"."
+        print("The result is in \""+str(o_path)+"\".")
         if tmode == 1:
             of = open(str(o_path),'a')
             of.write(" [TARGET]: "+targetIP+"\r\n")
@@ -300,11 +300,11 @@ def outReport(o_ck,o_path,tmode):
             of.write(TablePrinter(fmt, ul='=')(data))
             of.write("\r\n")
     else:
-        print BLUE+" [TARGET]: "+targetIP+END
-        print BLUE+" [PORT]: "+str(port)+END
-        print BLUE+" [SCAN TIME]: "+str(datetime.datetime.now())+END
-        print RED+" [VULNERABILITY]"+END
-        print( TablePrinter(fmt, ul='=')(data) )
+        print(BLUE+" [TARGET]: "+targetIP+END)
+        print(BLUE+" [PORT]: "+str(port)+END)
+        print(BLUE+" [SCAN TIME]: "+str(datetime.datetime.now())+END)
+        print(RED+" [VULNERABILITY]"+END)
+        print(( TablePrinter(fmt, ul='=')(data) ))
 
 ###MAIN##
 parser = argparse.ArgumentParser("a2sv",formatter_class=argparse.RawTextHelpFormatter)
@@ -327,10 +327,10 @@ if args.update:
 if args.display:
     disoption = args.display
     if((disoption == "n") or (disoption == "N")):
-		print "Running a2sv sillent mode"
+	        print("Running a2sv sillent mode")
 		displayMode = 1
     else:
-		displayMode = 0
+		    displayMode = 0
 if args.target:
     target = args.target
     showDisplay(displayMode,BLUE+"[SET] target => "+args.target+END)
@@ -347,7 +347,7 @@ elif args.targetfile:
         line = f.readline()
     targetMode = 1
     displayMode = 1
-    print "Running a2sv sillent mode[file list default]"
+    print("Running a2sv sillent mode[file list default]")
     f.close()
 else:
     mainScreen()
@@ -394,18 +394,18 @@ if displayMode == 0:
 if targetMode == 1:
     i=0
     imax = len(targetfileList)
-    print "_________________________________________________________________________"
-    print "                              [A2SV REPORT]                             "
+    print("_________________________________________________________________________")
+    print("                              [A2SV REPORT]                             ")
     while(i<imax):
         targetIP = targetfileList.pop()
         runScan(checkVun)
         outReport(output_ck,output_path,targetMode)
         i+=1
-    print "_________________________________________________________________________"
+    print("_________________________________________________________________________")
 else:
     runScan(checkVun)
-    print "_________________________________________________________________________"
-    print "                              [A2SV REPORT]                             "
+    print("_________________________________________________________________________")
+    print("                              [A2SV REPORT]                             ")
     outReport(output_ck,output_path,targetMode)
-    print "_________________________________________________________________________"
+    print("_________________________________________________________________________")
 showDisplay(displayMode,RED+"[FIN] Scan Finish!"+END)

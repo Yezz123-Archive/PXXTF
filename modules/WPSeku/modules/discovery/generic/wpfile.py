@@ -31,5 +31,5 @@ class wpfile:
 				if resp.status_code == 200 and resp._content != None:
 					if resp.url == url:
 						wpfile.out.plus('Found {} file under: {}'.format(file[0],resp.url))
-		except Exception,e:
+		except Exception as e:
 			pass

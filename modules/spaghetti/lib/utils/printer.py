@@ -7,7 +7,7 @@
 # @author: Momo Outaadi (M4ll0k)
 # @license: See the file 'doc/LICENSE'
 
-import color
+from . import color
 
 class Printer():
 	R = color.colors().red(1) #red
@@ -19,19 +19,19 @@ class Printer():
 	E = color.colors().end() # reset
 
 	def plus(self,string,flag="+"):
-		print("{}[{}]{} {}{}{}".format(Printer.G,flag,Printer.E,Printer.W,string,Printer.E))
+		print(("{}[{}]{} {}{}{}".format(Printer.G,flag,Printer.E,Printer.W,string,Printer.E)))
 	
 	def less(self,string,flag="-"):
-		print("{}[{}]{} {}{}{}".format(Printer.R,flag,Printer.E,Printer.W,string,Printer.E))
+		print(("{}[{}]{} {}{}{}".format(Printer.R,flag,Printer.E,Printer.W,string,Printer.E)))
 	
 	def error(self,string,flag="!"):
-		print("{}[{}]{} {}{}".format(Printer.R,flag,Printer.E,Printer.NR,string,Printer.E))
+		print(("{}[{}]{} {}{}".format(Printer.R,flag,Printer.E,Printer.NR,string,Printer.E)))
 	
 	def test(self,string,flag="*"):
-		print("{}[{}]{} {}{}{}".format(Printer.B,flag,Printer.E,Printer.W,string,Printer.E))
+		print(("{}[{}]{} {}{}{}".format(Printer.B,flag,Printer.E,Printer.W,string,Printer.E)))
 	
 	def info(self,string,color='G',flag="|"):
 		if color=='G':
-			print(" {}{}{} {}{}{}".format(Printer.G,flag,Printer.E,Printer.W,string,Printer.E))
+			print((" {}{}{} {}{}{}".format(Printer.G,flag,Printer.E,Printer.W,string,Printer.E)))
 		else:
-			print(" {}{}{} {}{}{}".format(Printer.R,flag,Printer.E,Printer.W,string,Printer.E))
+			print((" {}{}{} {}{}{}".format(Printer.R,flag,Printer.E,Printer.W,string,Printer.E)))

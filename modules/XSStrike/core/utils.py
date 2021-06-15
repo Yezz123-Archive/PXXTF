@@ -34,7 +34,7 @@ def counter(string):
 
 def closest(number, numbers):
     difference = [abs(list(numbers.values())[0]), {}]
-    for index, i in numbers.items():
+    for index, i in list(numbers.items()):
         diff = abs(number - i)
         if diff < difference[0]:
             difference = [diff, {index: i}]
@@ -95,8 +95,8 @@ def replaceValue(mapping, old, new, strategy=None):
     Note: A dict is returned regardless of modifications.
     """
     anotherMap = strategy(mapping) if strategy else mapping
-    if old in anotherMap.values():
-        for k in anotherMap.keys():
+    if old in list(anotherMap.values()):
+        for k in list(anotherMap.keys()):
             if anotherMap[k] == old:
                 anotherMap[k] = new
     return anotherMap
@@ -124,7 +124,7 @@ def randomUpper(string):
 
 def flattenParams(currentParam, params, payload):
     flatted = []
-    for name, value in params.items():
+    for name, value in list(params.items()):
         if name == currentParam:
             value = payload
         flatted.append(name + '=' + value)

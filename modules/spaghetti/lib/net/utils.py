@@ -8,7 +8,7 @@
 # @license: See the file 'doc/LICENSE'
 
 import random
-import urlparse
+import urllib.parse
  
 class RandomAgent():
 	def Randomagent(self):
@@ -47,10 +47,10 @@ class Checker():
 
 class Parser():
 	def ParserUrl(self,url):
-		scheme = urlparse.urlsplit(url).scheme
-		netloc = urlparse.urlsplit(url).netloc
-		path = urlparse.urlsplit(url).path
-		query = urlparse.urlsplit(url).query
+		scheme = urllib.parse.urlsplit(url).scheme
+		netloc = urllib.parse.urlsplit(url).netloc
+		path = urllib.parse.urlsplit(url).path
+		query = urllib.parse.urlsplit(url).query
 		if scheme not in ['http','https','']:
 			pass
 		if netloc == "":

@@ -22,15 +22,15 @@ with xsser; if not, write to the Free Software Foundation, Inc., 51
 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 """
 import sys
-import urllib
-import urllib2
-import urlparse
+import urllib.request, urllib.parse, urllib.error
+import urllib.request, urllib.error, urllib.parse
+import urllib.parse
 import pycurl
 import time
 import traceback
-import curlcontrol
-import threadpool
-from Queue import Queue
+from . import curlcontrol
+from . import threadpool
+from queue import Queue
 from collections import defaultdict
 from BeautifulSoup import BeautifulSoup
 
@@ -71,7 +71,7 @@ class Crawler(object):
         if self._reporter:
             self._reporter.report(msg)
         else:
-            print msg
+            print(msg)
 
     def set_reporter(self, reporter):
         self._reporter = reporter
@@ -81,18 +81,18 @@ class Crawler(object):
         find parameters in given url.
         """
         parsed = urllib2.urlparse.urlparse(url)
-        qs = urlparse.parse_qs(parsed.query)
+        qs = urllib.parse.parse_qs(parsed.query)
         if parsed.scheme:
             path = parsed.scheme + "://" + parsed.netloc + parsed.path
         else:
             path = parsed.netloc + parsed.path
         for arg_name in qs:
             key = (arg_name, parsed.netloc)
-            zipped = zip(*self._found_args[key])
+            zipped = list(zip(*self._found_args[key]))
             if not zipped or not path in zipped[0]:
                 self._found_args[key].append([path, url])
                 self.generate_result(arg_name, path, url)
-        ncurrent = sum(map(lambda s: len(s), self._found_args.values()))
+        ncurrent = sum([len(s) for s in list(self._found_args.values())])
         if ncurrent >= self._max:
             self._armed = False
 
@@ -133,13 +133,13 @@ class Crawler(object):
 
     def generate_result(self, arg_name, path, url):
         parsed = urllib2.urlparse.urlparse(url)
-        qs = urlparse.parse_qs(parsed.query)
+        qs = urllib.parse.parse_qs(parsed.query)
         qs_joint = {}
-        for key, val in qs.iteritems():
+        for key, val in qs.items():
             qs_joint[key] = val[0]
         attack_qs = dict(qs_joint)
         attack_qs[arg_name] = "VECTOR"
-        attack_url = path + '?' + urllib.urlencode(attack_qs)
+        attack_url = path + '?' + urllib.parse.urlencode(attack_qs)
         if not attack_url in self._parent.crawled_urls:
             self._parent.crawled_urls.append(attack_url)
 
@@ -223,7 +223,7 @@ class Crawler(object):
                 links.add(href)
             else:
                 break
-        return map(lambda s: {'href': s}, links)
+        return [{'href': s} for s in links]
 
     def _get_done_dummy(self, request, result):
         path = request.args[0][0]
@@ -259,22 +259,22 @@ class Crawler(object):
 
             for form in forms:
                 pars = {}
-                if form.has_key("action"):
-                    action_path = urlparse.urljoin(path, form["action"])
+                if "action" in form:
+                    action_path = urllib.parse.urljoin(path, form["action"])
                 else:
                     action_path = path
                 for input_par in form.find_all('input'):
 
-                    if not input_par.has_key("name"):
+                    if "name" not in input_par:
                         continue
                     value = "foo"
-                    if input_par.has_key("value") and input_par["value"]:
+                    if "value" in input_par and input_par["value"]:
                         value = input_par["value"]
                     pars[input_par["name"]] = value
                 for input_par in form.findAll('select'):
                     pars[input_par["name"]] = "1"
                 if pars:
-                    links.append({"url":action_path + '?' + urllib.urlencode(pars)})
+                    links.append({"url":action_path + '?' + urllib.parse.urlencode(pars)})
                 else:
                     self.report("form with no pars")
                     links.append({"url":action_path})
@@ -299,7 +299,7 @@ class Crawler(object):
                 continue
             if href.startswith("javascript") or href.startswith('mailto:'):
                 continue
-            href = urlparse.urljoin(path, href)
+            href = urllib.parse.urljoin(path, href)
             if not href.startswith("http") or not "." in href:
                 continue
             href = href.split('#',1)[0]

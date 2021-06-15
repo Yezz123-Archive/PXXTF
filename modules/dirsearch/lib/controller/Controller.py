@@ -150,7 +150,7 @@ class Controller(object):
                     if self.arguments.useRandomAgents:
                         self.requester.setRandomAgents(self.randomAgents)
 
-                    for key, value in arguments.headers.items():
+                    for key, value in list(arguments.headers.items()):
                         self.requester.setHeader(key, value)
 
                     # Initialize directories Queue with start Path
@@ -389,7 +389,7 @@ class Controller(object):
 
                 self.output.inLine(msg + ': ')
 
-                option = input()
+                option = eval(input())
 
                 if option.lower() == 'e':
                     self.exit = True

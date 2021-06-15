@@ -14,11 +14,11 @@ class Bigip():
     def Run(headers):
         _ = False
         try:
-            for item in headers.items():
+            for item in list(headers.items()):
                 _  = re.search(r'BigIP|BIGipServer',item[1],re.I) is not None
                 _ |= re.search(r'TS\w{4,}=',item[1],re.I) is not None
                 if _: 
                     return "BIG-IP Application Security Manager (F5 Networks)"
                     break
-        except Exception,ERROR:
-            print ERROR
+        except Exception as ERROR:
+            print(ERROR)

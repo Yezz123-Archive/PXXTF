@@ -14,12 +14,12 @@ class Asp():
 	def Run(content,headers):
 		_ = False
 		try:
-			for item in headers.items():
+			for item in list(headers.items()):
 				_ = re.search('ASP.NET|X-AspNet-Version|x-aspnetmvc-version',str(item),re.I) is not None
 				_ |= re.search(r'(__VIEWSTATE\W*)',content) is not None
 				_ |= re.search(r'(.asp"|.aspx")',content) is not None
 				if _:
 					return "ASP.NET"
 					break
-		except Exception,ERROR:
-			print ERROR
+		except Exception as ERROR:
+			print(ERROR)

@@ -14,10 +14,10 @@ class Rack():
 	def Run(headers):
 		_ = False
 		try:
-			for item in headers.items():
+			for item in list(headers.items()):
 				_ = re.search(r'mod_rack*|rack.session=*|x-rack|X-Rack-Cache',str(item),re.I) is not None 
 				if _:
 					return "Rack"
 					break
-		except Exception,ERROR:
+		except Exception as ERROR:
 			pass

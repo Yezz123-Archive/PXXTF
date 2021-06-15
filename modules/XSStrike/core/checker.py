@@ -42,4 +42,4 @@ def checker(url, params, headers, GET, delay, payload, positions, timeout, encod
         else:
             efficiencies.append(0)
         num += 1
-    return list(filter(None, efficiencies))
+    return list([_f for _f in efficiencies if _f])

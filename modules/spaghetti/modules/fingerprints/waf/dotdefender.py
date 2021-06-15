@@ -14,10 +14,10 @@ class Dotdefender():
     def Run(headers):
         _ = False
         try:
-            for item in headers.items():
+            for item in list(headers.items()):
                 _  = re.search(r'X-dotDefender-denied',item[0],re.I) is not None
                 if _:
                     return "dotDefender Web Application Firewall (Applicure Technologies)"
                     break
-        except Exception,ERROR:
-            print ERROR
+        except Exception as ERROR:
+            print(ERROR)

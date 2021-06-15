@@ -18,8 +18,8 @@ from progressbar import *
 import ssl
 import codecs
 from time import sleep
-import urllib
-import urllib2
+import urllib.request, urllib.parse, urllib.error
+import urllib.request, urllib.error, urllib.parse
 
 def firePayload(type, payloads, url, params, header, delay, outputFile, proxy, prefix, postfix):
     """
@@ -50,7 +50,7 @@ def firePayload(type, payloads, url, params, header, delay, outputFile, proxy, p
         :todo: Add threads in order to send requests simultaneously
 		
     """
-    print '''
+    print('''
 ___       ______________________   ______       ________        
 __ |     / /__    |__  ____/__  | / /__(_)____________(_)_____ _
 __ | /| / /__  /| |_  /_   __   |/ /__  /__  __ \____  /_  __ `/
@@ -59,17 +59,17 @@ ____/|__/  /_/  |_/_/      /_/ |_/  /_/  /_/ /_/___  /  \__,_/
                                                 /___/           
 
 WAFNinja - Penetration testers favorite for WAF Bypassing
-    '''
+    ''')
     pbar = ProgressBar(widgets=[SimpleProgress(), ' Payloads sent!    ', Percentage(), Bar()])
     if proxy is not '':
-        httpProxy = urllib2.ProxyHandler({'http': proxy, 'https': proxy})
+        httpProxy = urllib.request.ProxyHandler({'http': proxy, 'https': proxy})
         ctx = ssl.create_default_context()
         ctx.check_hostname = False
         ctx.verify_mode = ssl.CERT_NONE
-        opener = urllib2.build_opener(urllib2.HTTPSHandler(context=ctx), httpProxy)
-        urllib2.install_opener(opener)
+        opener = urllib.request.build_opener(urllib.request.HTTPSHandler(context=ctx), httpProxy)
+        urllib.request.install_opener(opener)
     else:
-        opener = urllib2.build_opener()
+        opener = urllib.request.build_opener()
     opener.addheaders = [('User-Agent', 'Mozilla/5.0')]
     for h in header:
         opener.addheaders.append(h)
@@ -85,7 +85,7 @@ WAFNinja - Penetration testers favorite for WAF Bypassing
                 response = opener.open(url_with_payload)
             else: # POST parameter  
                 params_with_payload = setParams(params, payload_enc) 
-                response = opener.open(url, urllib.urlencode(params_with_payload))
+                response = opener.open(url, urllib.parse.urlencode(params_with_payload))
             content = response.read()
             occurence = content.find(payload_enc)
             result.append({
@@ -93,9 +93,9 @@ WAFNinja - Penetration testers favorite for WAF Bypassing
                           'httpCode': response.getcode(), 
                           'contentLength': len(content),
                           'output': content[occurence:occurence + len(payload_enc)]})  # take string from occurence to occurence+len(expected)
-        except urllib2.HTTPError, error: # HTTP Status != 200
+        except urllib.error.HTTPError as error: # HTTP Status != 200
             if error.code == 404:
-                print 'ERROR: Target URL not reachable!'
+                print('ERROR: Target URL not reachable!')
                 sys.exit()
             else: # HTTP Status != 404
                 result.append({
@@ -255,10 +255,10 @@ def showOutput(type, url, result, outputFile, delay, proxy, prefix, postfix):
         file = codecs.open(outputFile, 'w', encoding='utf-8')
         file.write(table) 
         file.close() 
-        print 'Output saved to ' + outputFile + '!'
-        print 'Good luck.'
+        print('Output saved to ' + outputFile + '!')
+        print('Good luck.')
     else:
-        print table
+        print(table)
 
 def insertPayload(url, payload):
     """

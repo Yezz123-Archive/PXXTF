@@ -30,7 +30,7 @@ class AllowMethod():
 		for x in dbfiles:
 			try:
 				resp = self.http.Send(url=self.url,method=x[0])
-				if re.search(r'allow|public',str(resp.headers.keys()),re.I):
+				if re.search(r'allow|public',str(list(resp.headers.keys())),re.I):
 					allow = resp.headers['allow']
 					if allow == None: allow += resp.headers['public']
 					self.printer.plus('Allowed HTTP Methods: %s'%allow)

@@ -76,7 +76,7 @@ CHROME_BIN = 'google-chrome'
 CHROMIUM_BIN = 'chromium'
 
 WEBSCREENSHOT_JS = os.path.abspath(os.path.join(os.path.dirname(os.path.realpath(__file__)), './webscreenshot.js'))
-SCREENSHOTS_DIRECTORY = os.path.abspath(os.path.join(os.getcwdu(), './screenshots/'))
+SCREENSHOTS_DIRECTORY = os.path.abspath(os.path.join(os.getcwd(), './screenshots/'))
 
 # Logger definition
 LOGLEVELS = {0 : 'ERROR', 1 : 'INFO', 2 : 'DEBUG'}
@@ -201,7 +201,7 @@ def extract_all_matched_named_groups(regex, match):
             
     """
     result = {}
-    for name, id in regex.groupindex.items():
+    for name, id in list(regex.groupindex.items()):
         matched_value = match.group(name)
         if matched_value != None: result[name] = matched_value
     
@@ -219,7 +219,7 @@ def entry_format_validator(line):
             'entry_from_csv'        : entry_from_csv
     }
     
-    for name, regex in tab.items():
+    for name, regex in list(tab.items()):
         validator = regex.match(line)
         if validator:
             return extract_all_matched_named_groups(regex, validator)
@@ -245,7 +245,7 @@ def parse_targets(options, arguments):
         matches = entry_format_validator(line)
         
         # pass if line can be recognized as a correct input, or if no 'host' group could be found with all the regexes
-        if matches == None or not('host' in matches.keys()):
+        if matches == None or not('host' in list(matches.keys())):
             logger_gen.warn("Line %s '%s' could not have been recognized as a correct input" % (index, line))
             pass
         else:
@@ -254,7 +254,7 @@ def parse_targets(options, arguments):
             # Protocol is 'http' by default, unless ssl is forced
             if options.ssl == True:
                 protocol = 'https'
-            elif 'protocol' in matches.keys():
+            elif 'protocol' in list(matches.keys()):
                 protocol = str(matches['protocol'])
             else:
                 protocol = 'http'
@@ -262,7 +262,7 @@ def parse_targets(options, arguments):
             # Port is ('80' for http) or ('443' for https) by default, unless a specific port is supplied
             if options.port != None:
                 port = options.port
-            elif 'port' in matches.keys():
+            elif 'port' in list(matches.keys()):
                 port = int(matches['port'])
                 
                 # if port is 443, assume protocol is https if is not specified
@@ -271,20 +271,20 @@ def parse_targets(options, arguments):
                 port = 443 if protocol == 'https' else 80
             
             # No resource URI by default
-            if 'res' in matches.keys():
+            if 'res' in list(matches.keys()):
                 res = str(matches['res'])
             else:
                 res = None
             
             # perform screenshots over HTTP and HTTPS for each target
             if options.multiprotocol:
-                final_uri_http_port = int(matches['port']) if 'port' in matches.keys() else 80
+                final_uri_http_port = int(matches['port']) if 'port' in list(matches.keys()) else 80
                 final_uri_http = '%s://%s:%s' % ('http', host, final_uri_http_port)
                 target_list.append(final_uri_http)
                 logger_gen.info("'%s' has been formatted as '%s' with supplied overriding options" % (line, final_uri_http))
                 
                 
-                final_uri_https_port = int(matches['port']) if 'port' in matches.keys() else 443
+                final_uri_https_port = int(matches['port']) if 'port' in list(matches.keys()) else 443
                 final_uri_https = '%s://%s:%s' % ('https', host, final_uri_https_port)
                 target_list.append(final_uri_https)
                 logger_gen.info("'%s' has been formatted as '%s' with supplied overriding options" % (line, final_uri_https))
@@ -372,22 +372,22 @@ def take_screenshot(url_list, options):
     global SHELL_EXECUTION_OK, SHELL_EXECUTION_ERROR
     
     screenshot_number = len(url_list)
-    print "[+] %s URLs to be screenshot" % screenshot_number
+    print("[+] %s URLs to be screenshot" % screenshot_number)
     
     pool = multiprocessing.Pool(processes=int(options.workers), initializer=init_worker)
     
-    taken_screenshots = [r for r in pool.imap(func=craft_cmd, iterable=itertools.izip(url_list, itertools.repeat(options)))]
+    taken_screenshots = [r for r in pool.imap(func=craft_cmd, iterable=zip(url_list, itertools.repeat(options)))]
 
     screenshots_error_url = [url for retval, url in taken_screenshots if retval == SHELL_EXECUTION_ERROR]
     screenshots_error = sum(retval == SHELL_EXECUTION_ERROR for retval, url in taken_screenshots)
     screenshots_ok = int(screenshot_number - screenshots_error)
     
-    print "[+] %s actual URLs screenshot" % screenshots_ok
-    print "[+] %s error(s)" % screenshots_error
+    print("[+] %s actual URLs screenshot" % screenshots_ok)
+    print("[+] %s error(s)" % screenshots_error)
     
     if screenshots_error != 0:
         for url in screenshots_error_url:
-            print "    %s" % url
+            print("    %s" % url)
 
     return None
     
@@ -398,7 +398,7 @@ def main():
     global VERSION, SCREENSHOTS_DIRECTORY, LOGLEVELS
     signal.signal(signal.SIGINT, kill_em_all)
     
-    print 'webscreenshot.py version %s\n' % VERSION
+    print('webscreenshot.py version %s\n' % VERSION)
     
     options, arguments = parser.parse_args()
        
@@ -415,7 +415,7 @@ def main():
         parser.error('Please specify either an input file or an URL')
     
     if (options.output_directory != None):
-        SCREENSHOTS_DIRECTORY = os.path.abspath(os.path.join(os.getcwdu(), options.output_directory))
+        SCREENSHOTS_DIRECTORY = os.path.abspath(os.path.join(os.getcwd(), options.output_directory))
     
     logger_gen.debug("Options: %s\n" % options)
     if not os.path.exists(SCREENSHOTS_DIRECTORY):

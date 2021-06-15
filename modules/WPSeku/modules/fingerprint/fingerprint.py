@@ -6,9 +6,9 @@
 # @url: https://github.com/m4ll0k/WPSeku
 # @author: Momo Outaadi (M4ll0k)
 
-import waf
-import server
-import headers
+from . import waf
+from . import server
+from . import headers
 
 from lib import wphttp
 from lib import wpprint
@@ -32,5 +32,5 @@ class fingerprint:
 			waf.wpwaf().run(resp._content)
 			headers.wpheaders().run(resp.headers)
 			wpprint.wpprint().passs()
-		except Exception,e:
+		except Exception as e:
 			pass

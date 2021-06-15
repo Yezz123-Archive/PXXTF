@@ -14,10 +14,10 @@ class Modsecurity():
     def Run(headers):
         _ = False
         try:
-            for item in headers.items():
+            for item in list(headers.items()):
                 _ = re.search(r'Mod_Security|NOYB',item[1],re.I) is not None
                 if _:
                     return "ModSecurity Web Application Firewall (Trustwave)"
                     break
-        except Exception,ERROR:
-            print ERROR
+        except Exception as ERROR:
+            print(ERROR)

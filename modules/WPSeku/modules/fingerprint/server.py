@@ -13,9 +13,9 @@ class wpserver:
 	def run(self,headers):
 		server = ""
 		try:
-			for item in headers.items():
+			for item in list(headers.items()):
 				if re.search(r'server',item[0],re.I): server = item[1]
 			if server != "":
 				wpprint.wpprint().plus('Server: {}'.format(server))
-		except Exception,e:
+		except Exception as e:
 			pass

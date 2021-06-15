@@ -85,7 +85,7 @@ log_config = {
 class CustomFormatter(logging.Formatter):
     def format(self, record):
         msg = super().format(record)
-        if record.levelname in log_config.keys():
+        if record.levelname in list(log_config.keys()):
             msg = '%s %s %s' % (log_config[record.levelname]['prefix'], msg, end)
         return msg
 
@@ -124,7 +124,7 @@ def _switch_to_default_loggers(self):
 
 
 def _get_level_and_log(self, msg, level):
-    if level.upper() in log_config.keys():
+    if level.upper() in list(log_config.keys()):
         log_method = getattr(self, level.lower())
         log_method(msg)
     else:

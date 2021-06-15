@@ -18,5 +18,5 @@ class Joomla():
 			if _:
 				if re.search('/templates/*',content,re.I):
 					return "Joomla"
-		except Exception,ERROR:
-			print ERROR
+		except Exception as ERROR:
+			print(ERROR)

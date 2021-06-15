@@ -35,7 +35,7 @@ class wpversion:
 				if vers:
 					wpversion.out.plus('Running WordPress version: {}'.format(vers[0]))
 					self.dbwpscan(vers[0])
-		except Exception,e:
+		except Exception as e:
 			try:
 				url = wpversion.chk.path(self.url,'/feed')
 				resp = self.req.send(url,c=self.cookie)
@@ -44,7 +44,7 @@ class wpversion:
 					if vers:
 						wpversion.out.plus('Running WordPress version: {}'.format(vers[0]))
 						self.dbwpscan(vers[0])
-			except Exception,e:
+			except Exception as e:
 				try:
 					url = wpversion.chk.path(self.url,'/feed/atom')
 					resp = self.req.send(url,c=self.cookie)
@@ -53,7 +53,7 @@ class wpversion:
 						if vers:
 							wpversion.out.plus('Running WordPress version: {}'.format(vers[0]))
 							self.dbwpscan(vers[0])
-				except Exception,e:
+				except Exception as e:
 					try:
 						url = wpversion.chk.path(self.url,'readme.html')
 						resp = self.req.send(url,c=self.cookie)
@@ -62,7 +62,7 @@ class wpversion:
 							if vers:
 								wpversion.out.plus('Running WordPress version: {}'.format(vers[0]))
 								self.dbwpscan(vers[0])
-					except Exception,e:
+					except Exception as e:
 						try:
 							url = wpversion.chk.path(self.url,'')
 							resp = self.req.send(url,c=self.cookie)
@@ -71,7 +71,7 @@ class wpversion:
 								if vers:
 									wpversion.out.plus('Running WordPress version: {}'.format(vers[0]))
 									self.dbwpscan(vers[0])
-						except Exception,e:
+						except Exception as e:
 							pass
 
 	def dbwpscan(self,version):
@@ -84,7 +84,7 @@ class wpversion:
 				if js[version]['release_date']:
 					wpversion.out.more('Release date: {}'.format(js[version]['release_date']))
 				if js[version]['vulnerabilities']:
-					for x in xrange(len(js[version]['vulnerabilities'])):
+					for x in range(len(js[version]['vulnerabilities'])):
 						wpversion.out.more('Title: {}'.format(js[version]['vulnerabilities'][x]['title']))
 						if js[version]['vulnerabilities'][x]['references']['url']:
 							for y in range(len(js[version]['vulnerabilities'][x]['references']['url'])):
@@ -94,14 +94,14 @@ class wpversion:
 					wpversion.out.more('Not found vulnerabilities')
 			elif not js[version]:
 				wpversion.out.more('Not found vulnerabilities')
-		except Exception,e:
+		except Exception as e:
 			pass
 
 	def Version(self,vers):
 		try:
 			v = ""
-			for vv in xrange(len(vers.split('.'))):
+			for vv in range(len(vers.split('.'))):
 				v += vers.split('.')[vv]
 			return v
-		except Exception,e:
+		except Exception as e:
 			pass

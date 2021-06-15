@@ -28,6 +28,6 @@ class wprobots:
 			if resp.status_code == 200 and resp._content != None:
 				if resp.url == url:
 					wprobots.out.plus('Robots available under: {}'.format(resp.url))
-					print "-------------------------\r\n{}\n-------------------------".format(resp._content)
-		except Exception,e:
+					print("-------------------------\r\n{}\n-------------------------".format(resp._content))
+		except Exception as e:
 			pass

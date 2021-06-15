@@ -7,13 +7,13 @@
 # @author: Momo Outaadi (M4ll0k)
 # @license: See the file 'doc/LICENSE'
 
-from lang import lang
-from framework import framework
-from header import headers
-from cms import cms
-from server import server
-from waf import waf
-from os import os
+from .lang import lang
+from .framework import framework
+from .header import headers
+from .cms import cms
+from .server import server
+from .waf import waf
+from .os import os
 from lib.net import http
 from lib.net import utils
 from lib.utils import printer
@@ -63,4 +63,4 @@ class CheckAll():
 					self.printer.plus('CMS: %s'%x)
 			headers.Headers().Run(resp.headers)
 		except Exception as Error:
-			print Error
+			print(Error)

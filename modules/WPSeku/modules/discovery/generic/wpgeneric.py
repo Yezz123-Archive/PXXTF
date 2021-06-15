@@ -6,14 +6,14 @@
 # @url: https://github.com/m4ll0k/WPSeku
 # @author: Momo Outaadi (M4ll0k)
  
-import wpfile
-import wpfpd
-import wpconfig
-import wplisting
-import wplogin
-import wprobots
-import wpversion
-import wpxmlrpc
+from . import wpfile
+from . import wpfpd
+from . import wpconfig
+from . import wplisting
+from . import wplogin
+from . import wprobots
+from . import wpversion
+from . import wpxmlrpc
 
 from lib import wpprint
 

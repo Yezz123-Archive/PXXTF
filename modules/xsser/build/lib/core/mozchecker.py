@@ -76,7 +76,7 @@ class MozChecker(object):
 
     def on_new_window(self, widget, retval, chromemask):
         print("new window")
-        print(widget, retval, chromemask)
+        print((widget, retval, chromemask))
         return False
 
     def open_webbrowser(self, url):
@@ -104,7 +104,7 @@ class MozChecker(object):
         widget.get_js_status()
 
     def on_net_state(self, widget, flags, status):
-        print("net_state", widget, flags, status)
+        print(("net_state", widget, flags, status))
 
     def on_net_stop(self, widget=None):
         gtk.gdk.threads_enter()
@@ -126,7 +126,7 @@ if __name__ == '__main__':
     def alertkill():
         for a in gtk.window_list_toplevels():
             if a.get_title() and (a.get_title() == 'Alert' or 'says' in a.get_title() or 'Warning' in a.get_title()):
-                print(a.get_children())
+                print((a.get_children()))
                 a.hide()
                 a.destroy()
                 gtk.main_quit()

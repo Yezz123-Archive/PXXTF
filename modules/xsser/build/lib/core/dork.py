@@ -23,7 +23,7 @@ Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 List of search engines: http://en.wikipedia.org/wiki/List_of_search_engines
 
 """
-import urllib2, traceback, re, random
+import urllib.request, urllib.error, urllib.parse, traceback, re, random
 urllib2.socket.setdefaulttimeout(5.0)
 
 DEBUG = 0
@@ -51,25 +51,25 @@ class Dorker(object):
         elif self._engine == 'yahoo': # works at 20-02-2011 -> 19-02-2016 -> -> 09-04-2018
             search_url = 'https://search.yahoo.com/search?q="' + search + '"'
         else:
-            print "\n[Error] This search engine is not supported!\n" 
-            print "[Info] List of available:"
-            print '-'*25
+            print("\n[Error] This search engine is not supported!\n") 
+            print("[Info] List of available:")
+            print('-'*25)
             for e in self.search_engines:
-                print "+ "+e
-            print ""
+                print("+ "+e)
+            print("")
         try:
             self.search_url = search_url
-            print "\n[Info] Search query:", urllib2.unquote(search_url)
+            print("\n[Info] Search query:", urllib.parse.unquote(search_url))
             user_agent = random.choice(self.agents).strip() # set random user-agent
             referer = '127.0.0.1' # set referer to localhost / WAF black magic!
             headers = {'User-Agent' : user_agent, 'Referer' : referer}
-            req = urllib2.Request(search_url, None, headers)
-            html_data = urllib2.urlopen(req).read()
-            print "\n[Info] Retrieving requested info..."
-        except urllib2.URLError, e:
+            req = urllib.request.Request(search_url, None, headers)
+            html_data = urllib.request.urlopen(req).read()
+            print("\n[Info] Retrieving requested info...")
+        except urllib.error.URLError as e:
             if DEBUG:
                 traceback.print_exc()
-            print "\n[Error] Cannot connect!"
+            print("\n[Error] Cannot connect!")
             return
         if self._engine == 'bing':
             regex = '<h2><a href="(.+?)" h=' # regex magics 09-04/2018
@@ -80,7 +80,7 @@ class Dorker(object):
         found_links = []
         if links:
             for link in links:
-                link = urllib2.unquote(link)
+                link = urllib.parse.unquote(link)
                 if self._engine == "yahoo":
                     if "RU=https://www.yahoo.com/" in link:
                         link = "" # invalid url
@@ -90,7 +90,7 @@ class Dorker(object):
                     if link2 not in found_links: # parse that target is not duplicated
                         found_links.append(link)
         else:
-            print "\n[Info] Not any link found for that query!"
+            print("\n[Info] Not any link found for that query!")
         return found_links
 
 if __name__ == '__main__':
@@ -98,6 +98,6 @@ if __name__ == '__main__':
         dork = Dorker(a)
         res = dork.dork("news.php?id=")
         if res:
-            print "[+]", a, ":", len(res), "\n"
+            print("[+]", a, ":", len(res), "\n")
             for b in res:
-                print " *", b
+                print(" *", b)

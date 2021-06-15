@@ -42,13 +42,13 @@ class wpusers:
 						for i in author:
 							if i[0] not in df_users:
 								df_users.append(author[0])
-			except Exception,e:
+			except Exception as e:
 				pass
 		for i in df_users:
 			if i not in users:
 				users.append(i)
 		if users != []:
-			for user in xrange(len(users)):
+			for user in range(len(users)):
 				if '%20' in users[user][0]:
 					wpusers.out.more(' ID: {}  -  Login: {}'.format(user,
 						users[user].replace('%20',' ')))

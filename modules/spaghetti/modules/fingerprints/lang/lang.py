@@ -7,11 +7,11 @@
 # @author: Momo Outaadi (M4ll0k)
 # @license: See the file 'doc/LICENSE'
 
-import asp
-import java
-import php	
-import python
-import ruby
+from . import asp
+from . import java
+from . import php	
+from . import python
+from . import ruby
 
 def Lang(content,headers):
 	return (

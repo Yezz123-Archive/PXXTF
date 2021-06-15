@@ -62,8 +62,8 @@ class wptheme:
 
 			elif themes == None:
 				wptheme.out.warning('Not found themes..')
-		except Exception,e:
-			print e
+		except Exception as e:
+			print(e)
 
 	def info(self,theme):
 		try:
@@ -76,7 +76,7 @@ class wptheme:
 				wptheme.out.more('Author: {}'.format(re.findall('Author: (\S+)',resp.content)[0]))
 				wptheme.out.more('Author URL: {}'.format(re.findall('Author URL: (\S+)',resp.content)[0]))
 				wptheme.out.more('Version: {}'.format(re.findall('Version: (\d+.\d+[.\d+]*)',resp.content)[0]))
-		except Exception,e:
+		except Exception as e:
 			pass
 
 	def style(self,theme):
@@ -87,7 +87,7 @@ class wptheme:
 			if resp.status_code == 200 and resp.content != None:
 				if resp.url == url:
 					wptheme.out.more('Style: {}'.format(resp.url))
-		except Exception,e:
+		except Exception as e:
 			pass
 
 	def changelog(self,theme):
@@ -101,7 +101,7 @@ class wptheme:
 					if resp.url == url:
 						wptheme.out.more('Changelog: {}'.format(resp.url))
 						exit()
-		except Exception,e:
+		except Exception as e:
 			pass
 
 	def fullpathdisc(self,theme):
@@ -119,7 +119,7 @@ class wptheme:
 						if re.search('Fatal error',resp.content):
 							wptheme.out.more('Full Path Disclosure: {}'.format(resp.url))
 							exit()
-		except Exception,e:
+		except Exception as e:
 			pass
 
 	def license(self,theme):
@@ -133,7 +133,7 @@ class wptheme:
 					if resp.url == url:
 						wptheme.out.more('License: {}'.format(resp.url))
 						exit()
-		except Exception,e:
+		except Exception as e:
 			pass
 
 	def listing(self,theme):
@@ -149,7 +149,7 @@ class wptheme:
 					if resp.url == url:
 						if re.search('Index of',resp.content):
 							wptheme.out.more('Listing: {}'.format(resp.url))
-		except Exception,e:
+		except Exception as e:
 			pass
 
 	def readme(self,theme):
@@ -163,7 +163,7 @@ class wptheme:
 					if resp.url == url:
 						wptheme.out.more('Readme: {}'.format(resp.url))
 						exit()
-		except Exception,e:
+		except Exception as e:
 			pass
 
 	def dbwpscan(self,theme):
@@ -172,10 +172,10 @@ class wptheme:
 			resp = requests.packages.urllib3.disable_warnings()
 			resp = requests.get(url,headers={'user-agent':self.agent},verify=False)
 			js = json.loads(resp._content,'UTF-8')
-			print js
+			print(js)
 			if js[theme]:
 				if js[theme]['vulnerabilities']:
-					for x in xrange(len(js[theme]['vulnerabilities'])):
+					for x in range(len(js[theme]['vulnerabilities'])):
 						wptheme.out.more('Title: {}'.format(js[theme]['vulnerabilities'][x]['title']))
 						if js[theme]['vulnerabilities'][x]['references']['url']:
 							for y in range(len(js[theme]['vulnerabilities'][x]['references']['url'])):
@@ -185,5 +185,5 @@ class wptheme:
 					wptheme.out.more('Not found vulnerabilities')
 			elif not js[theme]:
 				wptheme.out.more('Not found vulnerabilities')
-		except Exception,e:
+		except Exception as e:
 			pass

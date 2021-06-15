@@ -28,5 +28,5 @@ class wpxmlrpc:
 			if resp.status_code == 405 and resp._content != None:
 				if resp.url == url:
 					wpxmlrpc.out.plus('XML-RPC Interface available under: {}'.format(resp.url))
-		except Exception,e:
+		except Exception as e:
 			pass

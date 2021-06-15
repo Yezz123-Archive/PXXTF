@@ -32,7 +32,7 @@ class wpconfig:
 					if re.search(r'\S+define(\S+,*)',resp._content):
 						wpconfig.out.plus('wp-config available under: {}'.format(resp.url))
 			self.wpbk()
-		except Exception,e:
+		except Exception as e:
 			pass
 
 	def wpbk(self):
@@ -47,5 +47,5 @@ class wpconfig:
 					if resp.url == url:
 						wpconfig.out.plus('wp-config backup available under: {}'.format(resp.url))
 						exit()
-		except Exception,e:
+		except Exception as e:
 			pass

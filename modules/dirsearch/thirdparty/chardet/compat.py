@@ -25,8 +25,8 @@ import sys
 if sys.version_info < (3, 0):
     PY2 = True
     PY3 = False
-    base_str = (str, unicode)
-    text_type = unicode
+    base_str = (str, str)
+    text_type = str
 else:
     PY2 = False
     PY3 = True

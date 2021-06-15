@@ -64,7 +64,7 @@ def merge_setting(request_setting, session_setting, dict_class=OrderedDict):
 
     # Remove keys that are set to None. Extract keys first to avoid altering
     # the dictionary during iteration.
-    none_keys = [k for (k, v) in merged_setting.items() if v is None]
+    none_keys = [k for (k, v) in list(merged_setting.items()) if v is None]
     for key in none_keys:
         del merged_setting[key]
 
@@ -617,7 +617,7 @@ class Session(SessionRedirectMixin):
         if self.trust_env:
             # Set environment's proxies.
             env_proxies = get_environ_proxies(url) or {}
-            for (k, v) in env_proxies.items():
+            for (k, v) in list(env_proxies.items()):
                 proxies.setdefault(k, v)
 
             # Look for requests environment configuration and be compatible
@@ -637,7 +637,7 @@ class Session(SessionRedirectMixin):
 
     def get_adapter(self, url):
         """Returns the appropriate connnection adapter for the given URL."""
-        for (prefix, adapter) in self.adapters.items():
+        for (prefix, adapter) in list(self.adapters.items()):
 
             if url.lower().startswith(prefix):
                 return adapter
@@ -647,7 +647,7 @@ class Session(SessionRedirectMixin):
 
     def close(self):
         """Closes all adapters and as such the session"""
-        for v in self.adapters.values():
+        for v in list(self.adapters.values()):
             v.close()
 
     def mount(self, prefix, adapter):
@@ -668,11 +668,11 @@ class Session(SessionRedirectMixin):
 
     def __setstate__(self, state):
         redirect_cache = state.pop('redirect_cache', {})
-        for attr, value in state.items():
+        for attr, value in list(state.items()):
             setattr(self, attr, value)
 
         self.redirect_cache = RecentlyUsedContainer(REDIRECT_CACHE_SIZE)
-        for redirect, to in redirect_cache.items():
+        for redirect, to in list(redirect_cache.items()):
             self.redirect_cache[redirect] = to
 
 

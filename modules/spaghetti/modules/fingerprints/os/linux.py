@@ -13,12 +13,12 @@ class Linux():
 	@staticmethod	
 	def Run(os):
 		try:
-			for item in os.items():
+			for item in list(os.items()):
 				_  = re.findall(r'linux|ubuntu|gentoo|debian|dotdeb|centos|redhat|sarge|etch|lenny|squeeze|wheezy|jessie|red hat|scientific linux',str(item),re.I)
 				if _:
 					if len(_)==2:return _[0]
 					else: 
 						return _[0]
 					break
-		except Exception,ERROR:
-			print ERROR
+		except Exception as ERROR:
+			print(ERROR)

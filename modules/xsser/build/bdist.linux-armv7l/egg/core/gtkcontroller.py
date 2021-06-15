@@ -24,7 +24,7 @@ import os, datetime
 import math
 import gtk
 import socket
-import urlparse
+import urllib.parse
 import webbrowser
 import threading
 import gobject
