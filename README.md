@@ -1,5 +1,5 @@
 <p align="center"> 
-    <img src="img/school-of-athens.jpg" alt="School of Athena">
+    <img src="https://github.com/yezz123/yezz123/blob/master/img/school-of-athens.jpg" alt="School of Athena">
 </p>
 
 ## About Pentest Tools Framework
