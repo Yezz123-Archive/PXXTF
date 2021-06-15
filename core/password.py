@@ -13,7 +13,7 @@ E = '\033[0m' # End
 
 
 def base64():
-    list = raw_input(""+N+"Pentest>> ("+B+"modules/password)("+R+"password/base64_decode"+N+"): ")
+    list = eval(input(""+N+"Pentest>> ("+B+"modules/password)("+R+"password/base64_decode"+N+"): "))
     if list == 'show options':
         help.option()
         base64()
@@ -21,16 +21,16 @@ def base64():
          core.menu.exploits()
 
     elif list == 'set target':
-         tar = raw_input(""+N+"Pentest>> ("+B+"modules/password)("+R+"password/base64_decode"+G+" (set base64)"+N+"): ")
-         print "base64 =>"+R+"",tar
-         go = raw_input(""+N+"Pentest>> ("+B+"modules/password)("+R+"password/base64_decode "+N+"): ")
+         tar = eval(input(""+N+"Pentest>> ("+B+"modules/password)("+R+"password/base64_decode"+G+" (set base64)"+N+"): "))
+         print(("base64 =>"+R+"",tar))
+         go = eval(input(""+N+"Pentest>> ("+B+"modules/password)("+R+"password/base64_decode "+N+"): "))
          if go == "run":
-             print
-             print""+G+""'Start Decode base64',tar
+             print()
+             print((""+G+""'Start Decode base64',tar))
              time.sleep(2)
-             print ""+R+""
+             print((""+R+""))
              os.system('echo "%s" | base64 -d' % (tar))
-             print
+             print()
              base64()
          elif go =='back':
               core.menu.exploits()
@@ -38,17 +38,17 @@ def base64():
          clean()
          base64()
     elif list =='exit':
-         print
-         print""+G+"Thanks for using PTF"
-         print
+         print()
+         print((""+G+"Thanks for using PTF"))
+         print()
          exit()
     else:
-        print "Wrong Command => ", list
-        print ""+N+""+B+"["+R+"!"+B+"] "+N+"Please enter 'show options'"
+        print(("Wrong Command => ", list))
+        print((""+N+""+B+"["+R+"!"+B+"] "+N+"Please enter 'show options'"))
         base64()
 
 def md5():
-    list = raw_input(""+N+"Pentest>> ("+B+"modules/password)("+R+"password/md5_decrypt"+N+"): ")
+    list = eval(input(""+N+"Pentest>> ("+B+"modules/password)("+R+"password/md5_decrypt"+N+"): "))
     if list == 'show options':
         help.option()
         md5()
@@ -56,16 +56,16 @@ def md5():
          core.menu.exploits()
 
     elif list == 'set target':
-         tar = raw_input(""+N+"Pentest>> ("+B+"modules/password)("+R+"password/md5_decrypt"+G+" (set md5)"+N+"): ")
-         print "md5 =>"+R+"",tar
-         go = raw_input(""+N+"Pentest>> ("+B+"modules/password)("+R+"password/md5_decrypt "+N+"): ")
+         tar = eval(input(""+N+"Pentest>> ("+B+"modules/password)("+R+"password/md5_decrypt"+G+" (set md5)"+N+"): "))
+         print(("md5 =>"+R+"",tar))
+         go = eval(input(""+N+"Pentest>> ("+B+"modules/password)("+R+"password/md5_decrypt "+N+"): "))
          if go == "run":
-             print
-             print""+G+""'Start md5_decrypt',tar
+             print()
+             print((""+G+""'Start md5_decrypt',tar))
              time.sleep(2)
-             print ""+R+""
+             print((""+R+""))
              os.system('python3 modules/hash/hash.py -s %s' % (tar))
-             print
+             print()
              md5()
          elif go =='back':
               core.menu.exploits()
@@ -73,17 +73,17 @@ def md5():
          clean()
          md5()
     elif list =='exit':
-         print
-         print""+G+"Thanks for using PTF"
-         print
+         print()
+         print((""+G+"Thanks for using PTF"))
+         print()
          exit()
     else:
-        print "Wrong Command => ", list
-        print ""+N+""+B+"["+R+"!"+B+"] "+N+"Please enter 'show options'"
+        print(("Wrong Command => ", list))
+        print((""+N+""+B+"["+R+"!"+B+"] "+N+"Please enter 'show options'"))
         md5()
 
 def sha1():
-    list = raw_input(""+N+"Pentest>> ("+B+"modules/password)("+R+"password/sha1_decrypt"+N+"): ")
+    list = eval(input(""+N+"Pentest>> ("+B+"modules/password)("+R+"password/sha1_decrypt"+N+"): "))
     if list == 'show options':
         help.option()
         sha1()
@@ -91,16 +91,16 @@ def sha1():
          core.menu.exploits()
 
     elif list == 'set target':
-         tar = raw_input(""+N+"Pentest>> ("+B+"modules/password)("+R+"password/sha1_decrypt"+G+" (set sha1)"+N+"): ")
-         print "sha1 =>"+R+"",tar
-         go = raw_input(""+N+"Pentest>> ("+B+"modules/password)("+R+"password/sha1_decrypt "+N+"): ")
+         tar = eval(input(""+N+"Pentest>> ("+B+"modules/password)("+R+"password/sha1_decrypt"+G+" (set sha1)"+N+"): "))
+         print(("sha1 =>"+R+"",tar))
+         go = eval(input(""+N+"Pentest>> ("+B+"modules/password)("+R+"password/sha1_decrypt "+N+"): "))
          if go == "run":
-             print
-             print""+G+""'Start sha1_decrypt',tar
+             print()
+             print((""+G+""'Start sha1_decrypt',tar))
              time.sleep(2)
-             print ""+R+""
+             print((""+R+""))
              os.system('python3 modules/hash/hash.py -s %s' % (tar))
-             print
+             print()
              sha1()
          elif go =='back':
               core.menu.exploits()
@@ -108,17 +108,17 @@ def sha1():
          clean()
          sha1()
     elif list =='exit':
-         print
-         print""+G+"Thanks for using PTF"
-         print
+         print()
+         print((""+G+"Thanks for using PTF"))
+         print()
          exit()
     else:
-        print "Wrong Command => ", list
-        print ""+N+""+B+"["+R+"!"+B+"] "+N+"Please enter 'show options'"
+        print(("Wrong Command => ", list))
+        print((""+N+""+B+"["+R+"!"+B+"] "+N+"Please enter 'show options'"))
         sha1()
 
 def sha256():
-    list = raw_input(""+N+"Pentest>> ("+B+"modules/password)("+R+"password/sha256_decrypt"+N+"): ")
+    list = eval(input(""+N+"Pentest>> ("+B+"modules/password)("+R+"password/sha256_decrypt"+N+"): "))
     if list == 'show options':
         help.option()
         sha256()
@@ -126,16 +126,16 @@ def sha256():
          core.menu.exploits()
 
     elif list == 'set target':
-         tar = raw_input(""+N+"Pentest>> ("+B+"modules/password)("+R+"password/sha256_decrypt"+G+" (set sha256)"+N+"): ")
-         print "sha256 =>"+R+"",tar
-         go = raw_input(""+N+"Pentest>> ("+B+"modules/password)("+R+"password/sha256_decrypt "+N+"): ")
+         tar = eval(input(""+N+"Pentest>> ("+B+"modules/password)("+R+"password/sha256_decrypt"+G+" (set sha256)"+N+"): "))
+         print(("sha256 =>"+R+"",tar))
+         go = eval(input(""+N+"Pentest>> ("+B+"modules/password)("+R+"password/sha256_decrypt "+N+"): "))
          if go == "run":
-             print
-             print""+G+""'Start sha256_decrypt',tar
+             print()
+             print((""+G+""'Start sha256_decrypt',tar))
              time.sleep(2)
-             print ""+R+""
+             print((""+R+""))
              os.system('python3 modules/hash/hash.py -s %s' % (tar))
-             print
+             print()
              sha256()
          elif go =='back':
               core.menu.exploits()
@@ -143,17 +143,17 @@ def sha256():
          clean()
          sha256()
     elif list =='exit':
-         print
-         print""+G+"Thanks for using PTF"
-         print
+         print()
+         print((""+G+"Thanks for using PTF"))
+         print()
          exit()
     else:
-        print "Wrong Command => ", list
-        print ""+N+""+B+"["+R+"!"+B+"] "+N+"Please enter 'show options'"
+        print(("Wrong Command => ", list))
+        print((""+N+""+B+"["+R+"!"+B+"] "+N+"Please enter 'show options'"))
         sha256()
 
 def sha384():
-    list = raw_input(""+N+"Pentest>> ("+B+"modules/password)("+R+"password/sha384_decrypt"+N+"): ")
+    list = eval(input(""+N+"Pentest>> ("+B+"modules/password)("+R+"password/sha384_decrypt"+N+"): "))
     if list == 'show options':
         help.option()
         sha384()
@@ -161,16 +161,16 @@ def sha384():
          core.menu.exploits()
 
     elif list == 'set target':
-         tar = raw_input(""+N+"Pentest>> ("+B+"modules/password)("+R+"password/sha384_decrypt"+G+" (set sha384)"+N+"): ")
-         print "sha384 =>"+R+"",tar
-         go = raw_input(""+N+"Pentest>> ("+B+"modules/password)("+R+"password/sha384_decrypt "+N+"): ")
+         tar = eval(input(""+N+"Pentest>> ("+B+"modules/password)("+R+"password/sha384_decrypt"+G+" (set sha384)"+N+"): "))
+         print(("sha384 =>"+R+"",tar))
+         go = eval(input(""+N+"Pentest>> ("+B+"modules/password)("+R+"password/sha384_decrypt "+N+"): "))
          if go == "run":
-             print
-             print""+G+""'Start sha384_decrypt',tar
+             print()
+             print((""+G+""'Start sha384_decrypt',tar))
              time.sleep(2)
-             print ""+R+""
+             print((""+R+""))
              os.system('python3 modules/hash/hash.py -s %s' % (tar))
-             print
+             print()
              sha384()
          elif go =='back':
               core.menu.exploits()
@@ -178,17 +178,17 @@ def sha384():
          clean()
          sha384()
     elif list =='exit':
-         print
-         print""+G+"Thanks for using PTF"
-         print
+         print()
+         print((""+G+"Thanks for using PTF"))
+         print()
          exit()
     else:
-        print "Wrong Command => ", list
-        print ""+N+""+B+"["+R+"!"+B+"] "+N+"Please enter 'show options'"
+        print(("Wrong Command => ", list))
+        print((""+N+""+B+"["+R+"!"+B+"] "+N+"Please enter 'show options'"))
         sha384()
 
 def sha512():
-    list = raw_input(""+N+"Pentest>> ("+B+"modules/password)("+R+"password/sha512_decrypt"+N+"): ")
+    list = eval(input(""+N+"Pentest>> ("+B+"modules/password)("+R+"password/sha512_decrypt"+N+"): "))
     if list == 'show options':
         help.option()
         sha512()
@@ -196,16 +196,16 @@ def sha512():
          core.menu.exploits()
 
     elif list == 'set target':
-         tar = raw_input(""+N+"Pentest>> ("+B+"modules/password)("+R+"password/sha512_decrypt"+G+" (set sha384)"+N+"): ")
-         print "sha512 =>"+R+"",tar
-         go = raw_input(""+N+"Pentest>> ("+B+"modules/password)("+R+"password/sha512_decrypt "+N+"): ")
+         tar = eval(input(""+N+"Pentest>> ("+B+"modules/password)("+R+"password/sha512_decrypt"+G+" (set sha384)"+N+"): "))
+         print(("sha512 =>"+R+"",tar))
+         go = eval(input(""+N+"Pentest>> ("+B+"modules/password)("+R+"password/sha512_decrypt "+N+"): "))
          if go == "run":
-             print
-             print""+G+""'Start sha512_decrypt',tar
+             print()
+             print((""+G+""'Start sha512_decrypt',tar))
              time.sleep(2)
-             print ""+R+""
+             print((""+R+""))
              os.system('python3 modules/hash/hash.py -s %s' % (tar))
-             print
+             print()
              sha512()
          elif go =='back':
               core.menu.exploits()
@@ -213,16 +213,16 @@ def sha512():
          clean()
          sha512()
     elif list =='exit':
-         print
-         print""+G+"Thanks for using PTF"
-         print
+         print()
+         print((""+G+"Thanks for using PTF"))
+         print()
          exit()
     else:
-        print "Wrong Command => ", list
-        print ""+N+""+B+"["+R+"!"+B+"] "+N+"Please enter 'show options'"
+        print(("Wrong Command => ", list))
+        print((""+N+""+B+"["+R+"!"+B+"] "+N+"Please enter 'show options'"))
         sha512()
 def ssh_bruteforce():
-    list = raw_input(""+N+"Pentest>> ("+B+"modules/password)("+R+"password/ssh_bruteforce"+N+"): ")
+    list = eval(input(""+N+"Pentest>> ("+B+"modules/password)("+R+"password/ssh_bruteforce"+N+"): "))
     if list == 'show options':
         help.option()
         ssh_bruteforce()
@@ -230,22 +230,22 @@ def ssh_bruteforce():
          core.menu.exploits()
 
     elif list == 'set target':
-         target = raw_input(""+N+"Pentest>> ("+B+"modules/password)("+R+"password/ssh_bruteforce"+G+" (set target)"+N+"): ")
-         print "target =>"+R+"",target
-         port = raw_input(""+N+"Pentest>> ("+B+"modules/password)("+R+"password/ssh_bruteforce"+G+" (set port)"+N+"): ")
-         print "port =>"+R+"",port
-         user = raw_input(""+N+"Pentest>> ("+B+"modules/password)("+R+"password/ssh_bruteforce"+G+" (set user)"+N+"): ")
-         print "user =>"+R+"",user
-         pas = raw_input(""+N+"Pentest>> ("+B+"modules/password)("+R+"password/ssh_bruteforce"+G+" (set locate wordlists)"+N+"): ")
-         print "wordlists =>"+R+"",pas
-         go = raw_input(""+N+"Pentest>> ("+B+"modules/password)("+R+"password/ssh_bruteforce "+N+"): ")
+         target = eval(input(""+N+"Pentest>> ("+B+"modules/password)("+R+"password/ssh_bruteforce"+G+" (set target)"+N+"): "))
+         print(("target =>"+R+"",target))
+         port = eval(input(""+N+"Pentest>> ("+B+"modules/password)("+R+"password/ssh_bruteforce"+G+" (set port)"+N+"): "))
+         print(("port =>"+R+"",port))
+         user = eval(input(""+N+"Pentest>> ("+B+"modules/password)("+R+"password/ssh_bruteforce"+G+" (set user)"+N+"): "))
+         print(("user =>"+R+"",user))
+         pas = eval(input(""+N+"Pentest>> ("+B+"modules/password)("+R+"password/ssh_bruteforce"+G+" (set locate wordlists)"+N+"): "))
+         print(("wordlists =>"+R+"",pas))
+         go = eval(input(""+N+"Pentest>> ("+B+"modules/password)("+R+"password/ssh_bruteforce "+N+"): "))
          if go == "run":
-             print
-             print""+G+""'Start Bruteforce',tar
+             print()
+             print((""+G+""'Start Bruteforce',tar))
              time.sleep(2)
-             print ""+R+""
+             print((""+R+""))
              os.system('ncrack -p %s --user %s -P %s %s' % (port,user,pas,target))
-             print
+             print()
              ssh_bruteforce()
          elif go =='back':
               core.menu.exploits()
@@ -253,11 +253,11 @@ def ssh_bruteforce():
          clean()
          ssh_bruteforce()
     elif list =='exit':
-         print
-         print""+G+"Thanks for using PXXTF"
-         print
+         print()
+         print((""+G+"Thanks for using PXXTF"))
+         print()
          exit()
     else:
-        print "Wrong Command => ", list
-        print ""+N+""+B+"["+R+"!"+B+"] "+N+"Please enter 'show options'"
+        print(("Wrong Command => ", list))
+        print((""+N+""+B+"["+R+"!"+B+"] "+N+"Please enter 'show options'"))
         sha512()

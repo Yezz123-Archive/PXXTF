@@ -1,7 +1,4 @@
 #!/usr/bin/python
-
-
-
 class fsave():
     def __init__(self, domain, method, value):
         import random
@@ -37,7 +34,7 @@ class fsave():
         self.style = a
 
     def pansor(self):
-        import markup
+        from . import markup
         from socket import gethostbyname,gethostname
         import time
         ip = gethostbyname(gethostname())
@@ -69,7 +66,7 @@ class fsave():
                 try:
                     file.write(x)
                 except BaseException:
-                    print "Exception" + x
+                    print(("Exception" + x))
                     pass
         except BaseException:
             self.state = "\tUnfortunately, the file could not be saved"

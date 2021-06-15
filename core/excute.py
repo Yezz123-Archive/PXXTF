@@ -18,7 +18,7 @@ if __name__ == "__main__" or clean() or banner() or ptf():
 def main():
     while True:
             try:
-                PTF = raw_input("Pentest>> ")
+                PTF = eval(input("Pentest>> "))
                 if PTF == 'use modules/exploits':
                     core.menu.exploits()
                     main()
@@ -70,12 +70,12 @@ def main():
                     core.banner.exits()
                     exit()
                 else:
-                    print "Wrong Command => ", PTF
-                    print ""+N+""+B+"["+R+"!"+B+"] "+N+"Please enter 'show options'"
+                    print(("Wrong Command => ", PTF))
+                    print((""+N+""+B+"["+R+"!"+B+"] "+N+"Please enter 'show options'"))
                     main()
             except(KeyboardInterrupt):
-                print("\n"+R+"[*] (Ctrl + C ) Detected, Trying To Exit ...\n" )
+                print(("\n"+R+"[*] (Ctrl + C ) Detected, Trying To Exit ...\n" ))
                 time.sleep(2)
-                print(""+G+"[*] Thank You For Using Pentest Framework =)\n" )
+                print((""+G+"[*] Thank You For Using Pentest Framework =)\n" ))
                 time.sleep(3)
                 exit()

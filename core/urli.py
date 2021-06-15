@@ -28,7 +28,7 @@ class sansor():
 
     def fransor(self, url):
         import re
-        from urllib import unquote
+        from urllib.parse import unquote
         import socket
         if not isinstance(url, str):
             url = url.decode('utf-8')
@@ -56,7 +56,7 @@ class sansor():
         return unquote(url)
 
     def cransor(self, url):
-        from urllib import urlopen
+        from urllib.request import urlopen
 
         try:
             ch = urlopen("http://" + url)

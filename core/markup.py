@@ -47,7 +47,7 @@ class element:
     def render(self, tag, single, between, kwargs):
 
         out = "<%s" % tag
-        for key, value in kwargs.iteritems():
+        for key, value in list(kwargs.items()):
             if value is not None:
                 key = key.strip('_')
                 if key == 'http_equiv':
@@ -133,17 +133,17 @@ class page:
 
         if mode == 'strict_html' or mode == 'html':
             self.onetags = valid_onetags
-            self.onetags += map(string.lower, self.onetags)
+            self.onetags += list(map(string.lower, self.onetags))
             self.twotags = valid_twotags
-            self.twotags += map(string.lower, self.twotags)
+            self.twotags += list(map(string.lower, self.twotags))
             self.deptags = deprecated_onetags + deprecated_twotags
-            self.deptags += map(string.lower, self.deptags)
+            self.deptags += list(map(string.lower, self.deptags))
             self.mode = 'strict_html'
         elif mode == 'loose_html':
             self.onetags = valid_onetags + deprecated_onetags
-            self.onetags += map(string.lower, self.onetags)
+            self.onetags += list(map(string.lower, self.onetags))
             self.twotags = valid_twotags + deprecated_twotags
-            self.twotags += map(string.lower, self.twotags)
+            self.twotags += list(map(string.lower, self.twotags))
             self.mode = mode
         elif mode == 'xml':
             if onetags and twotags:
@@ -244,7 +244,7 @@ class page:
 
     def css(self, filelist):
 
-        if isinstance(filelist, basestring):
+        if isinstance(filelist, str):
             self.link(
                 href=filelist,
                 rel='stylesheet',
@@ -261,7 +261,7 @@ class page:
     def metainfo(self, mydict):
 
         if isinstance(mydict, dict):
-            for name, content in mydict.iteritems():
+            for name, content in list(mydict.items()):
                 self.meta(name=name, content=content)
         else:
             raise TypeError(
@@ -270,7 +270,7 @@ class page:
     def scripts(self, mydict):
 
         if isinstance(mydict, dict):
-            for src, type in mydict.iteritems():
+            for src, type in list(mydict.items()):
                 self.script('', src=src, type='text/%s' % type)
         else:
             raise TypeError(
@@ -301,12 +301,12 @@ def _argsdicts(args, mydict):
     else:
         raise Exception("We should have never gotten here.")
 
-    mykeys = mydict.keys()
-    myvalues = map(_totuple, mydict.values())
+    mykeys = list(mydict.keys())
+    myvalues = list(map(_totuple, list(mydict.values())))
 
-    maxlength = max(map(len, [args] + myvalues))
+    maxlength = max(list(map(len, [args] + myvalues)))
 
-    for i in xrange(maxlength):
+    for i in range(maxlength):
         thisdict = {}
         for key, value in zip(mykeys, myvalues):
             try:
@@ -323,7 +323,7 @@ def _argsdicts(args, mydict):
 
 def _totuple(x):
 
-    if isinstance(x, basestring):
+    if isinstance(x, str):
         out = x,
     elif isinstance(x, (int, float)):
         out = str(x),
@@ -337,7 +337,7 @@ def _totuple(x):
 
 def escape(text, newline=False):
 
-    if isinstance(text, basestring):
+    if isinstance(text, str):
         if '&' in text:
             text = text.replace('&', '&amp;')
         if '>' in text:
@@ -360,7 +360,7 @@ _escape = escape
 
 def unescape(text):
 
-    if isinstance(text, basestring):
+    if isinstance(text, str):
         if '&amp;' in text:
             text = text.replace('&amp;', '&')
         if '&gt;' in text:
@@ -441,4 +441,4 @@ class CustomizationError(MarkupError):
 
 
 if __name__ == '__main__':
-    print __doc__
+    print(__doc__)

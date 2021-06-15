@@ -84,10 +84,10 @@ banner4 = ("""
 """)
 stream = (banner1, banner2, banner3, banner4 )
 def banner():
-	print random.choice(stream)
+	print((random.choice(stream)))
 def info():
                                                                                             # #
-    print("""\033[1;31m
+    print(("""\033[1;31m
     +---------------------------------------------------------------------+
     |                      Pentest Tools Framework                        |
     |                        \033[32m    V2.2[Beta]  \033[1;31m                             |
@@ -96,14 +96,14 @@ def info():
     | \033[0;33mTelegram:@WongNdesoCok  \033[1;31m                                            |
     | Report Bugs and ask questions[**] xzhack206@gmail.com               |
     |          \033[1;37m Pentest Tools Framework  Copyright (C) 2019\033[1;31m               |
-    +---------------------------------------------------------------------+\n"""+N+"")
+    +---------------------------------------------------------------------+\n"""+N+""))
 def ptf():
-    print
-    print ""+N+"         =[ "+O+"Pentest v2.2[Beta]                         "+N+"]"
-    print "  + -- --=[ "+B+"            MODULES \033[0;33m(7)                    "+N+"]"
-    print "  + -- --=[ "+R+"49 exploits 61 scanners  9 post            "+N+"]"
-    print "  + -- --=[ "+R+"7 password 14 listeners exploit-db         "+N+"]"
-    print "  + -- --=[ "+R+"8 Tools                                    "+N+"]\n"
+    print()
+    print((""+N+"         =[ "+O+"Pentest v2.2[Beta]                         "+N+"]"))
+    print(("  + -- --=[ "+B+"            MODULES \033[0;33m(7)                    "+N+"]"))
+    print(("  + -- --=[ "+R+"49 exploits 61 scanners  9 post            "+N+"]"))
+    print(("  + -- --=[ "+R+"7 password 14 listeners exploit-db         "+N+"]"))
+    print(("  + -- --=[ "+R+"8 Tools                                    "+N+"]\n"))
 
 def credits():
     def credit(s):
@@ -111,35 +111,35 @@ def credits():
             sys.stdout.write(c)
             sys.stdout.flush()
             time.sleep(random.random() * 0.3)
-    print""+G+"""
-                                         Credits & Thanks"""
+    print((""+G+"""
+                                         Credits & Thanks"""))
     sleep(0.4)
-    print""+B+""
+    print((""+B+""))
     credit('\t\t\t[nmap Security Scanner]')
-    print""+R+""
+    print((""+R+""))
     sleep(0.4)
     credit('\t\t\t[metasploit-framework]')
-    print""+O+""
+    print((""+O+""))
     sleep(0.4)
     credit('\t\t\t[exploit-db]')
-    print""+G+""
+    print((""+G+""))
     sleep(0.4)
     credit('\t\t\t[offensive-security]')
-    print""+B+""
+    print((""+B+""))
     sleep(0.4)
     credit('\t\t\t[Github]')
-    print""+R+""
+    print((""+R+""))
     sleep(0.4)
     credit('\t\t\t[ https://xerosecurity.com]')
-    print""+N+""
+    print((""+N+""))
 def exits():
     def exit(s):
         for c in s + '\n':
             sys.stdout.write(c)
             sys.stdout.flush()
             time.sleep(random.random() * 0.9)
-    print""+G+""
+    print((""+G+""))
     sleep(0.4)
-    print""+B+""
+    print((""+B+""))
     exit('--[+] Thanks for using PXXTF [+]--')
-    print""+R+""
+    print((""+R+""))

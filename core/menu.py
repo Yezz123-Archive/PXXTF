@@ -22,7 +22,7 @@ def clean():
 
 #EXPLOITS
 def exploits():
-        ex = raw_input(""+N+"Pentest>> ("+B+"modules/exploits"+N+"): ")
+        ex = eval(input(""+N+"Pentest>> ("+B+"modules/exploits"+N+"): "))
         if ex == 'show options':
             help.options()
             exploits()
@@ -182,20 +182,20 @@ def exploits():
              clean()
              exploits()
         elif ex =='exit':
-             print
-             print""+G+"Thanks for using PTF"
-             print
+             print()
+             print((""+G+"Thanks for using PTF"))
+             print()
              exit()
         else:
-            print "Wrong Command => ", ex
-            print ""+N+""+B+"["+R+"!"+B+"] "+N+"Please enter 'show options'"
+            print(("Wrong Command => ", ex))
+            print((""+N+""+B+"["+R+"!"+B+"] "+N+"Please enter 'show options'"))
             exploits()
 
 ##############
 #SCANNERS
 #############
 def scan():
-        sen = raw_input(""+N+"Pentest>> ("+B+"modules/scanners"+N+"): ")
+        sen = eval(input(""+N+"Pentest>> ("+B+"modules/scanners"+N+"): "))
         if sen == 'show options':
             help.options()
             scan()
@@ -403,17 +403,17 @@ def scan():
             clean()
             scan()
         elif sen =='exit':
-             print
-             print""+G+"Thanks for using PTF"
-             print
+             print()
+             print((""+G+"Thanks for using PTF"))
+             print()
              exit()
         else:
-            print "Wrong Command => ", sen
-            print ""+N+""+B+"["+R+"!"+B+"] "+N+"Please enter 'show options'"
+            print(("Wrong Command => ", sen))
+            print((""+N+""+B+"["+R+"!"+B+"] "+N+"Please enter 'show options'"))
             scan()
 def post():
     while True:
-        pos = raw_input(""+N+"Pentest>> ("+B+"modules/post"+N+"): ")
+        pos = eval(input(""+N+"Pentest>> ("+B+"modules/post"+N+"): "))
         if pos =='show options':
             help.options()
             post()
@@ -453,18 +453,18 @@ def post():
             clean()
             post()
         elif pos =='exit':
-             print
-             print""+G+"Thanks for using PTF"
-             print
+             print()
+             print((""+G+"Thanks for using PTF"))
+             print()
              exit()
         else:
-            print "Wrong Command => ", pos
-            print ""+N+""+B+"["+R+"!"+B+"] "+N+"Please enter 'show options'"
+            print(("Wrong Command => ", pos))
+            print((""+N+""+B+"["+R+"!"+B+"] "+N+"Please enter 'show options'"))
             post()
         pass
 
 def pas1():
-    pas = raw_input(""+N+"Pentest>> ("+B+"modules/password"+N+"): ")
+    pas = eval(input(""+N+"Pentest>> ("+B+"modules/password"+N+"): "))
     if pas =='show options':
         help.options()
         pas1()
@@ -496,20 +496,20 @@ def pas1():
         clean()
         pas1()
     elif pas =='exit':
-         print
-         print""+G+"Thanks for using PTF"
-         print
+         print()
+         print((""+G+"Thanks for using PTF"))
+         print()
          exit()
 
     elif pas == 'back':
          main()
     else:
-        print "Wrong Command => ", pas
-        print ""+N+""+B+"["+R+"!"+B+"] "+N+"Please enter 'show options'"
+        print(("Wrong Command => ", pas))
+        print((""+N+""+B+"["+R+"!"+B+"] "+N+"Please enter 'show options'"))
         pas1()
 
 def exploit_db():
-    db = raw_input(""+N+"Pentest>> ("+B+"modules/exploitdb"+N+"): ")
+    db = eval(input(""+N+"Pentest>> ("+B+"modules/exploitdb"+N+"): "))
     if db =='show options':
         help.optionsdb()
         exploit_db()
@@ -526,9 +526,9 @@ def exploit_db():
          help.db()
          exploit_db()
     elif db =='exit':
-         print
-         print""+G+"Thanks for using PTF"
-         print
+         print()
+         print((""+G+"Thanks for using PTF"))
+         print()
          exit()
     elif db == 'clear':
         clean()
@@ -536,14 +536,14 @@ def exploit_db():
     elif db == 'back':
          main()
     else:
-        print "Wrong Command => ", db
-        print ""+N+""+B+"["+R+"!"+B+"] "+N+"Please enter 'show options'"
+        print(("Wrong Command => ", db))
+        print((""+N+""+B+"["+R+"!"+B+"] "+N+"Please enter 'show options'"))
         exploit_db()
 
 
 def listener():
     while True:
-        map =raw_input(""+N+"Pentest>> ("+B+"modules/listener"+N+"): ")
+        map =eval(input(""+N+"Pentest>> ("+B+"modules/listener"+N+"): "))
         if map == 'show options':
             help.list()
             listener()
@@ -551,9 +551,9 @@ def listener():
             help.mod()
             listener()
         elif map =='exit':
-             print
-             print""+G+"Thanks for using PTF"
-             print
+             print()
+             print((""+G+"Thanks for using PTF"))
+             print()
              exit()
         elif map == 'back':
             main()
@@ -604,11 +604,11 @@ def listener():
             listener()
 
         else:
-            print "Wrong Command => ", map
-            print ""+N+""+B+"["+R+"!"+B+"] "+N+"Please enter 'show options'"
+            print(("Wrong Command => ", map))
+            print((""+N+""+B+"["+R+"!"+B+"] "+N+"Please enter 'show options'"))
             listener()
 def tools():
-    map =raw_input(""+N+"Pentest>> ("+B+"modules/tools)"+N+"): ")
+    map =eval(input(""+N+"Pentest>> ("+B+"modules/tools)"+N+"): "))
     if map == 'show options':
         help.tool1()
         tools()
@@ -624,9 +624,9 @@ def tools():
          """)
         tools()
     elif map =='exit':
-         print
-         print""+G+"Thanks for using PTF"
-         print
+         print()
+         print((""+G+"Thanks for using PTF"))
+         print()
          exit()
     elif map =='set atscan':
         exploit.atscan()
@@ -658,6 +658,6 @@ def tools():
         clean()
         tools()
     else:
-        print "Wrong Command => ", map
-        print ""+N+""+B+"["+R+"!"+B+"] "+N+"Please enter 'show options'"
+        print(("Wrong Command => ", map))
+        print((""+N+""+B+"["+R+"!"+B+"] "+N+"Please enter 'show options'"))
         tools()
