@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
-class sansor():
 
+class sansor():
     def __init__(self):
         pass
 
@@ -15,6 +15,7 @@ class sansor():
             url = url.split('/')[0].lower().encode('idna')
             url = url.split(b'.')
             return b'.'.join(url).decode('idna')
+
         ptc_match = re.search(r'^.*?://', url)
         www_match = re.search(r'w{3}\.', url)
         end_match = re.search(r'', url)

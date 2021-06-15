@@ -2,7 +2,7 @@
 import signal
 import sys
 import os
-from ptf import main
+from pxxtf import main
 import time
 from core import exploit
 from core import help
