@@ -1,26 +1,37 @@
-# Pentest Tools Framework (exploits, Scanner, Password.)
+<p align="center"> 
+    <img src="img/school-of-athens.jpg" alt="School of Athena">
+</p>
 
 ## About Pentest Tools Framework
 
-    INFO: Pentest Tools Framework is a database of exploits, Scanners
-    and tools for penetration testing. Pentest is a powerful
-    framework includes a lot of tools for beginners. You can explore
-    kernel vulnerabilities, network vulnerabilities.
+- INFO: Pentest Tools Framework is a database of exploits, Scanners and tools for penetration testing.
+
+- Pentest is a powerful
+  framework includes a lot of tools for beginners. You can explore
+  kernel vulnerabilities, network vulnerabilities.
 
 ## How to install PTF(Pentest Tools Framework)
 
-```
-> cd PXXTF
-
-> pip install -r requirements.txt
-
-> python install.py
-
-> PXXTF
+```sh
+cd PXXTF
 ```
 
-    INFO: After running install.py you should
-    select your Ubuntu/kali linux /parrot Os , all computer OS,
+```sh
+pip install -r requirements.txt
+```
+
+```sh
+python install.py
+```
+
+```sh
+sudo PXXTF
+```
+
+- You can Create your own env `python3 -m venv pxxtf` then activate it `source pxxtf/bin/activate` Then install all your requirements.
+
+  INFO: After running [Install.py](/install.py) you should
+  select your Ubuntu/kali linux /parrot Os , all computer OS,
 
 ## About Pentest Tools Framework modules
 
