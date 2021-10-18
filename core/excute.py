@@ -11,7 +11,7 @@ G = '\033[32m' # Green
 O = '\033[0;33m' # Orange
 B = '\033[1;34m' #Blue
 E = '\033[0m' # End
-if not os.geteuid() == 0:#Detected user root
+if os.geteuid() != 0:#Detected user root
     sys.exit("""\033[1;91m\n[!] Pentest Tools Framework run as root!!. \n\033[1;m""")
 if __name__ == "__main__" or clean() or banner() or ptf():
     main()

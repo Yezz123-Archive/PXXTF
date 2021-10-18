@@ -19,9 +19,8 @@ class find_records:
         if sansor().cransor(host) and sansor().cransor(
                 'api.hackertarget.com/hostsearch'):
 
-            wread = urllib.urlopen(
+            return urllib.urlopen(
                 'https://api.hackertarget.com/hostsearch/?q=' + host).read()
-            return wread
         else:
             return None
 

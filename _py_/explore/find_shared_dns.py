@@ -18,9 +18,8 @@ class find_shared_dns:
         if sansor().cransor(host) and sansor().cransor(
                 'api.hackertarget.com/findshareddns'):
 
-            wread = urllib.urlopen(
+            return urllib.urlopen(
                 'https://api.hackertarget.com/findshareddns/?q=' + host).read()
-            return wread
         else:
             return None
 

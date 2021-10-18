@@ -17,9 +17,8 @@ class dnslookup:
         host = sansor().pransor(host)
         if sansor().cransor(host) and sansor().cransor('api.hackertarget.com/dnslookup'):
 
-            wread = urllib.urlopen(
+            return urllib.urlopen(
                 'https://api.hackertarget.com/dnslookup/?q=' + host).read()
-            return wread
         else:
             return None
 

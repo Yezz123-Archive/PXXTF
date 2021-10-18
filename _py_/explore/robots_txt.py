@@ -29,9 +29,8 @@ class robots_txt:
             def getrequest(url):
                 try:
                     getrequest = request.request(url)
-                    if getrequest.status_code == 200:
-                        if url not in goods:
-                            goods.append(url)
+                    if getrequest.status_code == 200 and url not in goods:
+                        goods.append(url)
                 except BaseException:
                     pass
 

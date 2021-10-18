@@ -46,9 +46,7 @@ class sansor():
 
         if www_match:
             url = url.replace(www_match.group(), "")
-        if http_match:
-            pass
-        else:
+        if not http_match:
             url = "http://" + url
         if end_match:
             url = url + "/"
